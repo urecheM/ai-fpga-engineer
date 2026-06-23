@@ -30,15 +30,7 @@ python -m ai_fpga_engineer.cli build "Design an 8-bit ALU supporting ADD, SUB, A
 === Pipeline OK ===
 ```
 
-## Why this project
-
-Most "AI writes hardware" demos stop at generating code that looks plausible. The
-hard part isn't writing HDL — it's *trusting* it. This project is built around a
-single idea: **generate the RTL and the model that checks it from one source of
-truth**, so a passing test is meaningful evidence of correctness rather than a
-coincidence two halves of the same bug share.
-
-It runs eight cooperating agents — requirements, architecture, design-review critic,
+The project runs eight cooperating agents: requirements, architecture, design-review critic,
 HDL generation, verification, simulation, autonomous debugging, optimization, and
 documentation — over a shared project workspace, producing a complete, auditable
 hardware design package for four design classes (**ALU, counter, comparator,
@@ -46,7 +38,6 @@ register**).
 
 ## Architecture
 
-![Block diagram of the generated 8-bit ALU](ai_fpga_engineer/projects/alu8/diagrams/alu8_block.svg)
 
 ```
 spec → architecture → critic → HDL → verification → simulation → debug → optimization → docs
