@@ -1,10 +1,8 @@
 # ai-fpga-engineer
 # AI FPGA Engineer
 
-> An autonomous multi-agent pipeline that turns a **plain-English request** into
-> **verified, synthesizable VHDL** — with a block diagram, a self-checking
-> testbench, an autonomous debug pass, resource/timing estimates, and a full
-> engineering report, all with no human in the loop.
+> An autonomous multi-agent pipeline that converts natural-language hardware
+> requirements into verified, synthesizable VHDL.
 
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -43,10 +41,6 @@ register**).
 spec → architecture → critic → HDL → verification → simulation → debug → optimization → docs
 ```
 
-Each agent has one responsibility and a narrow, typed interface, coordinated by an
-orchestrator that owns sequencing, the design-review revision loop, optional fault
-injection, and the final pass/fail decision. Every artifact is written through one
-`Project` object, so the run is fully reproducible from its manifest.
 
 ## The correctness argument
 
@@ -60,22 +54,6 @@ embeds them into the generated testbench. Therefore:
 
 A green simulation is then evidence the RTL matches a model independently shown to
 satisfy the design's invariants — not a tautology.
-
-## What's real vs. what's an extension point
-
-**Real and checked here:** natural-language → formal spec, Graphviz block diagrams,
-synthesizable VHDL-2008, golden-model + property-based verification over directed,
-random, and exhaustive vectors, a self-checking testbench, an autonomous self-healing
-debug loop, resource/timing estimation, and an offline TF-IDF knowledge base with
-citations.
-
-**Emitted for your toolchain:** this repo has no RTL simulator, so the pipeline
-writes a ready-to-run **GHDL flow** (`tb/run_ghdl.sh`, `tb/Makefile`). If GHDL is
-installed it runs automatically and reports the real result.
-
-**Documented, not implemented (honest scope):** hardware-in-the-loop on real boards,
-vendor synthesis/place-and-route, retrieval over copyrighted textbooks, a learned LLM
-policy, and a React front end — each factored behind an existing interface.
 
 ## Quickstart
 
