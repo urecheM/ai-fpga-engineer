@@ -116,10 +116,6 @@ cd <project>/tb && ./run_ghdl.sh      # or: make sim ; make wave
 
 ## Read more
 
-- **[Technical report (PDF)](WIP)** — full
-  methodology, the co-generated VHDL/golden-model semantics, testbench structure,
-  and engineering insights.
-- **[Package README](ai_fpga_engineer/README.md)** — module-by-module details.
 
 ## Repository layout
 
