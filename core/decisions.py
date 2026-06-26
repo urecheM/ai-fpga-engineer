@@ -28,3 +28,27 @@ class ArchDecisions:
         return {"opcode_encoding": self.opcode_encoding,
                 "register_output": self.register_output,
                 "share_add_sub": self.share_add_sub}
+@dataclass
+class QoR:
+    luts: int = 0
+    registers: int = 0
+    dsp: int = 0
+    critical_path_ns: float = 0.0
+    fmax_mhz: float = 0.0
+    source: str = "estimated"         
+
+    @property
+    def area(self) -> int:
+        return self.luts + self.registers
+
+    def to_dict(self) -> dict:
+        return {"luts": self.luts, "registers": self.registers, "dsp": self.dsp,
+                "critical_path_ns": self.critical_path_ns,
+                "fmax_mhz": self.fmax_mhz, "source": self.source}
+
+
+@dataclass
+class Targets:
+    fmax_mhz: float | None = None
+    max_luts: int | None = None
+    max_registers: int | None = None
