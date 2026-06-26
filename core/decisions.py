@@ -64,3 +64,10 @@ class Targets:
 
     def met_by(self, q: QoR) -> bool:
         return not self.unmet(q)
+
+def score(q: QoR, objective: str) -> float:
+    if objective == "timing":
+        return q.fmax_mhz
+    if objective == "area":
+        return -float(q.area)
+    return q.fmax_mhz / (1, q.area)
