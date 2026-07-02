@@ -6,4 +6,4 @@ import math
 import random
 
 from ..core.spec import Specification, Port
-from ..core.decisions import ArchDecisions, 
+from ..core.decisions import ArchDecisions, QoR
