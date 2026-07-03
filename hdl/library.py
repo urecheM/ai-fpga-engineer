@@ -7,3 +7,9 @@ import random
 
 from ..core.spec import Specification, Port
 from ..core.decisions import ArchDecisions, QoR
+
+@dataclass
+class TestPlan:
+    kind: str
+    vectors: list[dict]
+    notes: list[str] = field(default_factory=list)
