@@ -1,0 +1,35 @@
+name: ci
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      AIFPGA_REQUIRE_TOOLS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install OSS CAD Suite (ghdl, yosys+ghdl-plugin, nextpnr-ice40, sby)
+        uses: YosysHQ/setup-oss-cad-suite@v3
+      - name: Fail fast if any tool is missing
+        run: |
+          which ghdl yosys nextpnr-ice40 sby
+          ghdl --version | head -2
+          yosys -V
+          python -m ai_fpga_engineer.cli tools
+      - run: pip install pytest ruff
+      - name: Lint (advisory until legacy cleanup lands)
+        run: ruff check ai_fpga_engineer --exit-zero
+      - name: Self-test suite (tool-gated checks are REQUIRED here)
+        run: python -m pytest ai_fpga_engineer/selftest.py -v
+      - name: Mutation campaign (defect-detection regression)
+        run: python -m ai_fpga_engineer.cli mutation-campaign --out reports/mutation_report.md --min-detect 0.6
+      - name: Estimator calibration vs measured PnR (small sweep)
+        run: python -m ai_fpga_engineer.cli calibrate --widths 4,8 --out reports/calibration
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-reports
+          path: reports/
