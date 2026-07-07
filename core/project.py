@@ -1,4 +1,7 @@
-"""Project workspace"""
+"""Project workspace. One directory per design run, holding every artifact the pipeline produces
+(rtl/, tb/, docs/, reports/, formal/, synth/, build/) plus a structured event
+log, an artifact index, run metrics, and a JSON manifest so the whole run is
+reproducible and inspectable after the fact."""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
