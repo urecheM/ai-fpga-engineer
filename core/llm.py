@@ -13,9 +13,12 @@ from typing import Protocol
 
 
 class LLMProvider(Protocol):
-    name: str
-    available: bool
-
+    name = "offline/rule-based"
+    def complete(self, prompt: str) -> str:  # pragma: no cover
+        raise NotImplementedError(
+            "No LLM configured. The pipeline is rule-based and does not need "
+            "one; attach a provider here only for a specific, benchmarked "
+            "experiment (see docs/CLAIMS.md).")
     def complete(self, system: str, prompt: str, max_tokens: int = 1024) -> str: ...
 
 
