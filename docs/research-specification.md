@@ -139,23 +139,16 @@ comparisons across benchmarks; significance testing (e.g. McNemar for paired
 pass/fail, bootstrap for metric deltas) is applied where sample size permits.
 The platform never reports a point estimate without its interval.
 
-## 13. Publication roadmap
-
-Technical report → OpenReview preprint (6–10 pp) → research website → external
-artifacts (Hugging Face dataset, Kaggle notebook, Colab notebooks, Papers With
-Code). All are generated from experiment outputs. See `ROADMAP.md`.
-
-## 14. Software architecture principles
+## 13. Software architecture principles
 
 Config over code; inference decoupled from evaluation; pure-data benchmarks;
 graceful toolchain degradation; append-only machine-readable logs;
 content-addressed caching; plugin registration for every extensible component;
 strict typing and linting; every artifact a build product.
 
-## 15. Long-term research vision
+## 14. Long-term research vision
 
 A community research infrastructure for AI-assisted hardware design: multi-model
 longitudinal leaderboards, formal verification backends, retrieval-augmented and
 RL-optimised generation, Pareto-optimal design-space exploration, and support
-for Verilog/SystemVerilog/Chisel/HLS through modular code-generation interfaces —
-extensible by external researchers and publishable within the broader ecosystem.
+for Verilog/SystemVerilog/Chisel/HLS through modular code-generation interfaces.
