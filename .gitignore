@@ -28,3 +28,7 @@ venv/
 
 # NOTE: results/, publication/ and website/ are committed as build products
 # (portfolio evidence). Regenerate them any time with `python reproduce.py`.
+
+# Editor + stray files
+.vscode/
+_rmtest
