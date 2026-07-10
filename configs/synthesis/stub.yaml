@@ -1,0 +1,5 @@
+name: stub
+backend: stub
+target: generic
+clock_ns: 10.0
+enabled: false

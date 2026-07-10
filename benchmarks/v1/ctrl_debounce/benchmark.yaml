@@ -1,0 +1,21 @@
+id: ctrl_debounce
+version: 1.0.0
+category: control
+title: Switch debouncer
+specification: Design a switch debouncer that only propagates the input to the output
+  after it has been stable for N=8 consecutive clock cycles.
+functional_requirements:
+- output changes only after 8 stable cycles
+expected_behavior: ''
+entity: debounce
+tags:
+- debouncer
+- control
+- sequential
+complexity:
+  state_complexity: 0
+  control_complexity: 3
+  timing_constraints: 2
+  interface_count: 3
+reference_hdl_path: reference.vhd
+properties: []

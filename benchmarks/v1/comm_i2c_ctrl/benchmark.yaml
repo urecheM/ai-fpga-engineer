@@ -1,0 +1,27 @@
+id: comm_i2c_ctrl
+version: 1.0.0
+category: communication
+title: I2C bit-level controller (start/stop/byte)
+specification: Design an I2C master byte controller that generates START and STOP
+  conditions and shifts out 8 bits MSB-first on sda synchronised to scl, asserting
+  done after the byte and sampling the ack bit.
+functional_requirements:
+- generates START and STOP
+- 8-bit MSB-first shift
+- samples ack
+expected_behavior: ''
+entity: i2c_byte
+tags:
+- i2c
+- protocol
+- sequential
+complexity:
+  state_complexity: 5
+  control_complexity: 6
+  timing_constraints: 3
+  interface_count: 8
+  concurrency: 1
+reference_hdl_path: reference.vhd
+properties:
+- deadlock_freedom
+- transaction_completion

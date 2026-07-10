@@ -1,38 +1,44 @@
 name: ci
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
 
 jobs:
-  software:
+  quality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: pip install -e ".[dev]"
-      - name: Self-test (tool-gated checks SKIP here, don't fail)
-        run: python -m pytest ai_fpga_engineer/selftest.py -v
-      - name: Benchmark suite (implemented set)
-        run: python -m ai_fpga_engineer.cli benchmarks run --set experiment.store=reports/experiments_store
-      - name: Ruff (advisory)
-        run: pip install ruff && ruff check ai_fpga_engineer --exit-zero
-
-  hardware:
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    env:
-      AIFPGA_REQUIRE_TOOLS: "1"
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Install OSS CAD Suite
-        uses: YosysHQ/setup-oss-cad-suite@v3
-      - name: Show what actually installed
+      - name: Install HDL toolchain (GHDL + Yosys)
+        run: sudo apt-get update && sudo apt-get install -y ghdl yosys || true
+      - name: Install package
+        run: pip install -e ".[dev]"
+      - name: Ruff lint
+        run: ruff check src tests scripts
+      - name: Ruff format check
+        run: ruff format --check src tests scripts
+      - name: mypy
+        run: mypy src/hdleval
+      - name: Tests + coverage
+        run: pytest --cov=hdleval --cov-report=xml --cov-report=term-missing
+      - name: Coverage badge data
         run: |
-          command -v ghdl yosys nextpnr-ice40 sby || true
-          ghdl --version | head -1 || true
-      - run: pip install -e ".[dev]"
-      - name: Tool-gated self-tests (required in this job)
-        run: python -m pytest ai_fpga_engineer/selftest.py -v
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          r = ET.parse("coverage.xml").getroot()
+          print(f"coverage={float(r.get('line-rate'))*100:.1f}%")
+          PY
+      - name: Reproduce artifacts
+        run: python reproduce.py
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: hdleval-artifacts
+          path: |
+            results/
+            publication/
+            website/

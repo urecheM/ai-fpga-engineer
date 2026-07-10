@@ -1,0 +1,16 @@
+name: Feature request
+description: Propose a new capability or improvement
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes: { label: Problem / motivation }
+    validations: { required: true }
+  - type: textarea
+    id: proposal
+    attributes: { label: Proposed solution }
+  - type: dropdown
+    id: area
+    attributes:
+      label: Subsystem
+      options: [harness, benchmarks, models, metrics, verification, leaderboard, reporting, orchestration, docs, other]

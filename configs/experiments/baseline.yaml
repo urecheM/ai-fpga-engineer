@@ -1,0 +1,20 @@
+name: baseline-v1
+description: >
+  Reproducible baseline across the v1 benchmark suite using the deterministic
+  reference (upper-bound) provider and three synthetic-fidelity baselines. This
+  establishes the metric/leaderboard machinery before real-model evaluation.
+models:
+  - reference-golden
+  - synthetic-high
+  - synthetic-mid
+  - synthetic-low
+prompts:
+  - direct
+benchmarks:
+  suite_version: v1
+trials: 3
+seed: 20260707
+synthesis: yosys-ice40
+verification: properties
+optimization: baseline
+tags: [baseline, reproducible, synthetic]

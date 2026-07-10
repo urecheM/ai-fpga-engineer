@@ -1,0 +1,21 @@
+id: ctrl_pwm
+version: 1.0.0
+category: control
+title: PWM generator (8-bit duty)
+specification: Design an 8-bit PWM generator. A free-running 8-bit counter compares
+  against an input duty value; pwm_out is high while counter < duty. Synchronous reset.
+functional_requirements:
+- duty cycle proportional to duty input
+expected_behavior: ''
+entity: pwm8
+tags:
+- pwm
+- control
+- sequential
+complexity:
+  arithmetic_complexity: 1
+  control_complexity: 2
+  timing_constraints: 2
+  interface_count: 4
+reference_hdl_path: reference.vhd
+properties: []

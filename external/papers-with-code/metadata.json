@@ -1,0 +1,61 @@
+{
+  "task": "HDL Generation (VHDL)",
+  "dataset": "hdleval Benchmark Suite v1",
+  "description": "Reproducible evaluation of LLM-assisted hardware design.",
+  "evaluation_methodology": "Identical harness per model: parse->compile->synth->sim->metrics->classify. Pass rate with Wilson 95% CI.",
+  "metrics": [
+    "pass_rate",
+    "compile_rate",
+    "synth_rate",
+    "sim_rate",
+    "avg_latency_s",
+    "avg_tokens",
+    "avg_retries",
+    "luts",
+    "ffs",
+    "est_fmax_mhz"
+  ],
+  "implementation": "https://github.com/your-org/hdleval",
+  "results": [
+    {
+      "model": "reference-golden",
+      "prompt": "direct",
+      "pass_rate": 1.0,
+      "pass_ci95": [
+        0.9336,
+        1.0
+      ],
+      "n": 54
+    },
+    {
+      "model": "synthetic-high",
+      "prompt": "direct",
+      "pass_rate": 1.0,
+      "pass_ci95": [
+        0.9336,
+        1.0
+      ],
+      "n": 54
+    },
+    {
+      "model": "synthetic-mid",
+      "prompt": "direct",
+      "pass_rate": 0.9444,
+      "pass_ci95": [
+        0.8489,
+        0.9809
+      ],
+      "n": 54
+    },
+    {
+      "model": "synthetic-low",
+      "prompt": "direct",
+      "pass_rate": 0.7778,
+      "pass_ci95": [
+        0.6506,
+        0.868
+      ],
+      "n": 54
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+id: dsp_movavg
+version: 1.0.0
+category: dsp
+title: Moving-average filter (window 4)
+specification: Design a moving-average filter over the last 4 unsigned 8-bit samples,
+  outputting the average (sum divided by 4).
+functional_requirements:
+- output = mean of last 4 samples
+expected_behavior: ''
+entity: movavg4
+tags:
+- moving-average
+- dsp
+- sequential
+complexity:
+  arithmetic_complexity: 4
+  control_complexity: 2
+  timing_constraints: 2
+  interface_count: 4
+reference_hdl_path: reference.vhd
+properties: []

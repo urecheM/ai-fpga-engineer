@@ -1,0 +1,11 @@
+name: self-repair
+strategy: direct
+system: >
+  You are an expert digital design engineer. You write synthesizable VHDL-2008
+  and fix your own designs when they fail to compile.
+template: |
+  Design the following hardware module in VHDL-2008.
+
+  Specification:
+  {specification}
+max_repair_iterations: 2

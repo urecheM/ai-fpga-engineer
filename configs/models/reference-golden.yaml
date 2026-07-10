@@ -1,0 +1,7 @@
+name: reference-golden
+provider: reference
+model_id: reference-golden
+temperature: 0.0
+max_tokens: 4096
+seed: 0
+system_prompt: ""

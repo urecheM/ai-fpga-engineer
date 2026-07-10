@@ -1,0 +1,23 @@
+id: arith_adder8
+version: 1.0.0
+category: arithmetic
+title: 8-bit ripple-carry adder
+specification: Design an 8-bit adder with carry-in and carry-out. Inputs a and b are
+  8-bit unsigned vectors, cin is a single bit. Output sum is 8 bits and cout is the
+  carry out.
+functional_requirements:
+- sum = a + b + cin (mod 256)
+- cout is the 9th bit of the sum
+expected_behavior: ''
+entity: adder8
+tags:
+- adder
+- combinational
+complexity:
+  arithmetic_complexity: 2
+  interface_count: 5
+  control_complexity: 0
+  timing_constraints: 0
+reference_hdl_path: reference.vhd
+properties:
+- overflow_detection

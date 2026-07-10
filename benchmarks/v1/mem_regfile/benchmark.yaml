@@ -1,0 +1,26 @@
+id: mem_regfile
+version: 1.0.0
+category: memory
+title: 32x32 register file (2R1W)
+specification: Design a 32-entry, 32-bit register file with two read ports and one
+  write port. Register 0 always reads as zero. Writes are synchronous.
+functional_requirements:
+- reg 0 reads zero
+- two independent read ports
+- synchronous write
+expected_behavior: ''
+entity: regfile
+tags:
+- register-file
+- memory
+- processor
+- sequential
+complexity:
+  control_complexity: 3
+  timing_constraints: 1
+  interface_count: 9
+  concurrency: 2
+  hierarchy_depth: 1
+reference_hdl_path: reference.vhd
+properties:
+- mutual_exclusion

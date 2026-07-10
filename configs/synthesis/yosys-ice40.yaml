@@ -1,0 +1,5 @@
+name: yosys-ice40
+backend: yosys
+target: ice40
+clock_ns: 10.0
+enabled: true

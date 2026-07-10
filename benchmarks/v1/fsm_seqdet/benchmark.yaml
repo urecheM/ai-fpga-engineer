@@ -1,0 +1,24 @@
+id: fsm_seqdet
+version: 1.0.0
+category: fsm
+title: Sequence detector (1011, overlapping)
+specification: Design an overlapping Mealy/Moore sequence detector that asserts found
+  for one cycle when the serial input bit stream contains 1011. Synchronous active-high
+  reset.
+functional_requirements:
+- asserts found on 1011
+- overlapping matches supported
+expected_behavior: ''
+entity: seq_detect
+tags:
+- fsm
+- sequential
+complexity:
+  state_complexity: 4
+  control_complexity: 4
+  timing_constraints: 2
+  interface_count: 4
+reference_hdl_path: reference.vhd
+properties:
+- deadlock_freedom
+- unreachable_state

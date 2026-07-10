@@ -1,0 +1,17 @@
+{
+  "n_benchmarks": 18,
+  "categories": [
+    "arithmetic",
+    "communication",
+    "control",
+    "dsp",
+    "fsm",
+    "memory",
+    "processor"
+  ],
+  "difficulty_range": [
+    16,
+    77
+  ],
+  "suite_version": "v1"
+}

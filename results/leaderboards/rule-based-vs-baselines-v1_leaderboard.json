@@ -1,0 +1,720 @@
+{
+  "by_category": {
+    "arithmetic": [
+      {
+        "avg_latency_s": 0.0021,
+        "avg_retries": 0.0,
+        "avg_tokens": 292.0,
+        "compile_rate": 0.5,
+        "failures": {
+          "no_code_generated": 2,
+          "none": 2
+        },
+        "model": "rule-based",
+        "n": 4,
+        "pass_ci95": [
+          0.15,
+          0.85
+        ],
+        "pass_rate": 0.5,
+        "prompt": "direct",
+        "sim_rate": 0.5,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 1.3793,
+        "avg_retries": 0.0,
+        "avg_tokens": 236.0,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 4
+        },
+        "model": "synthetic-high",
+        "n": 4,
+        "pass_ci95": [
+          0.5101,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 0.1028,
+        "avg_retries": 0.0,
+        "avg_tokens": 250.5,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 4
+        },
+        "model": "reference-golden",
+        "n": 4,
+        "pass_ci95": [
+          0.5101,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      }
+    ],
+    "communication": [
+      {
+        "avg_latency_s": 0.0002,
+        "avg_retries": 0.0,
+        "avg_tokens": 166.0,
+        "compile_rate": 0.0,
+        "failures": {
+          "no_code_generated": 3
+        },
+        "model": "rule-based",
+        "n": 3,
+        "pass_ci95": [
+          0.0,
+          0.5615
+        ],
+        "pass_rate": 0.0,
+        "prompt": "direct",
+        "sim_rate": 0.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 2.2107,
+        "avg_retries": 0.0,
+        "avg_tokens": 417.3,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 3
+        },
+        "model": "synthetic-high",
+        "n": 3,
+        "pass_ci95": [
+          0.4385,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 0.102,
+        "avg_retries": 0.0,
+        "avg_tokens": 433.0,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 3
+        },
+        "model": "reference-golden",
+        "n": 3,
+        "pass_ci95": [
+          0.4385,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      }
+    ],
+    "control": [
+      {
+        "avg_latency_s": 0.0003,
+        "avg_retries": 0.0,
+        "avg_tokens": 369.5,
+        "compile_rate": 0.5,
+        "failures": {
+          "no_code_generated": 1,
+          "none": 1
+        },
+        "model": "rule-based",
+        "n": 2,
+        "pass_ci95": [
+          0.0945,
+          0.9055
+        ],
+        "pass_rate": 0.5,
+        "prompt": "direct",
+        "sim_rate": 0.5,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 1.514,
+        "avg_retries": 0.0,
+        "avg_tokens": 271.0,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 2
+        },
+        "model": "synthetic-high",
+        "n": 2,
+        "pass_ci95": [
+          0.3424,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 0.088,
+        "avg_retries": 0.0,
+        "avg_tokens": 285.5,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 2
+        },
+        "model": "reference-golden",
+        "n": 2,
+        "pass_ci95": [
+          0.3424,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      }
+    ],
+    "dsp": [
+      {
+        "avg_latency_s": 0.0002,
+        "avg_retries": 0.0,
+        "avg_tokens": 151.0,
+        "compile_rate": 0.0,
+        "failures": {
+          "no_code_generated": 2
+        },
+        "model": "rule-based",
+        "n": 2,
+        "pass_ci95": [
+          0.0,
+          0.6576
+        ],
+        "pass_rate": 0.0,
+        "prompt": "direct",
+        "sim_rate": 0.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 1.8735,
+        "avg_retries": 0.0,
+        "avg_tokens": 296.0,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 2
+        },
+        "model": "synthetic-high",
+        "n": 2,
+        "pass_ci95": [
+          0.3424,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 0.104,
+        "avg_retries": 0.0,
+        "avg_tokens": 310.0,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 2
+        },
+        "model": "reference-golden",
+        "n": 2,
+        "pass_ci95": [
+          0.3424,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      }
+    ],
+    "fsm": [
+      {
+        "avg_latency_s": 0.0002,
+        "avg_retries": 0.0,
+        "avg_tokens": 163.5,
+        "compile_rate": 0.0,
+        "failures": {
+          "no_code_generated": 2
+        },
+        "model": "rule-based",
+        "n": 2,
+        "pass_ci95": [
+          0.0,
+          0.6576
+        ],
+        "pass_rate": 0.0,
+        "prompt": "direct",
+        "sim_rate": 0.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 2.1005,
+        "avg_retries": 0.0,
+        "avg_tokens": 312.5,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 2
+        },
+        "model": "synthetic-high",
+        "n": 2,
+        "pass_ci95": [
+          0.3424,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 0.082,
+        "avg_retries": 0.0,
+        "avg_tokens": 329.0,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 2
+        },
+        "model": "reference-golden",
+        "n": 2,
+        "pass_ci95": [
+          0.3424,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      }
+    ],
+    "memory": [
+      {
+        "avg_latency_s": 0.0003,
+        "avg_retries": 0.0,
+        "avg_tokens": 270.3,
+        "compile_rate": 0.6667,
+        "failures": {
+          "no_code_generated": 1,
+          "none": 2
+        },
+        "model": "rule-based",
+        "n": 3,
+        "pass_ci95": [
+          0.2077,
+          0.9385
+        ],
+        "pass_rate": 0.6667,
+        "prompt": "direct",
+        "sim_rate": 0.6667,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 1.663,
+        "avg_retries": 0.0,
+        "avg_tokens": 293.0,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 3
+        },
+        "model": "synthetic-high",
+        "n": 3,
+        "pass_ci95": [
+          0.4385,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 0.1047,
+        "avg_retries": 0.0,
+        "avg_tokens": 327.7,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 3
+        },
+        "model": "reference-golden",
+        "n": 3,
+        "pass_ci95": [
+          0.4385,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      }
+    ],
+    "processor": [
+      {
+        "avg_latency_s": 0.0005,
+        "avg_retries": 0.0,
+        "avg_tokens": 479.5,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 2
+        },
+        "model": "rule-based",
+        "n": 2,
+        "pass_ci95": [
+          0.3424,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 1.568,
+        "avg_retries": 0.0,
+        "avg_tokens": 266.5,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 2
+        },
+        "model": "synthetic-high",
+        "n": 2,
+        "pass_ci95": [
+          0.3424,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 0.1085,
+        "avg_retries": 0.0,
+        "avg_tokens": 316.5,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 2
+        },
+        "model": "reference-golden",
+        "n": 2,
+        "pass_ci95": [
+          0.3424,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      }
+    ]
+  },
+  "by_difficulty": {
+    "easy": [
+      {
+        "avg_latency_s": 0.0004,
+        "avg_retries": 0.0,
+        "avg_tokens": 298.9,
+        "compile_rate": 0.5,
+        "failures": {
+          "no_code_generated": 4,
+          "none": 4
+        },
+        "model": "rule-based",
+        "n": 8,
+        "pass_ci95": [
+          0.2152,
+          0.7848
+        ],
+        "pass_rate": 0.5,
+        "prompt": "direct",
+        "sim_rate": 0.5,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 1.5253,
+        "avg_retries": 0.0,
+        "avg_tokens": 257.6,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 8
+        },
+        "model": "synthetic-high",
+        "n": 8,
+        "pass_ci95": [
+          0.6756,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 0.1026,
+        "avg_retries": 0.0,
+        "avg_tokens": 280.2,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 8
+        },
+        "model": "reference-golden",
+        "n": 8,
+        "pass_ci95": [
+          0.6756,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      }
+    ],
+    "hard": [
+      {
+        "avg_latency_s": 0.0002,
+        "avg_retries": 0.0,
+        "avg_tokens": 166.0,
+        "compile_rate": 0.0,
+        "failures": {
+          "no_code_generated": 3
+        },
+        "model": "rule-based",
+        "n": 3,
+        "pass_ci95": [
+          0.0,
+          0.5615
+        ],
+        "pass_rate": 0.0,
+        "prompt": "direct",
+        "sim_rate": 0.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 2.2107,
+        "avg_retries": 0.0,
+        "avg_tokens": 417.3,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 3
+        },
+        "model": "synthetic-high",
+        "n": 3,
+        "pass_ci95": [
+          0.4385,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 0.102,
+        "avg_retries": 0.0,
+        "avg_tokens": 433.0,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 3
+        },
+        "model": "reference-golden",
+        "n": 3,
+        "pass_ci95": [
+          0.4385,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      }
+    ],
+    "moderate": [
+      {
+        "avg_latency_s": 0.0003,
+        "avg_retries": 0.0,
+        "avg_tokens": 292.8,
+        "compile_rate": 0.5,
+        "failures": {
+          "no_code_generated": 3,
+          "none": 3
+        },
+        "model": "rule-based",
+        "n": 6,
+        "pass_ci95": [
+          0.1876,
+          0.8124
+        ],
+        "pass_rate": 0.5,
+        "prompt": "direct",
+        "sim_rate": 0.5,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 1.9295,
+        "avg_retries": 0.0,
+        "avg_tokens": 301.5,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 6
+        },
+        "model": "synthetic-high",
+        "n": 6,
+        "pass_ci95": [
+          0.6097,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 0.0922,
+        "avg_retries": 0.0,
+        "avg_tokens": 327.7,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 6
+        },
+        "model": "reference-golden",
+        "n": 6,
+        "pass_ci95": [
+          0.6097,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      }
+    ],
+    "trivial": [
+      {
+        "avg_latency_s": 0.0074,
+        "avg_retries": 0.0,
+        "avg_tokens": 158.0,
+        "compile_rate": 0.0,
+        "failures": {
+          "no_code_generated": 1
+        },
+        "model": "rule-based",
+        "n": 1,
+        "pass_ci95": [
+          0.0,
+          0.7935
+        ],
+        "pass_rate": 0.0,
+        "prompt": "direct",
+        "sim_rate": 0.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 0.839,
+        "avg_retries": 0.0,
+        "avg_tokens": 245.0,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 1
+        },
+        "model": "synthetic-high",
+        "n": 1,
+        "pass_ci95": [
+          0.2065,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      },
+      {
+        "avg_latency_s": 0.116,
+        "avg_retries": 0.0,
+        "avg_tokens": 259.0,
+        "compile_rate": 1.0,
+        "failures": {
+          "none": 1
+        },
+        "model": "reference-golden",
+        "n": 1,
+        "pass_ci95": [
+          0.2065,
+          1.0
+        ],
+        "pass_rate": 1.0,
+        "prompt": "direct",
+        "sim_rate": 1.0,
+        "synth_rate": 0.0
+      }
+    ]
+  },
+  "overall": [
+    {
+      "avg_latency_s": 1.7361,
+      "avg_retries": 0.0,
+      "avg_tokens": 298.2,
+      "compile_rate": 1.0,
+      "failures": {
+        "none": 18
+      },
+      "model": "synthetic-high",
+      "n": 18,
+      "pass_ci95": [
+        0.8241,
+        1.0
+      ],
+      "pass_rate": 1.0,
+      "prompt": "direct",
+      "sim_rate": 1.0,
+      "synth_rate": 0.0
+    },
+    {
+      "avg_latency_s": 0.0998,
+      "avg_retries": 0.0,
+      "avg_tokens": 320.3,
+      "compile_rate": 1.0,
+      "failures": {
+        "none": 18
+      },
+      "model": "reference-golden",
+      "n": 18,
+      "pass_ci95": [
+        0.8241,
+        1.0
+      ],
+      "pass_rate": 1.0,
+      "prompt": "direct",
+      "sim_rate": 1.0,
+      "synth_rate": 0.0
+    },
+    {
+      "avg_latency_s": 0.0007,
+      "avg_retries": 0.0,
+      "avg_tokens": 266.9,
+      "compile_rate": 0.3889,
+      "failures": {
+        "no_code_generated": 11,
+        "none": 7
+      },
+      "model": "rule-based",
+      "n": 18,
+      "pass_ci95": [
+        0.203,
+        0.6138
+      ],
+      "pass_rate": 0.3889,
+      "prompt": "direct",
+      "sim_rate": 0.3889,
+      "synth_rate": 0.0
+    }
+  ]
+}

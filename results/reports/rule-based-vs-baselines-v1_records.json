@@ -1,0 +1,3647 @@
+[
+  {
+    "artifacts": {
+      "hdl_chars": "0"
+    },
+    "benchmark": "arith_adder8",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0089,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "no_code_generated",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 36,
+      "inference_latency_s": 0.0074,
+      "prompt_tokens": 122,
+      "properties": {
+        "overflow_detection": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 0,
+        "max_fan_out": 0,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": false,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "65f43e3ede64",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.4472415,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "1865"
+    },
+    "benchmark": "arith_alu8",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0021,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 469,
+      "inference_latency_s": 0.0005,
+      "prompt_tokens": 122,
+      "properties": {
+        "mutual_exclusion": "pass",
+        "overflow_detection": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 10,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 48,
+        "max_fan_out": 9,
+        "modularity": 0.308,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "none"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "074fde9b5be2",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.4897585,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "712"
+    },
+    "benchmark": "arith_cmp8",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0019,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 181,
+      "inference_latency_s": 0.0003,
+      "prompt_tokens": 96,
+      "properties": {
+        "mutual_exclusion": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 3,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 23,
+        "max_fan_out": 0,
+        "modularity": 0.727,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "e5473ab91458",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.5233002,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "0"
+    },
+    "benchmark": "arith_mul8",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0014,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "no_code_generated",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 36,
+      "inference_latency_s": 0.0002,
+      "prompt_tokens": 106,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "mutual_exclusion": "pass",
+        "overflow_detection": "unknown",
+        "transaction_completion": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 0,
+        "max_fan_out": 0,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": false,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "b58c12b3f824",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.5562613,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "0"
+    },
+    "benchmark": "comm_i2c_ctrl",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0012,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "no_code_generated",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 36,
+      "inference_latency_s": 0.0002,
+      "prompt_tokens": 130,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "transaction_completion": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 0,
+        "max_fan_out": 0,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": false,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "a2fe702890a8",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.5907998,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "0"
+    },
+    "benchmark": "comm_spi_master",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0013,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "no_code_generated",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 36,
+      "inference_latency_s": 0.0002,
+      "prompt_tokens": 120,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "transaction_completion": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 0,
+        "max_fan_out": 0,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": false,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "e547db8eaf6c",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.6231182,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "0"
+    },
+    "benchmark": "comm_uart_tx",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0013,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "no_code_generated",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 36,
+      "inference_latency_s": 0.0002,
+      "prompt_tokens": 140,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "transaction_completion": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 0,
+        "max_fan_out": 0,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": false,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "158e6d779b07",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.6548142,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "0"
+    },
+    "benchmark": "ctrl_debounce",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0013,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "no_code_generated",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 36,
+      "inference_latency_s": 0.0002,
+      "prompt_tokens": 114,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "mutual_exclusion": "pass",
+        "overflow_detection": "unknown",
+        "transaction_completion": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 0,
+        "max_fan_out": 0,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": false,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "63334481aa66",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.6896782,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "1865"
+    },
+    "benchmark": "ctrl_pwm",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0023,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 469,
+      "inference_latency_s": 0.0005,
+      "prompt_tokens": 120,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "mutual_exclusion": "pass",
+        "overflow_detection": "pass",
+        "transaction_completion": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 10,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 48,
+        "max_fan_out": 9,
+        "modularity": 0.308,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "none"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "a54bcb4e3392",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.724307,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "0"
+    },
+    "benchmark": "dsp_fir4",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0016,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "no_code_generated",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 36,
+      "inference_latency_s": 0.0002,
+      "prompt_tokens": 120,
+      "properties": {
+        "overflow_detection": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 0,
+        "max_fan_out": 0,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": false,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "8933c125daf1",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.759228,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "0"
+    },
+    "benchmark": "dsp_movavg",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0012,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "no_code_generated",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 36,
+      "inference_latency_s": 0.0002,
+      "prompt_tokens": 110,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "mutual_exclusion": "pass",
+        "overflow_detection": "unknown",
+        "transaction_completion": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 0,
+        "max_fan_out": 0,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": false,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "5267c551f924",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.7923758,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "0"
+    },
+    "benchmark": "fsm_seqdet",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0013,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "no_code_generated",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 36,
+      "inference_latency_s": 0.0002,
+      "prompt_tokens": 122,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 0,
+        "max_fan_out": 0,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": false,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "cc86a22337ab",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.8248405,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "0"
+    },
+    "benchmark": "fsm_traffic",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0015,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "no_code_generated",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 36,
+      "inference_latency_s": 0.0002,
+      "prompt_tokens": 133,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 0,
+        "max_fan_out": 0,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": false,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "05ea4a4f202f",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.8578606,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "0"
+    },
+    "benchmark": "mem_fifo",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0013,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "no_code_generated",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 36,
+      "inference_latency_s": 0.0002,
+      "prompt_tokens": 112,
+      "properties": {
+        "mutual_exclusion": "pass",
+        "overflow_detection": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 0,
+        "max_fan_out": 0,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": false,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "d1a84b3a0a4f",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.8905294,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "873"
+    },
+    "benchmark": "mem_regfile",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0018,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 221,
+      "inference_latency_s": 0.0003,
+      "prompt_tokens": 115,
+      "properties": {
+        "mutual_exclusion": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 4,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 32,
+        "max_fan_out": 3,
+        "modularity": 0.4,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "a1cd59716ad9",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.922824,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "867"
+    },
+    "benchmark": "mem_sync_ram",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0018,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 219,
+      "inference_latency_s": 0.0005,
+      "prompt_tokens": 108,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "mutual_exclusion": "pass",
+        "overflow_detection": "unknown",
+        "transaction_completion": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 4,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 32,
+        "max_fan_out": 3,
+        "modularity": 0.4,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "958c8fd0dccd",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.9587681,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "1865"
+    },
+    "benchmark": "proc_alu_ctrl",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.002,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 469,
+      "inference_latency_s": 0.0007,
+      "prompt_tokens": 122,
+      "properties": {
+        "mutual_exclusion": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 10,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 48,
+        "max_fan_out": 9,
+        "modularity": 0.308,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "none"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "6fbeba7cd462",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503490.9900703,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "928"
+    },
+    "benchmark": "proc_branch_pred",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0016,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 235,
+      "inference_latency_s": 0.0003,
+      "prompt_tokens": 133,
+      "properties": {
+        "deadlock_freedom": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 5,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 33,
+        "max_fan_out": 6,
+        "modularity": 0.381,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "rule-based",
+    "model_id": "ai_fpga_engineer-rule-based",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "bbffa4ffa9f0",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.018062,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "480"
+    },
+    "benchmark": "arith_adder8",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0012,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 123,
+      "inference_latency_s": 0.839,
+      "prompt_tokens": 122,
+      "properties": {
+        "overflow_detection": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 14,
+        "max_fan_out": 3,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "df692c6b884b",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.0537689,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "795"
+    },
+    "benchmark": "arith_alu8",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0016,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 201,
+      "inference_latency_s": 2.119,
+      "prompt_tokens": 122,
+      "properties": {
+        "mutual_exclusion": "pass",
+        "overflow_detection": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 9,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 23,
+        "max_fan_out": 8,
+        "modularity": 0.32,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "none"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "2fa21ecfa51b",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.086635,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "371"
+    },
+    "benchmark": "arith_cmp8",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.001,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 95,
+      "inference_latency_s": 1.271,
+      "prompt_tokens": 96,
+      "properties": {
+        "mutual_exclusion": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 3,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 10,
+        "max_fan_out": 0,
+        "modularity": 0.727,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "e7a964f1e800",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.1204755,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "305"
+    },
+    "benchmark": "arith_mul8",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0011,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 79,
+      "inference_latency_s": 1.288,
+      "prompt_tokens": 106,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "mutual_exclusion": "pass",
+        "overflow_detection": "unknown",
+        "transaction_completion": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 8,
+        "max_fan_out": 0,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "c4d9bf528f59",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.1552775,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "1091"
+    },
+    "benchmark": "comm_i2c_ctrl",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0013,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 275,
+      "inference_latency_s": 2.113,
+      "prompt_tokens": 130,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "transaction_completion": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 15,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 29,
+        "max_fan_out": 7,
+        "modularity": 0.258,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "8b0b9ec76070",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.1870165,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "1270"
+    },
+    "benchmark": "comm_spi_master",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0013,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 320,
+      "inference_latency_s": 2.086,
+      "prompt_tokens": 120,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "transaction_completion": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 14,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 34,
+        "max_fan_out": 5,
+        "modularity": 0.267,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "a05df36460ac",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.2196414,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "1057"
+    },
+    "benchmark": "comm_uart_tx",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0012,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 267,
+      "inference_latency_s": 2.433,
+      "prompt_tokens": 140,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "transaction_completion": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 20,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 28,
+        "max_fan_out": 6,
+        "modularity": 0.222,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "42d1d8a5ff43",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.2524421,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "693"
+    },
+    "benchmark": "ctrl_debounce",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0013,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 176,
+      "inference_latency_s": 1.482,
+      "prompt_tokens": 114,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "mutual_exclusion": "pass",
+        "overflow_detection": "pass",
+        "transaction_completion": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 8,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 22,
+        "max_fan_out": 6,
+        "modularity": 0.333,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "98d9b7f44571",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.2856927,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "516"
+    },
+    "benchmark": "ctrl_pwm",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0012,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 132,
+      "inference_latency_s": 1.546,
+      "prompt_tokens": 120,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "mutual_exclusion": "pass",
+        "overflow_detection": "pass",
+        "transaction_completion": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 5,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 16,
+        "max_fan_out": 4,
+        "modularity": 0.381,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "6ada316b229f",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.3174322,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "701"
+    },
+    "benchmark": "dsp_fir4",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0017,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 178,
+      "inference_latency_s": 2.285,
+      "prompt_tokens": 120,
+      "properties": {
+        "overflow_detection": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 4,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 19,
+        "max_fan_out": 7,
+        "modularity": 0.4,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "04333a660a4b",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.3504694,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "724"
+    },
+    "benchmark": "dsp_movavg",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0013,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 184,
+      "inference_latency_s": 1.462,
+      "prompt_tokens": 110,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "mutual_exclusion": "pass",
+        "overflow_detection": "pass",
+        "transaction_completion": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 4,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 20,
+        "max_fan_out": 7,
+        "modularity": 0.4,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "36d74b99936d",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.384018,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "735"
+    },
+    "benchmark": "fsm_seqdet",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0013,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 186,
+      "inference_latency_s": 2.207,
+      "prompt_tokens": 122,
+      "properties": {
+        "deadlock_freedom": "pass",
+        "unreachable_state": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 15,
+        "fsm_states": 4,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 23,
+        "max_fan_out": 7,
+        "modularity": 0.258,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "5fa792c6c2c2",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.4162009,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "726"
+    },
+    "benchmark": "fsm_traffic",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0015,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 184,
+      "inference_latency_s": 1.994,
+      "prompt_tokens": 133,
+      "properties": {
+        "deadlock_freedom": "pass",
+        "unreachable_state": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 12,
+        "fsm_states": 3,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 24,
+        "max_fan_out": 6,
+        "modularity": 0.286,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "50e10919df87",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.4499307,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "1010"
+    },
+    "benchmark": "mem_fifo",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0017,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 255,
+      "inference_latency_s": 1.747,
+      "prompt_tokens": 112,
+      "properties": {
+        "mutual_exclusion": "pass",
+        "overflow_detection": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 10,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 25,
+        "max_fan_out": 9,
+        "modularity": 0.308,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "dc152b04c88b",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.4847229,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "767"
+    },
+    "benchmark": "mem_regfile",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0014,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 194,
+      "inference_latency_s": 1.466,
+      "prompt_tokens": 115,
+      "properties": {
+        "mutual_exclusion": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 6,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 19,
+        "max_fan_out": 3,
+        "modularity": 0.364,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "none"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "4b0fd0a3c4d7",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.516933,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "369"
+    },
+    "benchmark": "mem_sync_ram",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0012,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 95,
+      "inference_latency_s": 1.776,
+      "prompt_tokens": 108,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "mutual_exclusion": "pass",
+        "overflow_detection": "unknown",
+        "transaction_completion": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 9,
+        "max_fan_out": 0,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "daa25c01c8e7",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.5525622,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "819"
+    },
+    "benchmark": "proc_alu_ctrl",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0012,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 207,
+      "inference_latency_s": 1.383,
+      "prompt_tokens": 122,
+      "properties": {
+        "mutual_exclusion": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 13,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 23,
+        "max_fan_out": 0,
+        "modularity": 0.276,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "none"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "51a62ec91350",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.5874703,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "274"
+    },
+    "benchmark": "proc_branch_pred",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0011,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 7,
+      "temperature": 0.2,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 71,
+      "inference_latency_s": 1.753,
+      "prompt_tokens": 133,
+      "properties": {
+        "deadlock_freedom": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 8,
+        "max_fan_out": 0,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "synthetic-high",
+    "model_id": "synthetic-f0.90",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "5f40a6d9a34f",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.6208134,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "480"
+    },
+    "benchmark": "arith_adder8",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0013,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 137,
+      "inference_latency_s": 0.116,
+      "prompt_tokens": 122,
+      "properties": {
+        "overflow_detection": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 14,
+        "max_fan_out": 3,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "56171b26ec8a",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.6559303,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "795"
+    },
+    "benchmark": "arith_alu8",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0017,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 216,
+      "inference_latency_s": 0.088,
+      "prompt_tokens": 122,
+      "properties": {
+        "mutual_exclusion": "pass",
+        "overflow_detection": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 9,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 23,
+        "max_fan_out": 8,
+        "modularity": 0.32,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "none"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "491146186fa3",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.694096,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "371"
+    },
+    "benchmark": "arith_cmp8",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0012,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 110,
+      "inference_latency_s": 0.083,
+      "prompt_tokens": 96,
+      "properties": {
+        "mutual_exclusion": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 3,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 10,
+        "max_fan_out": 0,
+        "modularity": 0.727,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "a2a26318a866",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.7342951,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "305"
+    },
+    "benchmark": "arith_mul8",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0012,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 93,
+      "inference_latency_s": 0.124,
+      "prompt_tokens": 106,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "mutual_exclusion": "pass",
+        "overflow_detection": "unknown",
+        "transaction_completion": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 0,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 8,
+        "max_fan_out": 0,
+        "modularity": 1.0,
+        "modules": 1,
+        "processes": 0,
+        "reset_style": "none"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "e6d2086abb7c",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.770881,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "1091"
+    },
+    "benchmark": "comm_i2c_ctrl",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0016,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 291,
+      "inference_latency_s": 0.097,
+      "prompt_tokens": 130,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "transaction_completion": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 15,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 29,
+        "max_fan_out": 7,
+        "modularity": 0.258,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "0a54ac97c5b9",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.8070369,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "1270"
+    },
+    "benchmark": "comm_spi_master",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0016,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 336,
+      "inference_latency_s": 0.139,
+      "prompt_tokens": 120,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "transaction_completion": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 14,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 34,
+        "max_fan_out": 5,
+        "modularity": 0.267,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "41e4c5a0dee0",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.8424616,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "1057"
+    },
+    "benchmark": "comm_uart_tx",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0013,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 282,
+      "inference_latency_s": 0.07,
+      "prompt_tokens": 140,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "transaction_completion": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 20,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 28,
+        "max_fan_out": 6,
+        "modularity": 0.222,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "6bc20fa1b51f",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.8762877,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "693"
+    },
+    "benchmark": "ctrl_debounce",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0012,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 191,
+      "inference_latency_s": 0.11,
+      "prompt_tokens": 114,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "mutual_exclusion": "pass",
+        "overflow_detection": "pass",
+        "transaction_completion": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 8,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 22,
+        "max_fan_out": 6,
+        "modularity": 0.333,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "bd6bacc6dc8e",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.9103715,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "516"
+    },
+    "benchmark": "ctrl_pwm",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0012,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 146,
+      "inference_latency_s": 0.066,
+      "prompt_tokens": 120,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "mutual_exclusion": "pass",
+        "overflow_detection": "pass",
+        "transaction_completion": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 5,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 16,
+        "max_fan_out": 4,
+        "modularity": 0.381,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "52c46fd566a4",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.9458907,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "698"
+    },
+    "benchmark": "dsp_fir4",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0012,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 191,
+      "inference_latency_s": 0.111,
+      "prompt_tokens": 120,
+      "properties": {
+        "overflow_detection": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 4,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 19,
+        "max_fan_out": 7,
+        "modularity": 0.4,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "1ed4cf4be46a",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503491.978761,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "724"
+    },
+    "benchmark": "dsp_movavg",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0013,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 199,
+      "inference_latency_s": 0.097,
+      "prompt_tokens": 110,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "mutual_exclusion": "pass",
+        "overflow_detection": "pass",
+        "transaction_completion": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 4,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 20,
+        "max_fan_out": 7,
+        "modularity": 0.4,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "f0fefa972b02",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503492.0169528,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "735"
+    },
+    "benchmark": "fsm_seqdet",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0012,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 202,
+      "inference_latency_s": 0.054,
+      "prompt_tokens": 122,
+      "properties": {
+        "deadlock_freedom": "pass",
+        "unreachable_state": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 15,
+        "fsm_states": 4,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 23,
+        "max_fan_out": 7,
+        "modularity": 0.258,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "3a4ed5af012f",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503492.0529,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "726"
+    },
+    "benchmark": "fsm_traffic",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0016,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 201,
+      "inference_latency_s": 0.11,
+      "prompt_tokens": 133,
+      "properties": {
+        "deadlock_freedom": "pass",
+        "unreachable_state": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 12,
+        "fsm_states": 3,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 24,
+        "max_fan_out": 6,
+        "modularity": 0.286,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "a94be29b3c06",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503492.0862336,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "1007"
+    },
+    "benchmark": "mem_fifo",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0013,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 269,
+      "inference_latency_s": 0.112,
+      "prompt_tokens": 112,
+      "properties": {
+        "mutual_exclusion": "pass",
+        "overflow_detection": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 10,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 25,
+        "max_fan_out": 9,
+        "modularity": 0.308,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "1876548422b5",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503492.123521,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "764"
+    },
+    "benchmark": "mem_regfile",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0014,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 209,
+      "inference_latency_s": 0.101,
+      "prompt_tokens": 115,
+      "properties": {
+        "mutual_exclusion": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 6,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 19,
+        "max_fan_out": 3,
+        "modularity": 0.364,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "none"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "cfefe1d67d53",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503492.1535752,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "608"
+    },
+    "benchmark": "mem_sync_ram",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0016,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 170,
+      "inference_latency_s": 0.101,
+      "prompt_tokens": 108,
+      "properties": {
+        "deadlock_freedom": "unknown",
+        "mutual_exclusion": "pass",
+        "overflow_detection": "unknown",
+        "transaction_completion": "unknown",
+        "unreachable_state": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 4,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 18,
+        "max_fan_out": 2,
+        "modularity": 0.4,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "none"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "e82e12105256",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503492.1880918,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "819"
+    },
+    "benchmark": "proc_alu_ctrl",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0012,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 223,
+      "inference_latency_s": 0.13,
+      "prompt_tokens": 122,
+      "properties": {
+        "mutual_exclusion": "pass"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 13,
+        "fsm_states": 0,
+        "has_reset": false,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 23,
+        "max_fan_out": 0,
+        "modularity": 0.276,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "none"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "ae75af8c7e33",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503492.225242,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  },
+  {
+    "artifacts": {
+      "hdl_chars": "544"
+    },
+    "benchmark": "proc_branch_pred",
+    "benchmark_version": "1.0.0",
+    "duration_s": 0.0011,
+    "environment": {
+      "git_commit": "056a0d390593b60439ab1d03ecf37b2b6c179444",
+      "machine": "aarch64",
+      "os": "Linux-6.8.0-124-generic-aarch64-with-glibc2.35",
+      "processor": "aarch64",
+      "python": "3.10.12"
+    },
+    "experiment": "rule-based-vs-baselines-v1",
+    "failure_class": "none",
+    "inference_config": {
+      "max_tokens": 4096,
+      "seed": 0,
+      "temperature": 0.0,
+      "top_p": 1.0
+    },
+    "metrics": {
+      "completion_tokens": 155,
+      "inference_latency_s": 0.087,
+      "prompt_tokens": 133,
+      "properties": {
+        "deadlock_freedom": "unknown"
+      },
+      "resources": {
+        "area_efficiency": 0.0,
+        "available": false,
+        "bram": 0,
+        "dsp": 0,
+        "est_fmax_mhz": 0.0,
+        "ffs": 0,
+        "luts": 0
+      },
+      "static": {
+        "combinational_complexity": 8,
+        "fsm_states": 0,
+        "has_reset": true,
+        "hierarchy_depth": 1,
+        "inferred_latch_risk": 0,
+        "lines": 17,
+        "max_fan_out": 8,
+        "modularity": 0.333,
+        "modules": 1,
+        "processes": 1,
+        "reset_style": "sync"
+      }
+    },
+    "model": "reference-golden",
+    "model_id": "reference-golden",
+    "passed": true,
+    "prompt": "direct",
+    "retry_history": [],
+    "run_id": "e74b5cf17d1a",
+    "schema_version": "1.0",
+    "seed": 20260707,
+    "started_at": 1783503492.261092,
+    "toolchain": {
+      "summary": "ghdl=no, yosys=no, nextpnr-ice40=no, ghdl-yosys-plugin=no"
+    },
+    "trial": 0
+  }
+]

@@ -1,0 +1,24 @@
+<!doctype html><html><head><meta charset='utf-8'><title>Results · hdleval</title><meta name='viewport' content='width=device-width,initial-scale=1'><style>
+:root{--bg:#0f1226;--card:#1a1f3a;--ink:#e8e8f0;--accent:#e94560;--muted:#9aa0c0}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial;background:var(--bg);color:var(--ink)}
+nav{display:flex;gap:1rem;padding:1rem 2rem;background:#0a0c1a;position:sticky;top:0;flex-wrap:wrap}
+nav a{color:var(--ink);text-decoration:none;font-weight:600}nav a:hover{color:var(--accent)}
+main{max-width:1000px;margin:0 auto;padding:2rem}
+h1,h2{color:#fff}a{color:var(--accent)}
+.card{background:var(--card);border-radius:12px;padding:1.2rem 1.5rem;margin:1rem 0}
+table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #333;padding:.5rem;text-align:left}
+th{background:#0a0c1a}.tag{display:inline-block;background:#0a0c1a;color:var(--muted);
+padding:.1rem .5rem;border-radius:6px;margin:.1rem;font-size:.8rem}
+img{max-width:100%;background:#fff;border-radius:8px}
+.hero{font-size:1.1rem;color:var(--muted)}
+</style></head><body><nav>
+<a href="index.html">Home</a><a href="architecture.html">Architecture</a>
+<a href="pipeline.html">Pipeline</a><a href="benchmarks.html">Benchmarks</a>
+<a href="experiments.html">Experiments</a><a href="results.html">Results</a>
+<a href="future.html">Future Work</a></nav><main>
+<h1>Results — baseline-v1</h1>
+<h2>Overall leaderboard</h2>
+<table><tr><th>model</th><th>prompt</th><th>n</th><th>pass_rate</th><th>pass_ci95</th><th>compile_rate</th><th>avg_latency_s</th><th>avg_tokens</th></tr><tr><td>reference-golden</td><td>direct</td><td>54</td><td>1.0</td><td>[0.9336, 1.0]</td><td>1.0</td><td>0.0998</td><td>320.3</td></tr><tr><td>synthetic-high</td><td>direct</td><td>54</td><td>1.0</td><td>[0.9336, 1.0]</td><td>1.0</td><td>1.7361</td><td>298.2</td></tr><tr><td>synthetic-mid</td><td>direct</td><td>54</td><td>0.9444</td><td>[0.8489, 0.9809]</td><td>0.9444</td><td>1.7463</td><td>265.7</td></tr><tr><td>synthetic-low</td><td>direct</td><td>54</td><td>0.7778</td><td>[0.6506, 0.868]</td><td>0.8333</td><td>1.7181</td><td>259.3</td></tr></table>
+<h2>Figures</h2><img src='assets/failure_distribution.svg' alt='failure_distribution'><img src='assets/pass_rate_by_category.svg' alt='pass_rate_by_category'><img src='assets/pass_rate_by_difficulty.svg' alt='pass_rate_by_difficulty'><img src='assets/pass_rate_by_model.svg' alt='pass_rate_by_model'>
+<p><a href='data/leaderboard.json'>Download leaderboard (JSON)</a> ·
+<a href='../results/reports/baseline-v1_report.md'>Markdown report</a></p></main></body></html>

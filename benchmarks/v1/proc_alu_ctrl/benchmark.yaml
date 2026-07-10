@@ -1,0 +1,22 @@
+id: proc_alu_ctrl
+version: 1.0.0
+category: processor
+title: ALU control decoder
+specification: 'Design an ALU control unit: given a 2-bit ALUOp and a 4-bit funct
+  field, output a 4-bit ALU control signal following the classic MIPS mapping (add/sub/and/or/slt).'
+functional_requirements:
+- decodes ALUOp+funct to control
+- defaults defined for all inputs
+expected_behavior: ''
+entity: alu_control
+tags:
+- processor
+- combinational
+- control
+complexity:
+  control_complexity: 5
+  arithmetic_complexity: 1
+  interface_count: 3
+reference_hdl_path: reference.vhd
+properties:
+- mutual_exclusion

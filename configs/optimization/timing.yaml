@@ -1,0 +1,4 @@
+name: timing
+objective: timing
+max_iterations: 3
+constraints: {min_fmax_mhz: 200}

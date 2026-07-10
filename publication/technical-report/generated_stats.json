@@ -1,0 +1,8 @@
+{
+  "n_evaluations": 216,
+  "n_models": 4,
+  "n_benchmarks": 18,
+  "best_model": "reference-golden",
+  "best_pass_rate": 1.0,
+  "n_failures": 15
+}

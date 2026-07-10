@@ -1,0 +1,626 @@
+[
+  {
+    "id": "arith_adder8",
+    "version": "1.0.0",
+    "category": "arithmetic",
+    "title": "8-bit ripple-carry adder",
+    "specification": "Design an 8-bit adder with carry-in and carry-out. Inputs a and b are 8-bit unsigned vectors, cin is a single bit. Output sum is 8 bits and cout is the carry out.",
+    "functional_requirements": [
+      "sum = a + b + cin (mod 256)",
+      "cout is the 9th bit of the sum"
+    ],
+    "expected_behavior": "",
+    "entity": "adder8",
+    "interfaces": [],
+    "tags": [
+      "adder",
+      "combinational"
+    ],
+    "complexity": {
+      "state_complexity": 0,
+      "arithmetic_complexity": 2,
+      "concurrency": 0,
+      "hierarchy_depth": 1,
+      "timing_constraints": 0,
+      "interface_count": 5,
+      "control_complexity": 0
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [
+      "overflow_detection"
+    ],
+    "estimated_difficulty": 16
+  },
+  {
+    "id": "arith_alu8",
+    "version": "1.0.0",
+    "category": "arithmetic",
+    "title": "8-bit ALU (ADD/SUB/AND/OR/XOR)",
+    "specification": "Design an 8-bit ALU with a 3-bit opcode selecting ADD(000), SUB(001), AND(010), OR(011), XOR(100). Inputs a and b are 8-bit. Outputs result (8-bit) and a zero flag.",
+    "functional_requirements": [
+      "opcode selects the operation",
+      "zero=1 iff result is 0"
+    ],
+    "expected_behavior": "",
+    "entity": "alu8",
+    "interfaces": [],
+    "tags": [
+      "alu",
+      "combinational"
+    ],
+    "complexity": {
+      "state_complexity": 0,
+      "arithmetic_complexity": 5,
+      "concurrency": 0,
+      "hierarchy_depth": 1,
+      "timing_constraints": 0,
+      "interface_count": 5,
+      "control_complexity": 3
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [
+      "overflow_detection",
+      "mutual_exclusion"
+    ],
+    "estimated_difficulty": 40
+  },
+  {
+    "id": "arith_cmp8",
+    "version": "1.0.0",
+    "category": "arithmetic",
+    "title": "8-bit magnitude comparator",
+    "specification": "Design an 8-bit unsigned comparator with outputs gt, eq, lt.",
+    "functional_requirements": [
+      "exactly one of gt/eq/lt is high"
+    ],
+    "expected_behavior": "",
+    "entity": "cmp8",
+    "interfaces": [],
+    "tags": [
+      "comparator",
+      "combinational"
+    ],
+    "complexity": {
+      "state_complexity": 0,
+      "arithmetic_complexity": 2,
+      "concurrency": 0,
+      "hierarchy_depth": 1,
+      "timing_constraints": 0,
+      "interface_count": 5,
+      "control_complexity": 2
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [
+      "mutual_exclusion"
+    ],
+    "estimated_difficulty": 24
+  },
+  {
+    "id": "arith_mul8",
+    "version": "1.0.0",
+    "category": "arithmetic",
+    "title": "8x8 unsigned multiplier",
+    "specification": "Design an 8x8 unsigned combinational multiplier. Inputs a and b are 8-bit; output product is 16-bit.",
+    "functional_requirements": [
+      "product = a * b"
+    ],
+    "expected_behavior": "",
+    "entity": "mul8",
+    "interfaces": [],
+    "tags": [
+      "multiplier",
+      "combinational",
+      "dsp"
+    ],
+    "complexity": {
+      "state_complexity": 0,
+      "arithmetic_complexity": 6,
+      "concurrency": 0,
+      "hierarchy_depth": 1,
+      "timing_constraints": 0,
+      "interface_count": 3,
+      "control_complexity": 0
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [],
+    "estimated_difficulty": 29
+  },
+  {
+    "id": "comm_i2c_ctrl",
+    "version": "1.0.0",
+    "category": "communication",
+    "title": "I2C bit-level controller (start/stop/byte)",
+    "specification": "Design an I2C master byte controller that generates START and STOP conditions and shifts out 8 bits MSB-first on sda synchronised to scl, asserting done after the byte and sampling the ack bit.",
+    "functional_requirements": [
+      "generates START and STOP",
+      "8-bit MSB-first shift",
+      "samples ack"
+    ],
+    "expected_behavior": "",
+    "entity": "i2c_byte",
+    "interfaces": [],
+    "tags": [
+      "i2c",
+      "protocol",
+      "sequential"
+    ],
+    "complexity": {
+      "state_complexity": 5,
+      "arithmetic_complexity": 0,
+      "concurrency": 1,
+      "hierarchy_depth": 1,
+      "timing_constraints": 3,
+      "interface_count": 8,
+      "control_complexity": 6
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [
+      "deadlock_freedom",
+      "transaction_completion"
+    ],
+    "estimated_difficulty": 77
+  },
+  {
+    "id": "comm_spi_master",
+    "version": "1.0.0",
+    "category": "communication",
+    "title": "SPI master (mode 0)",
+    "specification": "Design an SPI master in mode 0 (CPOL=0, CPHA=0) shifting 8 bits MSB-first. On start, generate sclk, drive mosi, sample miso, and assert done when complete.",
+    "functional_requirements": [
+      "MSB-first 8-bit transfer",
+      "mode 0 timing",
+      "done pulses on completion"
+    ],
+    "expected_behavior": "",
+    "entity": "spi_master",
+    "interfaces": [],
+    "tags": [
+      "spi",
+      "protocol",
+      "sequential"
+    ],
+    "complexity": {
+      "state_complexity": 4,
+      "arithmetic_complexity": 0,
+      "concurrency": 1,
+      "hierarchy_depth": 1,
+      "timing_constraints": 3,
+      "interface_count": 8,
+      "control_complexity": 5
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [
+      "deadlock_freedom",
+      "transaction_completion"
+    ],
+    "estimated_difficulty": 68
+  },
+  {
+    "id": "comm_uart_tx",
+    "version": "1.0.0",
+    "category": "communication",
+    "title": "UART transmitter (8N1)",
+    "specification": "Design a UART transmitter for 8 data bits, no parity, 1 stop bit. A start pulse latches data and shifts it out LSB-first framed by a start (0) and stop (1) bit. tx_busy is high during transmission. Assume a one-clock-per-bit baud tick.",
+    "functional_requirements": [
+      "frames data with start=0 and stop=1",
+      "LSB-first",
+      "tx_busy asserted during frame"
+    ],
+    "expected_behavior": "",
+    "entity": "uart_tx",
+    "interfaces": [],
+    "tags": [
+      "uart",
+      "protocol",
+      "sequential"
+    ],
+    "complexity": {
+      "state_complexity": 4,
+      "arithmetic_complexity": 0,
+      "concurrency": 1,
+      "hierarchy_depth": 1,
+      "timing_constraints": 3,
+      "interface_count": 6,
+      "control_complexity": 5
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [
+      "deadlock_freedom",
+      "transaction_completion"
+    ],
+    "estimated_difficulty": 65
+  },
+  {
+    "id": "ctrl_debounce",
+    "version": "1.0.0",
+    "category": "control",
+    "title": "Switch debouncer",
+    "specification": "Design a switch debouncer that only propagates the input to the output after it has been stable for N=8 consecutive clock cycles.",
+    "functional_requirements": [
+      "output changes only after 8 stable cycles"
+    ],
+    "expected_behavior": "",
+    "entity": "debounce",
+    "interfaces": [],
+    "tags": [
+      "debouncer",
+      "control",
+      "sequential"
+    ],
+    "complexity": {
+      "state_complexity": 0,
+      "arithmetic_complexity": 0,
+      "concurrency": 0,
+      "hierarchy_depth": 1,
+      "timing_constraints": 2,
+      "interface_count": 3,
+      "control_complexity": 3
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [],
+    "estimated_difficulty": 23
+  },
+  {
+    "id": "ctrl_pwm",
+    "version": "1.0.0",
+    "category": "control",
+    "title": "PWM generator (8-bit duty)",
+    "specification": "Design an 8-bit PWM generator. A free-running 8-bit counter compares against an input duty value; pwm_out is high while counter < duty. Synchronous reset.",
+    "functional_requirements": [
+      "duty cycle proportional to duty input"
+    ],
+    "expected_behavior": "",
+    "entity": "pwm8",
+    "interfaces": [],
+    "tags": [
+      "pwm",
+      "control",
+      "sequential"
+    ],
+    "complexity": {
+      "state_complexity": 0,
+      "arithmetic_complexity": 1,
+      "concurrency": 0,
+      "hierarchy_depth": 1,
+      "timing_constraints": 2,
+      "interface_count": 4,
+      "control_complexity": 2
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [],
+    "estimated_difficulty": 25
+  },
+  {
+    "id": "dsp_fir4",
+    "version": "1.0.0",
+    "category": "dsp",
+    "title": "4-tap FIR filter",
+    "specification": "Design a 4-tap FIR filter with fixed coefficients [1,2,2,1] over signed 8-bit samples. On each clock, shift in a new sample and output the convolution sum.",
+    "functional_requirements": [
+      "y = 1*x0 + 2*x1 + 2*x2 + 1*x3",
+      "signed arithmetic"
+    ],
+    "expected_behavior": "",
+    "entity": "fir4",
+    "interfaces": [],
+    "tags": [
+      "fir",
+      "dsp",
+      "sequential"
+    ],
+    "complexity": {
+      "state_complexity": 0,
+      "arithmetic_complexity": 6,
+      "concurrency": 1,
+      "hierarchy_depth": 1,
+      "timing_constraints": 2,
+      "interface_count": 4,
+      "control_complexity": 2
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [
+      "overflow_detection"
+    ],
+    "estimated_difficulty": 51
+  },
+  {
+    "id": "dsp_movavg",
+    "version": "1.0.0",
+    "category": "dsp",
+    "title": "Moving-average filter (window 4)",
+    "specification": "Design a moving-average filter over the last 4 unsigned 8-bit samples, outputting the average (sum divided by 4).",
+    "functional_requirements": [
+      "output = mean of last 4 samples"
+    ],
+    "expected_behavior": "",
+    "entity": "movavg4",
+    "interfaces": [],
+    "tags": [
+      "moving-average",
+      "dsp",
+      "sequential"
+    ],
+    "complexity": {
+      "state_complexity": 0,
+      "arithmetic_complexity": 4,
+      "concurrency": 0,
+      "hierarchy_depth": 1,
+      "timing_constraints": 2,
+      "interface_count": 4,
+      "control_complexity": 2
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [],
+    "estimated_difficulty": 37
+  },
+  {
+    "id": "fsm_seqdet",
+    "version": "1.0.0",
+    "category": "fsm",
+    "title": "Sequence detector (1011, overlapping)",
+    "specification": "Design an overlapping Mealy/Moore sequence detector that asserts found for one cycle when the serial input bit stream contains 1011. Synchronous active-high reset.",
+    "functional_requirements": [
+      "asserts found on 1011",
+      "overlapping matches supported"
+    ],
+    "expected_behavior": "",
+    "entity": "seq_detect",
+    "interfaces": [],
+    "tags": [
+      "fsm",
+      "sequential"
+    ],
+    "complexity": {
+      "state_complexity": 4,
+      "arithmetic_complexity": 0,
+      "concurrency": 0,
+      "hierarchy_depth": 1,
+      "timing_constraints": 2,
+      "interface_count": 4,
+      "control_complexity": 4
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [
+      "deadlock_freedom",
+      "unreachable_state"
+    ],
+    "estimated_difficulty": 48
+  },
+  {
+    "id": "fsm_traffic",
+    "version": "1.0.0",
+    "category": "fsm",
+    "title": "Traffic-light controller FSM",
+    "specification": "Design a traffic-light FSM with states RED, GREEN, YELLOW cycling on each clock tick enable. Synchronous active-high reset returns to RED. Output lights is a 3-bit one-hot (RED=100, GREEN=010, YELLOW=001).",
+    "functional_requirements": [
+      "cycles RED->GREEN->YELLOW->RED on tick",
+      "reset forces RED"
+    ],
+    "expected_behavior": "",
+    "entity": "traffic_light",
+    "interfaces": [],
+    "tags": [
+      "fsm",
+      "sequential"
+    ],
+    "complexity": {
+      "state_complexity": 3,
+      "arithmetic_complexity": 0,
+      "concurrency": 0,
+      "hierarchy_depth": 1,
+      "timing_constraints": 2,
+      "interface_count": 4,
+      "control_complexity": 3
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [
+      "deadlock_freedom",
+      "unreachable_state"
+    ],
+    "estimated_difficulty": 39
+  },
+  {
+    "id": "mem_fifo",
+    "version": "1.0.0",
+    "category": "memory",
+    "title": "Synchronous FIFO (depth 16)",
+    "specification": "Design a synchronous FIFO, 8-bit wide, depth 16, with wr_en/rd_en, full and empty flags, and synchronous active-high reset.",
+    "functional_requirements": [
+      "FIFO ordering preserved",
+      "full/empty flags correct",
+      "no overflow/underflow"
+    ],
+    "expected_behavior": "",
+    "entity": "fifo16",
+    "interfaces": [],
+    "tags": [
+      "fifo",
+      "memory",
+      "sequential"
+    ],
+    "complexity": {
+      "state_complexity": 0,
+      "arithmetic_complexity": 0,
+      "concurrency": 2,
+      "hierarchy_depth": 1,
+      "timing_constraints": 2,
+      "interface_count": 8,
+      "control_complexity": 4
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [
+      "overflow_detection",
+      "mutual_exclusion"
+    ],
+    "estimated_difficulty": 48
+  },
+  {
+    "id": "mem_regfile",
+    "version": "1.0.0",
+    "category": "memory",
+    "title": "32x32 register file (2R1W)",
+    "specification": "Design a 32-entry, 32-bit register file with two read ports and one write port. Register 0 always reads as zero. Writes are synchronous.",
+    "functional_requirements": [
+      "reg 0 reads zero",
+      "two independent read ports",
+      "synchronous write"
+    ],
+    "expected_behavior": "",
+    "entity": "regfile",
+    "interfaces": [],
+    "tags": [
+      "register-file",
+      "memory",
+      "processor",
+      "sequential"
+    ],
+    "complexity": {
+      "state_complexity": 0,
+      "arithmetic_complexity": 0,
+      "concurrency": 2,
+      "hierarchy_depth": 1,
+      "timing_constraints": 1,
+      "interface_count": 9,
+      "control_complexity": 3
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [
+      "mutual_exclusion"
+    ],
+    "estimated_difficulty": 42
+  },
+  {
+    "id": "mem_sync_ram",
+    "version": "1.0.0",
+    "category": "memory",
+    "title": "Synchronous single-port RAM (256x8)",
+    "specification": "Design a synchronous single-port RAM, 256 words x 8 bits, with a registered read output and a write-enable.",
+    "functional_requirements": [
+      "registered read",
+      "write-enable gated write"
+    ],
+    "expected_behavior": "",
+    "entity": "sync_ram",
+    "interfaces": [],
+    "tags": [
+      "ram",
+      "memory",
+      "sequential"
+    ],
+    "complexity": {
+      "state_complexity": 0,
+      "arithmetic_complexity": 0,
+      "concurrency": 0,
+      "hierarchy_depth": 1,
+      "timing_constraints": 1,
+      "interface_count": 6,
+      "control_complexity": 2
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [],
+    "estimated_difficulty": 21
+  },
+  {
+    "id": "proc_alu_ctrl",
+    "version": "1.0.0",
+    "category": "processor",
+    "title": "ALU control decoder",
+    "specification": "Design an ALU control unit: given a 2-bit ALUOp and a 4-bit funct field, output a 4-bit ALU control signal following the classic MIPS mapping (add/sub/and/or/slt).",
+    "functional_requirements": [
+      "decodes ALUOp+funct to control",
+      "defaults defined for all inputs"
+    ],
+    "expected_behavior": "",
+    "entity": "alu_control",
+    "interfaces": [],
+    "tags": [
+      "processor",
+      "combinational",
+      "control"
+    ],
+    "complexity": {
+      "state_complexity": 0,
+      "arithmetic_complexity": 1,
+      "concurrency": 0,
+      "hierarchy_depth": 1,
+      "timing_constraints": 0,
+      "interface_count": 3,
+      "control_complexity": 5
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [
+      "mutual_exclusion"
+    ],
+    "estimated_difficulty": 29
+  },
+  {
+    "id": "proc_branch_pred",
+    "version": "1.0.0",
+    "category": "processor",
+    "title": "2-bit saturating branch predictor",
+    "specification": "Design a 2-bit saturating counter branch predictor. On each resolved branch (taken input), update the state; predict output is high when in a 'taken' state. Synchronous active-high reset to weakly-not-taken.",
+    "functional_requirements": [
+      "saturates at strongly taken/not-taken",
+      "predict = MSB of counter"
+    ],
+    "expected_behavior": "",
+    "entity": "branch_pred",
+    "interfaces": [],
+    "tags": [
+      "branch-predictor",
+      "processor",
+      "fsm",
+      "sequential"
+    ],
+    "complexity": {
+      "state_complexity": 4,
+      "arithmetic_complexity": 0,
+      "concurrency": 0,
+      "hierarchy_depth": 1,
+      "timing_constraints": 2,
+      "interface_count": 4,
+      "control_complexity": 4
+    },
+    "reference_hdl_path": "reference.vhd",
+    "testbench_path": "",
+    "testbench_entity": "",
+    "properties": [
+      "deadlock_freedom"
+    ],
+    "estimated_difficulty": 48
+  }
+]

@@ -1,0 +1,25 @@
+id: proc_branch_pred
+version: 1.0.0
+category: processor
+title: 2-bit saturating branch predictor
+specification: Design a 2-bit saturating counter branch predictor. On each resolved
+  branch (taken input), update the state; predict output is high when in a 'taken'
+  state. Synchronous active-high reset to weakly-not-taken.
+functional_requirements:
+- saturates at strongly taken/not-taken
+- predict = MSB of counter
+expected_behavior: ''
+entity: branch_pred
+tags:
+- branch-predictor
+- processor
+- fsm
+- sequential
+complexity:
+  state_complexity: 4
+  control_complexity: 4
+  timing_constraints: 2
+  interface_count: 4
+reference_hdl_path: reference.vhd
+properties:
+- deadlock_freedom

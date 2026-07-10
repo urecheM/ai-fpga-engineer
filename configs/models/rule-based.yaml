@@ -1,0 +1,10 @@
+# The ai_fpga_engineer rule-based pipeline, evaluated as a model through the
+# identical hdleval harness. Deterministic; no API key. Perfect on its four
+# supported design classes (alu, counter, register, comparator), zero coverage
+# elsewhere — an honest coverage/quality baseline.
+name: rule-based
+provider: rule_based
+model_id: ai_fpga_engineer-rule-based
+temperature: 0.0
+max_tokens: 4096
+seed: 0

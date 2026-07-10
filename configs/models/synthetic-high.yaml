@@ -1,0 +1,7 @@
+name: synthetic-high
+provider: synthetic
+model_id: synthetic-f0.90
+temperature: 0.2
+max_tokens: 4096
+seed: 7
+extra: {fidelity: 0.90}

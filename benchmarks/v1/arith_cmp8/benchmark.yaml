@@ -1,0 +1,19 @@
+id: arith_cmp8
+version: 1.0.0
+category: arithmetic
+title: 8-bit magnitude comparator
+specification: Design an 8-bit unsigned comparator with outputs gt, eq, lt.
+functional_requirements:
+- exactly one of gt/eq/lt is high
+expected_behavior: ''
+entity: cmp8
+tags:
+- comparator
+- combinational
+complexity:
+  arithmetic_complexity: 2
+  interface_count: 5
+  control_complexity: 2
+reference_hdl_path: reference.vhd
+properties:
+- mutual_exclusion

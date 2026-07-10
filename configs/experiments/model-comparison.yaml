@@ -1,0 +1,21 @@
+name: model-comparison-v1
+description: >
+  Compare a real language model (Anthropic Claude) against the deterministic
+  rule-based pipeline and a synthetic baseline, through the identical hdleval
+  harness. Requires ANTHROPIC_API_KEY + the `anthropic` SDK for the claude-sonnet
+  model; the reference-golden/rule-based/synthetic models need no key. Real-model
+  responses are cached to .hdleval_cache/ so re-runs are reproducible.
+models:
+  - claude-sonnet
+  - rule-based
+  - synthetic-high
+prompts:
+  - direct
+  - chain-of-thought
+benchmarks:
+  suite_version: v1
+trials: 1
+seed: 20260707
+synthesis: yosys-ice40
+verification: properties
+tags: [comparison, real-model]

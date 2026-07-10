@@ -1,0 +1,7 @@
+name: synthetic-mid
+provider: synthetic
+model_id: synthetic-f0.75
+temperature: 0.4
+max_tokens: 4096
+seed: 7
+extra: {fidelity: 0.75}

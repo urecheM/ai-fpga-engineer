@@ -1,0 +1,4 @@
+name: area
+objective: area
+max_iterations: 3
+constraints: {max_luts: 512}

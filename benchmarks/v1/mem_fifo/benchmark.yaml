@@ -1,0 +1,26 @@
+id: mem_fifo
+version: 1.0.0
+category: memory
+title: Synchronous FIFO (depth 16)
+specification: Design a synchronous FIFO, 8-bit wide, depth 16, with wr_en/rd_en,
+  full and empty flags, and synchronous active-high reset.
+functional_requirements:
+- FIFO ordering preserved
+- full/empty flags correct
+- no overflow/underflow
+expected_behavior: ''
+entity: fifo16
+tags:
+- fifo
+- memory
+- sequential
+complexity:
+  state_complexity: 0
+  control_complexity: 4
+  timing_constraints: 2
+  interface_count: 8
+  concurrency: 2
+reference_hdl_path: reference.vhd
+properties:
+- overflow_detection
+- mutual_exclusion

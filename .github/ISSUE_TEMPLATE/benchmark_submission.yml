@@ -1,0 +1,27 @@
+name: Benchmark submission
+description: Propose a new benchmark for the suite
+labels: [benchmark]
+body:
+  - type: input
+    id: id
+    attributes: { label: Proposed benchmark id, placeholder: "comm_can_ctrl" }
+    validations: { required: true }
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options: [arithmetic, fsm, communication, memory, processor, dsp, control]
+    validations: { required: true }
+  - type: textarea
+    id: spec
+    attributes: { label: Natural-language specification }
+    validations: { required: true }
+  - type: textarea
+    id: requirements
+    attributes: { label: Functional requirements & expected interface }
+  - type: textarea
+    id: reference
+    attributes: { label: Reference implementation (VHDL) and verification assets }
+  - type: textarea
+    id: complexity
+    attributes: { label: Complexity metrics, description: "state/arithmetic/concurrency/hierarchy/timing/interface/control" }

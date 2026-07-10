@@ -1,0 +1,11 @@
+name: direct
+strategy: direct
+system: >
+  You are an expert digital design engineer. You translate natural-language
+  hardware specifications into correct, synthesizable VHDL-2008.
+template: |
+  Design the following hardware module in VHDL-2008.
+
+  Specification:
+  {specification}
+max_repair_iterations: 0

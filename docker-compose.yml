@@ -1,0 +1,17 @@
+services:
+  hdleval:
+    build: .
+    image: hdleval:latest
+    volumes:
+      - ./results:/opt/hdleval/results
+      - ./experiments:/opt/hdleval/experiments
+      - ./publication:/opt/hdleval/publication
+      - ./website:/opt/hdleval/website
+    environment:
+      - HDLEVAL_REQUIRE_TOOLS=0
+    command: ["python", "reproduce.py"]
+
+  tests:
+    build: .
+    image: hdleval:latest
+    command: ["python", "-m", "pytest", "--cov=hdleval", "--cov-report=term-missing"]

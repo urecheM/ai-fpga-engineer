@@ -1,0 +1,26 @@
+id: comm_spi_master
+version: 1.0.0
+category: communication
+title: SPI master (mode 0)
+specification: Design an SPI master in mode 0 (CPOL=0, CPHA=0) shifting 8 bits MSB-first.
+  On start, generate sclk, drive mosi, sample miso, and assert done when complete.
+functional_requirements:
+- MSB-first 8-bit transfer
+- mode 0 timing
+- done pulses on completion
+expected_behavior: ''
+entity: spi_master
+tags:
+- spi
+- protocol
+- sequential
+complexity:
+  state_complexity: 4
+  control_complexity: 5
+  timing_constraints: 3
+  interface_count: 8
+  concurrency: 1
+reference_hdl_path: reference.vhd
+properties:
+- deadlock_freedom
+- transaction_completion

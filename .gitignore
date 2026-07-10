@@ -1,44 +1,30 @@
+# Python
 __pycache__/
 *.py[cod]
-*.pyc
-projects/
-reports/
-*$py.class
 *.egg-info/
-.eggs/
 build/
 dist/
-.installed.cfg
-*.egg
+.eggs/
 
-# Virtual environments
-.venv/
-venv/
-env/
-ENV/
-
-# Tooling caches
+# Testing / typing / linting caches
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
-.coverage
 htmlcov/
+.coverage
+coverage.xml
 
-# --- AI FPGA Engineer working output ---
-# Generated project workspaces (keep the curated sample under
-# ai_fpga_engineer/projects/alu8, ignore everything else the CLI writes).
-projects/
-!ai_fpga_engineer/projects/
-!ai_fpga_engineer/projects/alu8/
-!ai_fpga_engineer/projects/alu8/**
-# GHDL simulation byproducts
-*.cf
-*.ghw
-work-obj*.cf
+# hdleval caches (regenerable)
+.hdleval_cache/
+*.sqlite-journal
 
-# --- Editors / OS ---
-.vscode/
-.idea/
-*.swp
+# Environments
+.venv/
+venv/
+.env
+
+# OS
 .DS_Store
-Thumbs.db
+
+# NOTE: results/, publication/ and website/ are committed as build products
+# (portfolio evidence). Regenerate them any time with `python reproduce.py`.

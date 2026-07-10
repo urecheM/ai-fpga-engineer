@@ -1,0 +1,21 @@
+id: mem_sync_ram
+version: 1.0.0
+category: memory
+title: Synchronous single-port RAM (256x8)
+specification: Design a synchronous single-port RAM, 256 words x 8 bits, with a registered
+  read output and a write-enable.
+functional_requirements:
+- registered read
+- write-enable gated write
+expected_behavior: ''
+entity: sync_ram
+tags:
+- ram
+- memory
+- sequential
+complexity:
+  control_complexity: 2
+  timing_constraints: 1
+  interface_count: 6
+reference_hdl_path: reference.vhd
+properties: []

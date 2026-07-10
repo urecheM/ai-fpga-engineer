@@ -1,0 +1,5 @@
+name: reference-vectors
+strategy: reference_vectors
+n_vectors: 256
+enabled: true
+properties: []

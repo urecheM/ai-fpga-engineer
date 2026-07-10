@@ -1,0 +1,10 @@
+name: properties
+strategy: properties
+n_vectors: 0
+enabled: true
+properties:
+  - deadlock_freedom
+  - unreachable_state
+  - overflow_detection
+  - mutual_exclusion
+  - transaction_completion

@@ -1,0 +1,24 @@
+id: fsm_traffic
+version: 1.0.0
+category: fsm
+title: Traffic-light controller FSM
+specification: Design a traffic-light FSM with states RED, GREEN, YELLOW cycling on
+  each clock tick enable. Synchronous active-high reset returns to RED. Output lights
+  is a 3-bit one-hot (RED=100, GREEN=010, YELLOW=001).
+functional_requirements:
+- cycles RED->GREEN->YELLOW->RED on tick
+- reset forces RED
+expected_behavior: ''
+entity: traffic_light
+tags:
+- fsm
+- sequential
+complexity:
+  state_complexity: 3
+  control_complexity: 3
+  timing_constraints: 2
+  interface_count: 4
+reference_hdl_path: reference.vhd
+properties:
+- deadlock_freedom
+- unreachable_state

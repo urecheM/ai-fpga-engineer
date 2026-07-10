@@ -1,0 +1,20 @@
+id: arith_mul8
+version: 1.0.0
+category: arithmetic
+title: 8x8 unsigned multiplier
+specification: Design an 8x8 unsigned combinational multiplier. Inputs a and b are
+  8-bit; output product is 16-bit.
+functional_requirements:
+- product = a * b
+expected_behavior: ''
+entity: mul8
+tags:
+- multiplier
+- combinational
+- dsp
+complexity:
+  arithmetic_complexity: 6
+  interface_count: 3
+  timing_constraints: 0
+reference_hdl_path: reference.vhd
+properties: []

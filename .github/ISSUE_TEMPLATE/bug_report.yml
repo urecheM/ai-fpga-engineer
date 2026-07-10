@@ -1,0 +1,18 @@
+name: Bug report
+description: Report a defect in the platform or benchmarks
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes: { label: What happened?, description: Describe the bug and expected behavior }
+    validations: { required: true }
+  - type: textarea
+    id: repro
+    attributes: { label: Reproduction, description: "Command(s), config, and benchmark id" }
+    validations: { required: true }
+  - type: input
+    id: commit
+    attributes: { label: Git commit / version }
+  - type: textarea
+    id: env
+    attributes: { label: Environment, description: "OS, Python, GHDL/Yosys versions (`hdleval toolchain`)" }

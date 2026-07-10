@@ -1,0 +1,27 @@
+id: comm_uart_tx
+version: 1.0.0
+category: communication
+title: UART transmitter (8N1)
+specification: Design a UART transmitter for 8 data bits, no parity, 1 stop bit. A
+  start pulse latches data and shifts it out LSB-first framed by a start (0) and stop
+  (1) bit. tx_busy is high during transmission. Assume a one-clock-per-bit baud tick.
+functional_requirements:
+- frames data with start=0 and stop=1
+- LSB-first
+- tx_busy asserted during frame
+expected_behavior: ''
+entity: uart_tx
+tags:
+- uart
+- protocol
+- sequential
+complexity:
+  state_complexity: 4
+  control_complexity: 5
+  timing_constraints: 3
+  interface_count: 6
+  concurrency: 1
+reference_hdl_path: reference.vhd
+properties:
+- deadlock_freedom
+- transaction_completion

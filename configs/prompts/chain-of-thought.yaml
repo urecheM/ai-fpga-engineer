@@ -1,0 +1,11 @@
+name: chain-of-thought
+strategy: chain_of_thought
+system: >
+  You are an expert digital design engineer who reasons carefully about
+  interfaces, state, and timing before writing synthesizable VHDL-2008.
+template: |
+  Design the following hardware module in VHDL-2008.
+
+  Specification:
+  {specification}
+max_repair_iterations: 0

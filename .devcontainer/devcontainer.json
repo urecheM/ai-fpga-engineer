@@ -1,0 +1,22 @@
+{
+  "name": "hdleval",
+  "build": { "dockerfile": "../Dockerfile" },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "charliermarsh.ruff",
+        "ms-python.mypy-type-checker",
+        "redhat.vscode-yaml"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.testing.pytestEnabled": true,
+        "editor.formatOnSave": true,
+        "[python]": { "editor.defaultFormatter": "charliermarsh.ruff" }
+      }
+    }
+  },
+  "postCreateCommand": "pip install -e '.[dev]' && pre-commit install",
+  "remoteEnv": { "PYTHONPATH": "${containerWorkspaceFolder}/src" }
+}

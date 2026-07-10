@@ -1,0 +1,7 @@
+{
+    "python.testing.pytestArgs": [
+        "ai_fpga_engineer"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}

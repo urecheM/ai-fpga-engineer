@@ -1,0 +1,8 @@
+# Real Anthropic provider. Requires ANTHROPIC_API_KEY + `anthropic` SDK.
+# Responses are cached to disk so re-runs are reproducible.
+name: claude-sonnet
+provider: anthropic
+model_id: claude-sonnet-4-6
+temperature: 0.0
+max_tokens: 4096
+seed: 0

@@ -1,0 +1,24 @@
+id: arith_alu8
+version: 1.0.0
+category: arithmetic
+title: 8-bit ALU (ADD/SUB/AND/OR/XOR)
+specification: Design an 8-bit ALU with a 3-bit opcode selecting ADD(000), SUB(001),
+  AND(010), OR(011), XOR(100). Inputs a and b are 8-bit. Outputs result (8-bit) and
+  a zero flag.
+functional_requirements:
+- opcode selects the operation
+- zero=1 iff result is 0
+expected_behavior: ''
+entity: alu8
+tags:
+- alu
+- combinational
+complexity:
+  arithmetic_complexity: 5
+  interface_count: 5
+  control_complexity: 3
+  timing_constraints: 0
+reference_hdl_path: reference.vhd
+properties:
+- overflow_detection
+- mutual_exclusion
