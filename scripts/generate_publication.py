@@ -6,6 +6,7 @@ static narrative template with generated tables and statistics. The narrative
 figure is injected from the experiment registry, so the paper cannot drift from
 the data.
 """
+
 from __future__ import annotations
 
 import json
@@ -200,8 +201,17 @@ def main() -> None:
         for svg in figdir.glob("*.svg"):
             shutil.copy2(svg, PUB / "figures" / svg.name)
 
-    cols = ["model", "prompt", "n", "pass_rate", "pass_ci95", "compile_rate",
-            "synth_rate", "avg_latency_s", "avg_tokens"]
+    cols = [
+        "model",
+        "prompt",
+        "n",
+        "pass_rate",
+        "pass_ci95",
+        "compile_rate",
+        "synth_rate",
+        "avg_latency_s",
+        "avg_tokens",
+    ]
     overall = _md_table(lb["overall"], cols)
     cat_rows = []
     for cat, rows in lb["by_category"].items():
@@ -216,18 +226,21 @@ def main() -> None:
 
     stats = _stats(lb, recs)
     report = REPORT_TEMPLATE.format(
-        exp=EXP, overall_table=overall, category_table=cat_table,
-        difficulty_table=diff_table, **stats,
+        exp=EXP,
+        overall_table=overall,
+        category_table=cat_table,
+        difficulty_table=diff_table,
+        **stats,
     )
     (PUB / "technical-report" / "TECHNICAL_REPORT.md").write_text(report)
-    (PUB / "technical-report" / "generated_stats.json").write_text(
-        json.dumps(stats, indent=2))
+    (PUB / "technical-report" / "generated_stats.json").write_text(json.dumps(stats, indent=2))
 
     # references.bib
     (PUB / "technical-report" / "references.bib").write_text(
         "@misc{hdleval2026,\n  title={hdleval: An Extensible, Reproducible Platform "
         "for Evaluating LLM-Assisted Hardware Design},\n  author={hdleval contributors},\n"
-        "  year={2026},\n  note={https://github.com/your-org/hdleval}\n}\n")
+        "  year={2026},\n  note={https://github.com/your-org/hdleval}\n}\n"
+    )
 
     # preprint (condensed 6-10pp derivative)
     _write_preprint(stats, overall, PUB)
@@ -244,8 +257,8 @@ def _write_preprint(stats, overall_table, pub: Path):
 We introduce hdleval, an extensible platform for reproducible evaluation of
 LLM-assisted hardware design, with a versioned benchmark taxonomy, a fixed
 evaluation harness decoupled from model inference, and quantitative metrics
-beyond pass/fail. Baseline: {stats['n_evaluations']} evaluations over
-{stats['n_benchmarks']} benchmarks.
+beyond pass/fail. Baseline: {stats["n_evaluations"]} evaluations over
+{stats["n_benchmarks"]} benchmarks.
 
 ## Reproduction assumptions and deviations
 - The public baseline uses deterministic reference and synthetic-fidelity

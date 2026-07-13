@@ -10,6 +10,7 @@ backbone of the reproducible smoke experiment.
 When no reference HDL is available it emits an empty stub, which the harness
 records as a generation failure — a useful negative control.
 """
+
 from __future__ import annotations
 
 import hashlib

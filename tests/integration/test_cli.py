@@ -15,6 +15,7 @@ def test_toolchain():
 def test_run_and_report(tmp_path):
     # tiny run over arithmetic only, then regenerate report from the DB
     import yaml
+
     exp = {
         "name": "cli-smoke",
         "models": ["reference-golden"],

@@ -1,7 +1,8 @@
 """Provider registry: build a provider from a :class:`ModelConfig`."""
+
 from __future__ import annotations
 
-from typing import Callable
+from collections.abc import Callable
 
 from ..config.schema import ConfigError, ModelConfig
 from .base import ModelProvider

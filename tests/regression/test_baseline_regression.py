@@ -1,8 +1,12 @@
 """Golden regression: the deterministic providers must not silently drift."""
+
 from __future__ import annotations
 
 from hdleval.config.schema import (
-    BenchmarkSelector, ExperimentConfig, ModelConfig, PromptConfig,
+    BenchmarkSelector,
+    ExperimentConfig,
+    ModelConfig,
+    PromptConfig,
 )
 from hdleval.evaluation.runner import run_experiment
 
@@ -13,7 +17,8 @@ def _run(model_name, provider, extra, tmp_path):
         models=[ModelConfig(name=model_name, provider=provider, seed=7, extra=extra)],
         prompts=[PromptConfig(name="direct", template="{specification}")],
         benchmarks=BenchmarkSelector(suite_version="v1"),
-        trials=1, seed=20260707,
+        trials=1,
+        seed=20260707,
     )
     results, _ = run_experiment(exp, out_dir=tmp_path / "r", db_path=tmp_path / "d.sqlite")
     return results

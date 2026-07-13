@@ -4,6 +4,7 @@ Every stage of every benchmark execution emits a JSON line. Logs are the raw
 substrate from which reports and leaderboards are regenerated, so they are
 append-only and self-describing (schema_version + timestamp on each record).
 """
+
 from __future__ import annotations
 
 import json
@@ -54,7 +55,7 @@ class StructuredLogger:
             self._fh.close()
             self._fh = None
 
-    def __enter__(self) -> "StructuredLogger":
+    def __enter__(self) -> StructuredLogger:
         return self
 
     def __exit__(self, *exc: object) -> None:

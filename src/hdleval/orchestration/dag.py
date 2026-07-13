@@ -5,12 +5,14 @@ skipped, incrementally recomputed and scheduled in parallel. Each node declares
 dependencies and a pure ``fn(inputs) -> result``; results are content-hash
 cached so unchanged upstream inputs short-circuit recomputation.
 """
+
 from __future__ import annotations
 
 import hashlib
 import json
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Any, Callable
+from typing import Any
 
 
 @dataclass
@@ -33,7 +35,7 @@ class DAG:
         self._nodes: dict[str, Node] = {}
         self._cache: dict[str, Any] = {}
 
-    def add(self, node: Node) -> "DAG":
+    def add(self, node: Node) -> DAG:
         if node.name in self._nodes:
             raise ValueError(f"duplicate node {node.name!r}")
         self._nodes[node.name] = node
@@ -69,8 +71,9 @@ class DAG:
             payload = str(inputs)
         return hashlib.sha256((name + payload).encode()).hexdigest()
 
-    def run(self, initial: dict[str, Any] | None = None,
-            use_cache: bool = True) -> dict[str, NodeResult]:
+    def run(
+        self, initial: dict[str, Any] | None = None, use_cache: bool = True
+    ) -> dict[str, NodeResult]:
         env: dict[str, Any] = dict(initial or {})
         results: dict[str, NodeResult] = {}
         for name in self._toposort():

@@ -3,6 +3,7 @@
 All outputs are derived; nothing here is hand-authored. ``write_all_reports``
 is called by ``reproduce.py`` so every table in the paper is regenerated.
 """
+
 from __future__ import annotations
 
 import csv
@@ -50,22 +51,55 @@ def write_all_reports(
     p = out / "tables" / f"{experiment_name}_results.csv"
     with p.open("w", newline="") as fh:
         w = csv.writer(fh)
-        w.writerow(["benchmark", "model", "prompt", "trial", "passed", "failure_class",
-                    "duration_s", "latency_s", "tokens"])
+        w.writerow(
+            [
+                "benchmark",
+                "model",
+                "prompt",
+                "trial",
+                "passed",
+                "failure_class",
+                "duration_s",
+                "latency_s",
+                "tokens",
+            ]
+        )
         for r in records:
             m = r.get("metrics", {})
-            w.writerow([r["benchmark"], r["model"], r["prompt"], r["trial"],
-                        int(r["passed"]), r.get("failure_class", ""),
-                        r.get("duration_s", ""), m.get("inference_latency_s", ""),
-                        int(m.get("prompt_tokens", 0)) + int(m.get("completion_tokens", 0))])
+            w.writerow(
+                [
+                    r["benchmark"],
+                    r["model"],
+                    r["prompt"],
+                    r["trial"],
+                    int(r["passed"]),
+                    r.get("failure_class", ""),
+                    r.get("duration_s", ""),
+                    m.get("inference_latency_s", ""),
+                    int(m.get("prompt_tokens", 0)) + int(m.get("completion_tokens", 0)),
+                ]
+            )
     written["results_csv"] = str(p)
 
     # Markdown report
-    cols = ["model", "prompt", "n", "pass_rate", "pass_ci95", "compile_rate",
-            "synth_rate", "avg_latency_s", "avg_tokens", "avg_retries"]
-    md = [f"# Results: {experiment_name}\n",
-          "_This report is generated automatically from the experiment registry._\n",
-          "\n## Overall leaderboard\n\n", _md_table(leaderboard.overall, cols)]
+    cols = [
+        "model",
+        "prompt",
+        "n",
+        "pass_rate",
+        "pass_ci95",
+        "compile_rate",
+        "synth_rate",
+        "avg_latency_s",
+        "avg_tokens",
+        "avg_retries",
+    ]
+    md = [
+        f"# Results: {experiment_name}\n",
+        "_This report is generated automatically from the experiment registry._\n",
+        "\n## Overall leaderboard\n\n",
+        _md_table(leaderboard.overall, cols),
+    ]
     for cat, rows in leaderboard.by_category.items():
         md.append(f"\n## Category: {cat}\n\n")
         md.append(_md_table(rows, cols))
@@ -88,16 +122,23 @@ def _html_dashboard(name: str, lb: Leaderboard, records: list[dict[str, Any]]) -
     def table(rows: list[dict[str, Any]]) -> str:
         if not rows:
             return "<p>no data</p>"
-        cols = ["model", "prompt", "n", "pass_rate", "compile_rate", "synth_rate",
-                "avg_latency_s", "avg_tokens"]
+        cols = [
+            "model",
+            "prompt",
+            "n",
+            "pass_rate",
+            "compile_rate",
+            "synth_rate",
+            "avg_latency_s",
+            "avg_tokens",
+        ]
         h = "<tr>" + "".join(f"<th>{c}</th>" for c in cols) + "</tr>"
-        b = "".join("<tr>" + "".join(f"<td>{r.get(c,'')}</td>" for c in cols) + "</tr>"
-                    for r in rows)
+        b = "".join(
+            "<tr>" + "".join(f"<td>{r.get(c, '')}</td>" for c in cols) + "</tr>" for r in rows
+        )
         return f"<table>{h}{b}</table>"
 
-    cat_sections = "".join(
-        f"<h3>{c}</h3>{table(rows)}" for c, rows in lb.by_category.items()
-    )
+    cat_sections = "".join(f"<h3>{c}</h3>{table(rows)}" for c, rows in lb.by_category.items())
     return f"""<!doctype html><html><head><meta charset="utf-8">
 <title>{name} dashboard</title>
 <style>body{{font-family:system-ui,Arial;margin:2rem;color:#1a1a2e}}

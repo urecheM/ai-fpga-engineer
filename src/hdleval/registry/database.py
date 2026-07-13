@@ -4,6 +4,7 @@ Stores one row per (experiment, run, benchmark) with the full record JSON plus
 indexed columns for common queries. Enables cross-release comparison and feeds
 the leaderboard/report generators.
 """
+
 from __future__ import annotations
 
 import json
@@ -11,9 +12,10 @@ import shutil
 import sqlite3
 import tempfile
 import uuid
-from contextlib import closing
+from collections.abc import Iterable
+from contextlib import closing, suppress
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 from .experiment import ExperimentRecord
 
@@ -50,10 +52,8 @@ class ExperimentDB:
         # it to the destination on commit/close, keeping the registry portable.
         self._work = Path(tempfile.gettempdir()) / f"hdleval-{uuid.uuid4().hex}.sqlite"
         if self.path.exists():
-            try:
+            with suppress(OSError):
                 shutil.copy2(self.path, self._work)
-            except OSError:
-                pass
         self._conn = sqlite3.connect(str(self._work))
         self._conn.row_factory = sqlite3.Row
         with closing(self._conn.cursor()) as cur:
@@ -63,10 +63,8 @@ class ExperimentDB:
 
     def _mirror(self) -> None:
         """Copy the local working DB to the (possibly fuse-mounted) destination."""
-        try:
+        with suppress(OSError):
             shutil.copy2(self._work, self.path)
-        except OSError:
-            pass
 
     def insert(self, rec: ExperimentRecord) -> None:
         with closing(self._conn.cursor()) as cur:
@@ -77,11 +75,20 @@ class ExperimentDB:
                  started_at, record_json)
                 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                 (
-                    rec.run_id, rec.experiment, rec.benchmark, rec.benchmark_version,
-                    rec.model, rec.prompt, rec.seed, rec.trial, int(rec.passed),
-                    rec.failure_class, rec.duration_s,
+                    rec.run_id,
+                    rec.experiment,
+                    rec.benchmark,
+                    rec.benchmark_version,
+                    rec.model,
+                    rec.prompt,
+                    rec.seed,
+                    rec.trial,
+                    int(rec.passed),
+                    rec.failure_class,
+                    rec.duration_s,
                     rec.environment.get("git_commit", "unknown"),
-                    rec.started_at, json.dumps(rec.to_dict(), sort_keys=True),
+                    rec.started_at,
+                    json.dumps(rec.to_dict(), sort_keys=True),
                 ),
             )
         self._conn.commit()
@@ -109,7 +116,5 @@ class ExperimentDB:
     def close(self) -> None:
         self._mirror()
         self._conn.close()
-        try:
+        with suppress(OSError):
             self._work.unlink()
-        except OSError:
-            pass

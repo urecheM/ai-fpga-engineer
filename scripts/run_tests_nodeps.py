@@ -4,6 +4,7 @@ Provides a minimal `pytest` module (fixture, raises) + fixtures (tmp_path,
 repo_root, suite), discovers test_* functions, and reports pass/fail. This is a
 convenience for environments without the dev extras; CI uses real pytest+coverage.
 """
+
 from __future__ import annotations
 
 import importlib.util
@@ -22,8 +23,10 @@ sys.path.insert(0, str(ROOT / "src"))
 class _Raises:
     def __init__(self, exc):
         self.exc = exc
+
     def __enter__(self):
         return self
+
     def __exit__(self, et, ev, tb):
         if et is None:
             raise AssertionError(f"expected {self.exc.__name__}")
@@ -32,23 +35,31 @@ class _Raises:
 
 pytest = types.ModuleType("pytest")
 pytest.raises = lambda exc: _Raises(exc)
+
+
 def _fixture(*a, **k):
     def deco(fn):
         fn.__is_fixture__ = True
         return fn
+
     return deco if not a else deco(a[0])
+
+
 pytest.fixture = _fixture
 sys.modules["pytest"] = pytest
 
 
 def _make_fixtures(tmp_root):
     from hdleval.benchmarks.loader import load_suite
+
     counter = {"n": 0}
+
     def tmp_path():
         counter["n"] += 1
         p = Path(tmp_root) / f"t{counter['n']}"
         p.mkdir(parents=True, exist_ok=True)
         return p
+
     return {
         "repo_root": lambda: ROOT,
         "suite": lambda: load_suite("v1"),
@@ -81,11 +92,11 @@ def main() -> int:
             try:
                 fn(**kwargs)
                 passed += 1
-            except Exception as e:  # noqa: BLE001
+            except Exception as e:
                 failed += 1
                 failures.append(f"{tf.name}::{name}: {e}")
                 traceback.print_exc()
-    print(f"\n{'='*50}\nPASSED {passed}  FAILED {failed}")
+    print(f"\n{'=' * 50}\nPASSED {passed}  FAILED {failed}")
     for f in failures:
         print("  FAIL", f)
     return 1 if failed else 0
