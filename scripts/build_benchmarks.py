@@ -25,11 +25,12 @@ BENCHMARKS = []
 
 
 def add(id, category, title, spec, entity, complexity, tags, ref, reqs, props=None,
-        expected=""):
+        expected="", tb=None, tb_entity=""):
     BENCHMARKS.append(dict(
         id=id, category=category, title=title, spec=spec, entity=entity,
         complexity=complexity, tags=tags, ref=textwrap.dedent(ref).strip() + "\n",
         reqs=reqs, props=props or [], expected=expected,
+        tb=textwrap.dedent(tb).strip() + "\n" if tb else None, tb_entity=tb_entity,
     ))
 
 
@@ -217,7 +218,7 @@ add("comm_uart_tx", "communication", "UART transmitter (8N1)",
            tx : out std_logic; tx_busy : out std_logic);
     end entity;
     architecture rtl of uart_tx is
-      type st is (IDLE, START, DATA, STOP);
+      type st is (IDLE, ST_START, ST_DATA, ST_STOP);
       signal state : st := IDLE;
       signal sh : std_logic_vector(7 downto 0);
       signal idx : integer range 0 to 7 := 0;
@@ -228,11 +229,11 @@ add("comm_uart_tx", "communication", "UART transmitter (8N1)",
           else
             case state is
               when IDLE => tx<='1'; tx_busy<='0';
-                if start='1' then sh<=data; tx_busy<='1'; state<=START; end if;
-              when START => if tick='1' then tx<='0'; idx<=0; state<=DATA; end if;
-              when DATA => if tick='1' then tx<=sh(idx);
-                if idx=7 then state<=STOP; else idx<=idx+1; end if; end if;
-              when STOP => if tick='1' then tx<='1'; state<=IDLE; end if;
+                if start='1' then sh<=data; tx_busy<='1'; state<=ST_START; end if;
+              when ST_START => if tick='1' then tx<='0'; idx<=0; state<=ST_DATA; end if;
+              when ST_DATA => if tick='1' then tx<=sh(idx);
+                if idx=7 then state<=ST_STOP; else idx<=idx+1; end if; end if;
+              when ST_STOP => if tick='1' then tx<='1'; state<=IDLE; end if;
             end case;
           end if;
         end if;
@@ -240,7 +241,73 @@ add("comm_uart_tx", "communication", "UART transmitter (8N1)",
     end architecture;
     """,
     ["frames data with start=0 and stop=1", "LSB-first", "tx_busy asserted during frame"],
-    ["deadlock_freedom", "transaction_completion"])
+    ["deadlock_freedom", "transaction_completion"],
+    tb="""
+    -- Self-checking testbench for uart_tx (8N1, one clock per bit via tick='1').
+    -- Drives a byte and verifies the serial frame: start(0), data LSB-first, stop(1).
+    -- Pass => "ALL TESTS PASSED"; mismatch => severity failure (non-zero exit).
+    -- NOTE: outputs of uart_tx are registered, so tx updates one clock after the
+    -- state/tick condition; the checks below account for that latency.
+    library ieee;
+    use ieee.std_logic_1164.all;
+    use ieee.numeric_std.all;
+
+    entity uart_tx_tb is
+    end entity uart_tx_tb;
+
+    architecture tb of uart_tx_tb is
+      signal clk, rst, tick, start, tx, tx_busy : std_logic := '0';
+      signal data : std_logic_vector(7 downto 0) := (others => '0');
+      constant BYTE : std_logic_vector(7 downto 0) := "10110010";
+    begin
+      dut : entity work.uart_tx
+        port map (clk => clk, rst => rst, tick => tick, start => start,
+                  data => data, tx => tx, tx_busy => tx_busy);
+
+      stim : process
+        variable errors : natural := 0;
+        variable expect : std_logic_vector(0 to 9);  -- start + 8 data + stop
+
+        procedure tick_clk is
+        begin
+          clk <= '0'; wait for 5 ns;
+          clk <= '1'; wait for 5 ns;
+        end procedure;
+      begin
+        expect(0) := '0';                              -- start bit
+        for i in 0 to 7 loop
+          expect(i + 1) := BYTE(i);                     -- data, LSB first
+        end loop;
+        expect(9) := '1';                              -- stop bit
+
+        tick <= '1';
+        rst  <= '1';                 tick_clk;          -- reset -> IDLE
+        rst  <= '0'; data <= BYTE; start <= '1'; tick_clk;  -- IDLE -> START (latch)
+        start <= '0';                tick_clk;          -- START -> DATA, tx <= start bit
+
+        if tx /= expect(0) then
+          errors := errors + 1;
+          report "start bit mismatch" severity error;
+        end if;
+
+        for i in 1 to 9 loop
+          tick_clk;                                     -- each subsequent bit
+          if tx /= expect(i) then
+            errors := errors + 1;
+            report "frame bit " & integer'image(i) & " mismatch" severity error;
+          end if;
+        end loop;
+
+        if errors = 0 then
+          report "ALL TESTS PASSED (uart_tx frame verified)" severity note;
+        else
+          report integer'image(errors) & " frame bit(s) FAILED" severity failure;
+        end if;
+        wait;
+      end process;
+    end architecture tb;
+    """,
+    tb_entity="uart_tx_tb")
 
 add("comm_spi_master", "communication", "SPI master (mode 0)",
     "Design an SPI master in mode 0 (CPOL=0, CPHA=0) shifting 8 bits MSB-first. On "
@@ -285,7 +352,73 @@ add("comm_spi_master", "communication", "SPI master (mode 0)",
     end architecture;
     """,
     ["MSB-first 8-bit transfer", "mode 0 timing", "done pulses on completion"],
-    ["deadlock_freedom", "transaction_completion"])
+    ["deadlock_freedom", "transaction_completion"],
+    tb="""
+    -- Self-checking testbench for spi_master (mode 0, MSB-first, 8 bits).
+    -- Robust checks that don't depend on exact internal phase counting:
+    --   1. the first mosi bit equals tx_data(7)  (MSB-first);
+    --   2. 'done' asserts within a bounded number of clocks (transaction completes,
+    --      i.e. no deadlock).
+    -- Full rx_data equivalence checking is left as a follow-up.
+    -- Pass => "ALL TESTS PASSED"; failure => severity failure (non-zero exit).
+    library ieee;
+    use ieee.std_logic_1164.all;
+    use ieee.numeric_std.all;
+
+    entity spi_master_tb is
+    end entity spi_master_tb;
+
+    architecture tb of spi_master_tb is
+      signal clk, rst, start, miso, sclk, mosi, done : std_logic := '0';
+      signal tx_data : std_logic_vector(7 downto 0) := (others => '0');
+      signal rx_data : std_logic_vector(7 downto 0);
+      constant TXD : std_logic_vector(7 downto 0) := "10100011";
+    begin
+      dut : entity work.spi_master
+        port map (clk => clk, rst => rst, start => start, tx_data => tx_data,
+                  miso => miso, sclk => sclk, mosi => mosi, done => done,
+                  rx_data => rx_data);
+
+      stim : process
+        variable errors : natural := 0;
+        variable cycles : natural := 0;
+
+        procedure tick_clk is
+        begin
+          clk <= '0'; wait for 5 ns;
+          clk <= '1'; wait for 5 ns;
+        end procedure;
+      begin
+        miso <= '1';
+        rst  <= '1';                       tick_clk;    -- reset -> IDLE
+        rst  <= '0'; tx_data <= TXD; start <= '1'; tick_clk;  -- IDLE -> RUN (latch)
+        start <= '0';                      tick_clk;    -- first RUN edge: mosi <= TXD(7)
+
+        if mosi /= TXD(7) then
+          errors := errors + 1;
+          report "mosi not MSB-first (expected tx_data(7))" severity error;
+        end if;
+
+        while done /= '1' and cycles < 40 loop
+          tick_clk;
+          cycles := cycles + 1;
+        end loop;
+
+        if done /= '1' then
+          errors := errors + 1;
+          report "done never asserted within 40 clocks (possible deadlock)" severity error;
+        end if;
+
+        if errors = 0 then
+          report "ALL TESTS PASSED (spi_master completion + MSB-first verified)" severity note;
+        else
+          report integer'image(errors) & " check(s) FAILED" severity failure;
+        end if;
+        wait;
+      end process;
+    end architecture tb;
+    """,
+    tb_entity="spi_master_tb")
 
 # ---------------- MEMORY ----------------
 add("mem_fifo", "memory", "Synchronous FIFO (depth 16)",
@@ -626,8 +759,12 @@ def main() -> None:
             "tags": b["tags"],
             "complexity": b["complexity"],
             "reference_hdl_path": "reference.vhd",
-            "properties": b["props"],
         }
+        if b.get("tb"):
+            (bdir / "testbench.vhd").write_text(b["tb"])
+            meta["testbench_path"] = "testbench.vhd"
+            meta["testbench_entity"] = b["tb_entity"]
+        meta["properties"] = b["props"]
         with (bdir / "benchmark.yaml").open("w") as fh:
             yaml.safe_dump(meta, fh, sort_keys=False, default_flow_style=False)
     print(f"wrote {len(BENCHMARKS)} benchmarks to {ROOT}")

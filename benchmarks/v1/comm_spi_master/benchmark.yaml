@@ -21,6 +21,8 @@ complexity:
   interface_count: 8
   concurrency: 1
 reference_hdl_path: reference.vhd
+testbench_path: testbench.vhd
+testbench_entity: spi_master_tb
 properties:
 - deadlock_freedom
 - transaction_completion
