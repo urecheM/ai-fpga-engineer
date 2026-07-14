@@ -4,5 +4,5 @@
   "n_benchmarks": 18,
   "best_model": "reference-golden",
   "best_pass_rate": 1.0,
-  "n_failures": 15
+  "n_failures": 69
 }

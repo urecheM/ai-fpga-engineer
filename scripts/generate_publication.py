@@ -159,10 +159,13 @@ support variance estimates and, in multi-model studies, significance testing.
 ## 10. Error Analysis
 
 Failures are classified as no-code, syntax, compilation, synthesis, simulation,
-protocol, timing, verification or optimization failures. The distribution
-(figure above) shows that lower-fidelity configurations fail predominantly
-through missing/incomplete code and protocol violations, concentrated on the
-hard communication-protocol benchmarks.
+protocol, timing, verification or optimization failures. With GHDL/Yosys
+actually running (rather than degraded to `skipped`), the dominant failure mode
+for lower-fidelity configurations is a genuine `compilation_error` — GHDL
+rejecting the emitted RTL — which accounts for the large majority of failures;
+missing/incomplete code is a minority. This is the harness's central case for
+toolchain-backed verification: a static-only fallback would materially
+overstate correctness for exactly these records.
 
 ## 11. Limitations and Threats to Validity
 

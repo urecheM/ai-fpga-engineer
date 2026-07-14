@@ -21,10 +21,10 @@ beyond pass/fail. Baseline: 216 evaluations over
 ## Headline results
 | model | prompt | n | pass_rate | pass_ci95 | compile_rate | synth_rate | avg_latency_s | avg_tokens |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| reference-golden | direct | 54 | 1.0 | [0.9336, 1.0] | 1.0 | 0.0 | 0.0998 | 320.3 |
-| synthetic-high | direct | 54 | 1.0 | [0.9336, 1.0] | 1.0 | 0.0 | 1.7361 | 298.2 |
-| synthetic-mid | direct | 54 | 0.9444 | [0.8489, 0.9809] | 0.9444 | 0.0 | 1.7463 | 265.7 |
-| synthetic-low | direct | 54 | 0.7778 | [0.6506, 0.868] | 0.8333 | 0.0 | 1.7181 | 259.3 |
+| reference-golden | direct | 54 | 1.0 | [0.9336, 1.0] | 1.0 | 1.0 | 0.0998 | 320.7 |
+| synthetic-high | direct | 54 | 0.7222 | [0.5911, 0.8238] | 0.7222 | 0.7222 | 1.7361 | 298.6 |
+| synthetic-mid | direct | 54 | 0.5556 | [0.4238, 0.68] | 0.5556 | 0.5556 | 1.7463 | 265.7 |
+| synthetic-low | direct | 54 | 0.4444 | [0.32, 0.5762] | 0.4444 | 0.4444 | 1.7181 | 259.7 |
 
 
 ## Methodology, limitations, and threats to validity

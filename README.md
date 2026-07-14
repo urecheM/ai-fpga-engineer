@@ -5,8 +5,8 @@
 
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Coverage](https://img.shields.io/badge/coverage-88%25-brightgreen)
-![Tests](https://img.shields.io/badge/tests-48%20passing-success)
+![Coverage](https://img.shields.io/badge/coverage-89%25-brightgreen)
+![Tests](https://img.shields.io/badge/tests-66%20passing-success)
 ![HDL](https://img.shields.io/badge/target-VHDL--2008-orange)
 ![Status](https://img.shields.io/badge/release-v0.1%20prototype-blueviolet)
 
@@ -63,8 +63,9 @@ load spec ▶ build prompt ▶ infer ▶ parse ▶ compile ▶ synthesize
 Metrics span functional (compile/synth/sim/properties), structural (static
 analysis), resource (LUT/FF/DSP/BRAM, estimated Fmax, area efficiency) and
 process (latency, tokens, retries). Failures are classified into one canonical
-class. Toolchain stages degrade to `skipped` when GHDL/Yosys are absent (strict
-in CI). Full detail: [`docs/evaluation-methodology.md`](docs/evaluation-methodology.md).
+class. Toolchain stages degrade to `skipped` when GHDL/Yosys are absent; CI
+installs both so these stages run for real rather than skipping. Full detail:
+[`docs/evaluation-methodology.md`](docs/evaluation-methodology.md).
 
 ## Experiments
 
@@ -78,13 +79,18 @@ identical harness. See [`docs/guides/experiments.md`](docs/guides/experiments.md
 
 | model | prompt | n | pass rate | 95% CI | avg latency (s) | avg tokens |
 |---|---|---|---|---|---|---|
-| reference-golden | direct | 54 | 1.000 | [0.934, 1.0] | 0.10 | 320 |
-| synthetic-high | direct | 54 | 1.000 | [0.934, 1.0] | 1.74 | 298 |
-| synthetic-mid | direct | 54 | 0.944 | [0.849, 0.981] | 1.75 | 266 |
-| synthetic-low | direct | 54 | 0.778 | [0.651, 0.868] | 1.72 | 259 |
+| reference-golden | direct | 54 | 1.000 | [0.934, 1.0] | 0.10 | 321 |
+| synthetic-high | direct | 54 | 0.722 | [0.591, 0.824] | 1.74 | 299 |
+| synthetic-mid | direct | 54 | 0.556 | [0.424, 0.68] | 1.75 | 266 |
+| synthetic-low | direct | 54 | 0.444 | [0.32, 0.576] | 1.72 | 260 |
 
-Pass rate declines with fidelity and with objective difficulty (hard
-communication-protocol benchmarks dominate the failures), supporting H3. Full
+Pass rate separates cleanly by synthetic fidelity (0.72 → 0.56 → 0.44), but with
+GHDL/Yosys actually running synthesis in the loop, it does **not** decline
+monotonically with objective difficulty as H3 predicted — e.g. `moderate`-tier
+designs now fail more often than `hard`-tier ones for `synthetic-high`. This
+qualifies rather than confirms H3: difficulty score and real synthesizability
+are only loosely correlated once static heuristics are replaced with an actual
+toolchain. See the technical report's threats-to-validity discussion. Full
 leaderboards, category/difficulty breakdowns and figures are regenerated into
 `results/`, `publication/` and `website/`.
 
@@ -106,8 +112,8 @@ docker build -t hdleval . && docker run --rm -v "$PWD/results:/opt/hdleval/resul
 Offline verification without dev extras:
 
 ```bash
-PYTHONPATH=src python scripts/run_tests_nodeps.py   # 48 tests
-PYTHONPATH=.  python scripts/estimate_coverage.py    # ~88% coverage
+PYTHONPATH=src python scripts/run_tests_nodeps.py   # 66 tests
+PYTHONPATH=.  python scripts/estimate_coverage.py    # ~89% coverage
 ```
 
 ## Limitations
@@ -161,6 +167,7 @@ MIT — see [LICENSE](LICENSE).
 
 ---
 
-*The `agents/`, `core/`, `hdl/` and `reference/` directories contain the original
-rule-based VHDL pipeline this platform grew from; its verified golden models seed
-the benchmark reference implementations.*
+*The `ai_fpga_engineer/` package contains the original rule-based VHDL pipeline
+this platform grew from (also exposed to hdleval as the `rule_based` model
+provider); its verified golden models seed the benchmark reference
+implementations.*

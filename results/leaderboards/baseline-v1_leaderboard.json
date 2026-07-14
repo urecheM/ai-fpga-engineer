@@ -18,7 +18,7 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 1.3793,
@@ -37,37 +37,18 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 1.258,
         "avg_retries": 0.0,
         "avg_tokens": 224.0,
-        "compile_rate": 1.0,
-        "failures": {
-          "none": 12
-        },
-        "model": "synthetic-mid",
-        "n": 12,
-        "pass_ci95": [
-          0.7575,
-          1.0
-        ],
-        "pass_rate": 1.0,
-        "prompt": "direct",
-        "sim_rate": 1.0,
-        "synth_rate": 0.0
-      },
-      {
-        "avg_latency_s": 1.2515,
-        "avg_retries": 0.0,
-        "avg_tokens": 209.0,
         "compile_rate": 0.75,
         "failures": {
-          "no_code_generated": 3,
+          "compilation_error": 3,
           "none": 9
         },
-        "model": "synthetic-low",
+        "model": "synthetic-mid",
         "n": 12,
         "pass_ci95": [
           0.4677,
@@ -76,14 +57,35 @@
         "pass_rate": 0.75,
         "prompt": "direct",
         "sim_rate": 0.75,
-        "synth_rate": 0.0
+        "synth_rate": 0.75
+      },
+      {
+        "avg_latency_s": 1.2515,
+        "avg_retries": 0.0,
+        "avg_tokens": 209.0,
+        "compile_rate": 0.5,
+        "failures": {
+          "compilation_error": 3,
+          "no_code_generated": 3,
+          "none": 6
+        },
+        "model": "synthetic-low",
+        "n": 12,
+        "pass_ci95": [
+          0.2538,
+          0.7462
+        ],
+        "pass_rate": 0.5,
+        "prompt": "direct",
+        "sim_rate": 0.5,
+        "synth_rate": 0.5
       }
     ],
     "communication": [
       {
         "avg_latency_s": 0.102,
         "avg_retries": 0.0,
-        "avg_tokens": 433.0,
+        "avg_tokens": 435.3,
         "compile_rate": 1.0,
         "failures": {
           "none": 9
@@ -97,12 +99,12 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 2.2107,
         "avg_retries": 0.0,
-        "avg_tokens": 417.3,
+        "avg_tokens": 419.7,
         "compile_rate": 1.0,
         "failures": {
           "none": 9
@@ -116,18 +118,39 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 2.585,
         "avg_retries": 0.0,
         "avg_tokens": 276.7,
-        "compile_rate": 0.6667,
+        "compile_rate": 0.3333,
         "failures": {
+          "compilation_error": 3,
           "no_code_generated": 3,
-          "none": 6
+          "none": 3
         },
         "model": "synthetic-mid",
+        "n": 9,
+        "pass_ci95": [
+          0.1206,
+          0.6458
+        ],
+        "pass_rate": 0.3333,
+        "prompt": "direct",
+        "sim_rate": 0.3333,
+        "synth_rate": 0.3333
+      },
+      {
+        "avg_latency_s": 2.194,
+        "avg_retries": 0.0,
+        "avg_tokens": 369.0,
+        "compile_rate": 0.6667,
+        "failures": {
+          "compilation_error": 3,
+          "none": 6
+        },
+        "model": "synthetic-low",
         "n": 9,
         "pass_ci95": [
           0.3542,
@@ -136,26 +159,7 @@
         "pass_rate": 0.6667,
         "prompt": "direct",
         "sim_rate": 0.6667,
-        "synth_rate": 0.0
-      },
-      {
-        "avg_latency_s": 2.194,
-        "avg_retries": 0.0,
-        "avg_tokens": 366.7,
-        "compile_rate": 1.0,
-        "failures": {
-          "none": 9
-        },
-        "model": "synthetic-low",
-        "n": 9,
-        "pass_ci95": [
-          0.7008,
-          1.0
-        ],
-        "pass_rate": 1.0,
-        "prompt": "direct",
-        "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 0.6667
       }
     ],
     "control": [
@@ -176,7 +180,7 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 1.514,
@@ -195,25 +199,25 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 1.22,
         "avg_retries": 0.0,
         "avg_tokens": 242.5,
-        "compile_rate": 1.0,
+        "compile_rate": 0.0,
         "failures": {
-          "none": 6
+          "compilation_error": 6
         },
         "model": "synthetic-mid",
         "n": 6,
         "pass_ci95": [
-          0.6097,
-          1.0
+          0.0,
+          0.3903
         ],
-        "pass_rate": 1.0,
+        "pass_rate": 0.0,
         "prompt": "direct",
-        "sim_rate": 1.0,
+        "sim_rate": 0.0,
         "synth_rate": 0.0
       },
       {
@@ -233,7 +237,7 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       }
     ],
     "dsp": [
@@ -254,63 +258,64 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 1.8735,
         "avg_retries": 0.0,
         "avg_tokens": 296.0,
-        "compile_rate": 1.0,
+        "compile_rate": 0.5,
         "failures": {
-          "none": 6
+          "compilation_error": 3,
+          "none": 3
         },
         "model": "synthetic-high",
         "n": 6,
         "pass_ci95": [
-          0.6097,
-          1.0
+          0.1876,
+          0.8124
         ],
-        "pass_rate": 1.0,
+        "pass_rate": 0.5,
         "prompt": "direct",
-        "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "sim_rate": 0.5,
+        "synth_rate": 0.5
       },
       {
         "avg_latency_s": 2.0305,
         "avg_retries": 0.0,
         "avg_tokens": 252.0,
-        "compile_rate": 1.0,
+        "compile_rate": 0.0,
         "failures": {
-          "none": 6
+          "compilation_error": 6
         },
         "model": "synthetic-mid",
         "n": 6,
         "pass_ci95": [
-          0.6097,
-          1.0
+          0.0,
+          0.3903
         ],
-        "pass_rate": 1.0,
+        "pass_rate": 0.0,
         "prompt": "direct",
-        "sim_rate": 1.0,
+        "sim_rate": 0.0,
         "synth_rate": 0.0
       },
       {
         "avg_latency_s": 1.903,
         "avg_retries": 0.0,
         "avg_tokens": 254.0,
-        "compile_rate": 1.0,
+        "compile_rate": 0.0,
         "failures": {
-          "none": 6
+          "compilation_error": 6
         },
         "model": "synthetic-low",
         "n": 6,
         "pass_ci95": [
-          0.6097,
-          1.0
+          0.0,
+          0.3903
         ],
-        "pass_rate": 1.0,
+        "pass_rate": 0.0,
         "prompt": "direct",
-        "sim_rate": 1.0,
+        "sim_rate": 0.0,
         "synth_rate": 0.0
       }
     ],
@@ -332,7 +337,7 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 2.1005,
@@ -351,7 +356,7 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 1.7125,
@@ -370,16 +375,16 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 1.7425,
         "avg_retries": 0.0,
         "avg_tokens": 262.0,
-        "compile_rate": 1.0,
+        "compile_rate": 0.5,
         "failures": {
-          "none": 3,
-          "protocol_violation": 3
+          "compilation_error": 3,
+          "none": 3
         },
         "model": "synthetic-low",
         "n": 6,
@@ -390,7 +395,7 @@
         "pass_rate": 0.5,
         "prompt": "direct",
         "sim_rate": 0.5,
-        "synth_rate": 0.0
+        "synth_rate": 0.5
       }
     ],
     "memory": [
@@ -411,64 +416,65 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 1.663,
         "avg_retries": 0.0,
         "avg_tokens": 293.0,
-        "compile_rate": 1.0,
+        "compile_rate": 0.0,
         "failures": {
-          "none": 9
+          "compilation_error": 9
         },
         "model": "synthetic-high",
         "n": 9,
         "pass_ci95": [
-          0.7008,
-          1.0
+          0.0,
+          0.2992
         ],
-        "pass_rate": 1.0,
+        "pass_rate": 0.0,
         "prompt": "direct",
-        "sim_rate": 1.0,
+        "sim_rate": 0.0,
         "synth_rate": 0.0
       },
       {
         "avg_latency_s": 1.8167,
         "avg_retries": 0.0,
         "avg_tokens": 280.3,
-        "compile_rate": 1.0,
+        "compile_rate": 0.6667,
         "failures": {
-          "none": 9
+          "compilation_error": 3,
+          "none": 6
         },
         "model": "synthetic-mid",
         "n": 9,
         "pass_ci95": [
-          0.7008,
-          1.0
+          0.3542,
+          0.8794
         ],
-        "pass_rate": 1.0,
+        "pass_rate": 0.6667,
         "prompt": "direct",
-        "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "sim_rate": 0.6667,
+        "synth_rate": 0.6667
       },
       {
         "avg_latency_s": 1.946,
         "avg_retries": 0.0,
         "avg_tokens": 185.3,
-        "compile_rate": 0.3333,
+        "compile_rate": 0.0,
         "failures": {
-          "no_code_generated": 6,
-          "none": 3
+          "compilation_error": 3,
+          "no_code_generated": 6
         },
         "model": "synthetic-low",
         "n": 9,
         "pass_ci95": [
-          0.1206,
-          0.6458
+          0.0,
+          0.2992
         ],
-        "pass_rate": 0.3333,
+        "pass_rate": 0.0,
         "prompt": "direct",
-        "sim_rate": 0.3333,
+        "sim_rate": 0.0,
         "synth_rate": 0.0
       }
     ],
@@ -490,26 +496,27 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 1.568,
         "avg_retries": 0.0,
         "avg_tokens": 266.5,
-        "compile_rate": 1.0,
+        "compile_rate": 0.5,
         "failures": {
-          "none": 6
+          "compilation_error": 3,
+          "none": 3
         },
         "model": "synthetic-high",
         "n": 6,
         "pass_ci95": [
-          0.6097,
-          1.0
+          0.1876,
+          0.8124
         ],
-        "pass_rate": 1.0,
+        "pass_rate": 0.5,
         "prompt": "direct",
-        "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "sim_rate": 0.5,
+        "synth_rate": 0.5
       },
       {
         "avg_latency_s": 1.6355,
@@ -528,26 +535,27 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 1.8175,
         "avg_retries": 0.0,
         "avg_tokens": 300.5,
-        "compile_rate": 1.0,
+        "compile_rate": 0.5,
         "failures": {
-          "none": 6
+          "compilation_error": 3,
+          "none": 3
         },
         "model": "synthetic-low",
         "n": 6,
         "pass_ci95": [
-          0.6097,
-          1.0
+          0.1876,
+          0.8124
         ],
-        "pass_rate": 1.0,
+        "pass_rate": 0.5,
         "prompt": "direct",
-        "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "sim_rate": 0.5,
+        "synth_rate": 0.5
       }
     ]
   },
@@ -570,56 +578,18 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 1.5253,
         "avg_retries": 0.0,
         "avg_tokens": 257.6,
-        "compile_rate": 1.0,
-        "failures": {
-          "none": 24
-        },
-        "model": "synthetic-high",
-        "n": 24,
-        "pass_ci95": [
-          0.862,
-          1.0
-        ],
-        "pass_rate": 1.0,
-        "prompt": "direct",
-        "sim_rate": 1.0,
-        "synth_rate": 0.0
-      },
-      {
-        "avg_latency_s": 1.3891,
-        "avg_retries": 0.0,
-        "avg_tokens": 252.0,
-        "compile_rate": 1.0,
-        "failures": {
-          "none": 24
-        },
-        "model": "synthetic-mid",
-        "n": 24,
-        "pass_ci95": [
-          0.862,
-          1.0
-        ],
-        "pass_rate": 1.0,
-        "prompt": "direct",
-        "sim_rate": 1.0,
-        "synth_rate": 0.0
-      },
-      {
-        "avg_latency_s": 1.4155,
-        "avg_retries": 0.0,
-        "avg_tokens": 237.0,
         "compile_rate": 0.875,
         "failures": {
-          "no_code_generated": 3,
+          "compilation_error": 3,
           "none": 21
         },
-        "model": "synthetic-low",
+        "model": "synthetic-high",
         "n": 24,
         "pass_ci95": [
           0.69,
@@ -628,14 +598,55 @@
         "pass_rate": 0.875,
         "prompt": "direct",
         "sim_rate": 0.875,
-        "synth_rate": 0.0
+        "synth_rate": 0.875
+      },
+      {
+        "avg_latency_s": 1.3891,
+        "avg_retries": 0.0,
+        "avg_tokens": 252.0,
+        "compile_rate": 0.5,
+        "failures": {
+          "compilation_error": 12,
+          "none": 12
+        },
+        "model": "synthetic-mid",
+        "n": 24,
+        "pass_ci95": [
+          0.3143,
+          0.6857
+        ],
+        "pass_rate": 0.5,
+        "prompt": "direct",
+        "sim_rate": 0.5,
+        "synth_rate": 0.5
+      },
+      {
+        "avg_latency_s": 1.4155,
+        "avg_retries": 0.0,
+        "avg_tokens": 237.0,
+        "compile_rate": 0.75,
+        "failures": {
+          "compilation_error": 3,
+          "no_code_generated": 3,
+          "none": 18
+        },
+        "model": "synthetic-low",
+        "n": 24,
+        "pass_ci95": [
+          0.551,
+          0.88
+        ],
+        "pass_rate": 0.75,
+        "prompt": "direct",
+        "sim_rate": 0.75,
+        "synth_rate": 0.75
       }
     ],
     "hard": [
       {
         "avg_latency_s": 0.102,
         "avg_retries": 0.0,
-        "avg_tokens": 433.0,
+        "avg_tokens": 435.3,
         "compile_rate": 1.0,
         "failures": {
           "none": 9
@@ -649,12 +660,12 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 2.2107,
         "avg_retries": 0.0,
-        "avg_tokens": 417.3,
+        "avg_tokens": 419.7,
         "compile_rate": 1.0,
         "failures": {
           "none": 9
@@ -668,18 +679,39 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 2.585,
         "avg_retries": 0.0,
         "avg_tokens": 276.7,
-        "compile_rate": 0.6667,
+        "compile_rate": 0.3333,
         "failures": {
+          "compilation_error": 3,
           "no_code_generated": 3,
-          "none": 6
+          "none": 3
         },
         "model": "synthetic-mid",
+        "n": 9,
+        "pass_ci95": [
+          0.1206,
+          0.6458
+        ],
+        "pass_rate": 0.3333,
+        "prompt": "direct",
+        "sim_rate": 0.3333,
+        "synth_rate": 0.3333
+      },
+      {
+        "avg_latency_s": 2.194,
+        "avg_retries": 0.0,
+        "avg_tokens": 369.0,
+        "compile_rate": 0.6667,
+        "failures": {
+          "compilation_error": 3,
+          "none": 6
+        },
+        "model": "synthetic-low",
         "n": 9,
         "pass_ci95": [
           0.3542,
@@ -688,26 +720,7 @@
         "pass_rate": 0.6667,
         "prompt": "direct",
         "sim_rate": 0.6667,
-        "synth_rate": 0.0
-      },
-      {
-        "avg_latency_s": 2.194,
-        "avg_retries": 0.0,
-        "avg_tokens": 366.7,
-        "compile_rate": 1.0,
-        "failures": {
-          "none": 9
-        },
-        "model": "synthetic-low",
-        "n": 9,
-        "pass_ci95": [
-          0.7008,
-          1.0
-        ],
-        "pass_rate": 1.0,
-        "prompt": "direct",
-        "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 0.6667
       }
     ],
     "moderate": [
@@ -728,57 +741,38 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 1.9295,
         "avg_retries": 0.0,
         "avg_tokens": 301.5,
-        "compile_rate": 1.0,
+        "compile_rate": 0.3333,
         "failures": {
-          "none": 18
+          "compilation_error": 12,
+          "none": 6
         },
         "model": "synthetic-high",
         "n": 18,
         "pass_ci95": [
-          0.8241,
-          1.0
+          0.1628,
+          0.5625
         ],
-        "pass_rate": 1.0,
+        "pass_rate": 0.3333,
         "prompt": "direct",
-        "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "sim_rate": 0.3333,
+        "synth_rate": 0.3333
       },
       {
         "avg_latency_s": 1.9718,
         "avg_retries": 0.0,
         "avg_tokens": 281.8,
-        "compile_rate": 1.0,
+        "compile_rate": 0.6667,
         "failures": {
-          "none": 18
+          "compilation_error": 6,
+          "none": 12
         },
         "model": "synthetic-mid",
-        "n": 18,
-        "pass_ci95": [
-          0.8241,
-          1.0
-        ],
-        "pass_rate": 1.0,
-        "prompt": "direct",
-        "sim_rate": 1.0,
-        "synth_rate": 0.0
-      },
-      {
-        "avg_latency_s": 1.994,
-        "avg_retries": 0.0,
-        "avg_tokens": 255.8,
-        "compile_rate": 0.8333,
-        "failures": {
-          "no_code_generated": 3,
-          "none": 12,
-          "protocol_violation": 3
-        },
-        "model": "synthetic-low",
         "n": 18,
         "pass_ci95": [
           0.4375,
@@ -787,6 +781,26 @@
         "pass_rate": 0.6667,
         "prompt": "direct",
         "sim_rate": 0.6667,
+        "synth_rate": 0.6667
+      },
+      {
+        "avg_latency_s": 1.994,
+        "avg_retries": 0.0,
+        "avg_tokens": 255.8,
+        "compile_rate": 0.0,
+        "failures": {
+          "compilation_error": 15,
+          "no_code_generated": 3
+        },
+        "model": "synthetic-low",
+        "n": 18,
+        "pass_ci95": [
+          0.0,
+          0.1759
+        ],
+        "pass_rate": 0.0,
+        "prompt": "direct",
+        "sim_rate": 0.0,
         "synth_rate": 0.0
       }
     ],
@@ -808,7 +822,7 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 0.839,
@@ -827,7 +841,7 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 0.735,
@@ -846,7 +860,7 @@
         "pass_rate": 1.0,
         "prompt": "direct",
         "sim_rate": 1.0,
-        "synth_rate": 0.0
+        "synth_rate": 1.0
       },
       {
         "avg_latency_s": 1.056,
@@ -873,7 +887,7 @@
     {
       "avg_latency_s": 0.0998,
       "avg_retries": 0.0,
-      "avg_tokens": 320.3,
+      "avg_tokens": 320.7,
       "compile_rate": 1.0,
       "failures": {
         "none": 54
@@ -887,67 +901,69 @@
       "pass_rate": 1.0,
       "prompt": "direct",
       "sim_rate": 1.0,
-      "synth_rate": 0.0
+      "synth_rate": 1.0
     },
     {
       "avg_latency_s": 1.7361,
       "avg_retries": 0.0,
-      "avg_tokens": 298.2,
-      "compile_rate": 1.0,
+      "avg_tokens": 298.6,
+      "compile_rate": 0.7222,
       "failures": {
-        "none": 54
+        "compilation_error": 15,
+        "none": 39
       },
       "model": "synthetic-high",
       "n": 54,
       "pass_ci95": [
-        0.9336,
-        1.0
+        0.5911,
+        0.8238
       ],
-      "pass_rate": 1.0,
+      "pass_rate": 0.7222,
       "prompt": "direct",
-      "sim_rate": 1.0,
-      "synth_rate": 0.0
+      "sim_rate": 0.7222,
+      "synth_rate": 0.7222
     },
     {
       "avg_latency_s": 1.7463,
       "avg_retries": 0.0,
       "avg_tokens": 265.7,
-      "compile_rate": 0.9444,
+      "compile_rate": 0.5556,
       "failures": {
+        "compilation_error": 21,
         "no_code_generated": 3,
-        "none": 51
+        "none": 30
       },
       "model": "synthetic-mid",
       "n": 54,
       "pass_ci95": [
-        0.8489,
-        0.9809
+        0.4238,
+        0.68
       ],
-      "pass_rate": 0.9444,
+      "pass_rate": 0.5556,
       "prompt": "direct",
-      "sim_rate": 0.9444,
-      "synth_rate": 0.0
+      "sim_rate": 0.5556,
+      "synth_rate": 0.5556
     },
     {
       "avg_latency_s": 1.7181,
       "avg_retries": 0.0,
-      "avg_tokens": 259.3,
-      "compile_rate": 0.8333,
+      "avg_tokens": 259.7,
+      "compile_rate": 0.4444,
       "failures": {
+        "compilation_error": 21,
         "no_code_generated": 9,
-        "none": 42,
-        "protocol_violation": 3
+        "none": 24
       },
       "model": "synthetic-low",
       "n": 54,
       "pass_ci95": [
-        0.6506,
-        0.868
+        0.32,
+        0.5762
       ],
-      "pass_rate": 0.7778,
+      "pass_rate": 0.4444,
       "prompt": "direct",
-      "sim_rate": 0.7778,
-      "synth_rate": 0.0
+      "sim_rate": 0.4444,
+      "synth_rate": 0.4444
     }
   ]
 }

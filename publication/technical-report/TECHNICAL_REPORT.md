@@ -84,10 +84,10 @@ Overall leaderboard (95% Wilson confidence intervals on pass rate):
 
 | model | prompt | n | pass_rate | pass_ci95 | compile_rate | synth_rate | avg_latency_s | avg_tokens |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| reference-golden | direct | 54 | 1.0 | [0.9336, 1.0] | 1.0 | 0.0 | 0.0998 | 320.3 |
-| synthetic-high | direct | 54 | 1.0 | [0.9336, 1.0] | 1.0 | 0.0 | 1.7361 | 298.2 |
-| synthetic-mid | direct | 54 | 0.9444 | [0.8489, 0.9809] | 0.9444 | 0.0 | 1.7463 | 265.7 |
-| synthetic-low | direct | 54 | 0.7778 | [0.6506, 0.868] | 0.8333 | 0.0 | 1.7181 | 259.3 |
+| reference-golden | direct | 54 | 1.0 | [0.9336, 1.0] | 1.0 | 1.0 | 0.0998 | 320.7 |
+| synthetic-high | direct | 54 | 0.7222 | [0.5911, 0.8238] | 0.7222 | 0.7222 | 1.7361 | 298.6 |
+| synthetic-mid | direct | 54 | 0.5556 | [0.4238, 0.68] | 0.5556 | 0.5556 | 1.7463 | 265.7 |
+| synthetic-low | direct | 54 | 0.4444 | [0.32, 0.5762] | 0.4444 | 0.4444 | 1.7181 | 259.7 |
 
 
 Per-category pass rates:
@@ -96,32 +96,32 @@ Per-category pass rates:
 | --- | --- | --- | --- | --- |
 | arithmetic | reference-golden | 12 | 1.0 | [0.7575, 1.0] |
 | arithmetic | synthetic-high | 12 | 1.0 | [0.7575, 1.0] |
-| arithmetic | synthetic-mid | 12 | 1.0 | [0.7575, 1.0] |
-| arithmetic | synthetic-low | 12 | 0.75 | [0.4677, 0.9111] |
+| arithmetic | synthetic-mid | 12 | 0.75 | [0.4677, 0.9111] |
+| arithmetic | synthetic-low | 12 | 0.5 | [0.2538, 0.7462] |
 | communication | reference-golden | 9 | 1.0 | [0.7008, 1.0] |
 | communication | synthetic-high | 9 | 1.0 | [0.7008, 1.0] |
-| communication | synthetic-mid | 9 | 0.6667 | [0.3542, 0.8794] |
-| communication | synthetic-low | 9 | 1.0 | [0.7008, 1.0] |
+| communication | synthetic-mid | 9 | 0.3333 | [0.1206, 0.6458] |
+| communication | synthetic-low | 9 | 0.6667 | [0.3542, 0.8794] |
 | control | reference-golden | 6 | 1.0 | [0.6097, 1.0] |
 | control | synthetic-high | 6 | 1.0 | [0.6097, 1.0] |
-| control | synthetic-mid | 6 | 1.0 | [0.6097, 1.0] |
+| control | synthetic-mid | 6 | 0.0 | [0.0, 0.3903] |
 | control | synthetic-low | 6 | 1.0 | [0.6097, 1.0] |
 | dsp | reference-golden | 6 | 1.0 | [0.6097, 1.0] |
-| dsp | synthetic-high | 6 | 1.0 | [0.6097, 1.0] |
-| dsp | synthetic-mid | 6 | 1.0 | [0.6097, 1.0] |
-| dsp | synthetic-low | 6 | 1.0 | [0.6097, 1.0] |
+| dsp | synthetic-high | 6 | 0.5 | [0.1876, 0.8124] |
+| dsp | synthetic-mid | 6 | 0.0 | [0.0, 0.3903] |
+| dsp | synthetic-low | 6 | 0.0 | [0.0, 0.3903] |
 | fsm | reference-golden | 6 | 1.0 | [0.6097, 1.0] |
 | fsm | synthetic-high | 6 | 1.0 | [0.6097, 1.0] |
 | fsm | synthetic-mid | 6 | 1.0 | [0.6097, 1.0] |
 | fsm | synthetic-low | 6 | 0.5 | [0.1876, 0.8124] |
 | memory | reference-golden | 9 | 1.0 | [0.7008, 1.0] |
-| memory | synthetic-high | 9 | 1.0 | [0.7008, 1.0] |
-| memory | synthetic-mid | 9 | 1.0 | [0.7008, 1.0] |
-| memory | synthetic-low | 9 | 0.3333 | [0.1206, 0.6458] |
+| memory | synthetic-high | 9 | 0.0 | [0.0, 0.2992] |
+| memory | synthetic-mid | 9 | 0.6667 | [0.3542, 0.8794] |
+| memory | synthetic-low | 9 | 0.0 | [0.0, 0.2992] |
 | processor | reference-golden | 6 | 1.0 | [0.6097, 1.0] |
-| processor | synthetic-high | 6 | 1.0 | [0.6097, 1.0] |
+| processor | synthetic-high | 6 | 0.5 | [0.1876, 0.8124] |
 | processor | synthetic-mid | 6 | 1.0 | [0.6097, 1.0] |
-| processor | synthetic-low | 6 | 1.0 | [0.6097, 1.0] |
+| processor | synthetic-low | 6 | 0.5 | [0.1876, 0.8124] |
 
 
 Per-difficulty-tier pass rates:
@@ -129,17 +129,17 @@ Per-difficulty-tier pass rates:
 | tier | model | n | pass_rate | pass_ci95 |
 | --- | --- | --- | --- | --- |
 | easy | reference-golden | 24 | 1.0 | [0.862, 1.0] |
-| easy | synthetic-high | 24 | 1.0 | [0.862, 1.0] |
-| easy | synthetic-mid | 24 | 1.0 | [0.862, 1.0] |
-| easy | synthetic-low | 24 | 0.875 | [0.69, 0.9566] |
+| easy | synthetic-high | 24 | 0.875 | [0.69, 0.9566] |
+| easy | synthetic-mid | 24 | 0.5 | [0.3143, 0.6857] |
+| easy | synthetic-low | 24 | 0.75 | [0.551, 0.88] |
 | hard | reference-golden | 9 | 1.0 | [0.7008, 1.0] |
 | hard | synthetic-high | 9 | 1.0 | [0.7008, 1.0] |
-| hard | synthetic-mid | 9 | 0.6667 | [0.3542, 0.8794] |
-| hard | synthetic-low | 9 | 1.0 | [0.7008, 1.0] |
+| hard | synthetic-mid | 9 | 0.3333 | [0.1206, 0.6458] |
+| hard | synthetic-low | 9 | 0.6667 | [0.3542, 0.8794] |
 | moderate | reference-golden | 18 | 1.0 | [0.8241, 1.0] |
-| moderate | synthetic-high | 18 | 1.0 | [0.8241, 1.0] |
-| moderate | synthetic-mid | 18 | 1.0 | [0.8241, 1.0] |
-| moderate | synthetic-low | 18 | 0.6667 | [0.4375, 0.8372] |
+| moderate | synthetic-high | 18 | 0.3333 | [0.1628, 0.5625] |
+| moderate | synthetic-mid | 18 | 0.6667 | [0.4375, 0.8372] |
+| moderate | synthetic-low | 18 | 0.0 | [0.0, 0.1759] |
 | trivial | reference-golden | 3 | 1.0 | [0.4385, 1.0] |
 | trivial | synthetic-high | 3 | 1.0 | [0.4385, 1.0] |
 | trivial | synthetic-mid | 3 | 1.0 | [0.4385, 1.0] |
@@ -162,10 +162,13 @@ support variance estimates and, in multi-model studies, significance testing.
 ## 10. Error Analysis
 
 Failures are classified as no-code, syntax, compilation, synthesis, simulation,
-protocol, timing, verification or optimization failures. The distribution
-(figure above) shows that lower-fidelity configurations fail predominantly
-through missing/incomplete code and protocol violations, concentrated on the
-hard communication-protocol benchmarks.
+protocol, timing, verification or optimization failures. With GHDL/Yosys
+actually running (rather than degraded to `skipped`), the dominant failure mode
+for lower-fidelity configurations is a genuine `compilation_error` — GHDL
+rejecting the emitted RTL — which accounts for the large majority of failures;
+missing/incomplete code is a minority. This is the harness's central case for
+toolchain-backed verification: a static-only fallback would materially
+overstate correctness for exactly these records.
 
 ## 11. Limitations and Threats to Validity
 

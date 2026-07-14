@@ -45,7 +45,24 @@ def _fixture(*a, **k):
     return deco if not a else deco(a[0])
 
 
+def _skipif(condition, *, reason=""):
+    def deco(fn):
+        fn.__skipif__ = (condition, reason)
+        return fn
+
+    return deco
+
+
+def _parametrize(argnames, argvalues, ids=None):
+    def deco(fn):
+        fn.__parametrize__ = (argnames, list(argvalues), ids)
+        return fn
+
+    return deco
+
+
 pytest.fixture = _fixture
+pytest.mark = types.SimpleNamespace(skipif=_skipif, parametrize=_parametrize)
 sys.modules["pytest"] = pytest
 
 
@@ -74,11 +91,24 @@ def _load(path):
     return mod
 
 
+def _cases(fn):
+    """Yield (label, extra_kwargs) for one test function, expanding parametrize."""
+    argnames, argvalues, ids = getattr(fn, "__parametrize__", (None, None, None))
+    if argvalues is None:
+        yield "", {}
+        return
+    names = [n.strip() for n in argnames.split(",")]
+    for i, val in enumerate(argvalues):
+        vals = val if len(names) > 1 else (val,)
+        label = f"[{ids[i]}]" if ids else f"[{i}]"
+        yield label, dict(zip(names, vals, strict=True))
+
+
 def main() -> int:
     tmp_root = tempfile.mkdtemp()
     fixtures = _make_fixtures(tmp_root)
     test_files = sorted((ROOT / "tests").rglob("test_*.py"))
-    passed = failed = 0
+    passed = failed = skipped = 0
     failures = []
     for tf in test_files:
         mod = _load(tf)
@@ -87,16 +117,23 @@ def main() -> int:
                 continue
             if getattr(fn, "__is_fixture__", False):
                 continue
+            condition, reason = getattr(fn, "__skipif__", (False, ""))
+            if condition:
+                skipped += 1
+                print(f"SKIP {tf.name}::{name} ({reason})")
+                continue
             sig = inspect.signature(fn)
-            kwargs = {p: fixtures[p]() for p in sig.parameters if p in fixtures}
-            try:
-                fn(**kwargs)
-                passed += 1
-            except Exception as e:
-                failed += 1
-                failures.append(f"{tf.name}::{name}: {e}")
-                traceback.print_exc()
-    print(f"\n{'=' * 50}\nPASSED {passed}  FAILED {failed}")
+            for label, case_kwargs in _cases(fn):
+                kwargs = {p: fixtures[p]() for p in sig.parameters if p in fixtures}
+                kwargs.update(case_kwargs)
+                try:
+                    fn(**kwargs)
+                    passed += 1
+                except Exception as e:
+                    failed += 1
+                    failures.append(f"{tf.name}::{name}{label}: {e}")
+                    traceback.print_exc()
+    print(f"\n{'=' * 50}\nPASSED {passed}  FAILED {failed}  SKIPPED {skipped}")
     for f in failures:
         print("  FAIL", f)
     return 1 if failed else 0
