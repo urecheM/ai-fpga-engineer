@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-from hdleval.metrics.static_analysis import analyze_vhdl
 from hdleval.metrics.resources import resource_metrics
+from hdleval.metrics.static_analysis import analyze_vhdl
 from hdleval.toolchain.detect import ToolResult
-
 
 FSM = """
 entity t is port(clk: in bit); end entity;

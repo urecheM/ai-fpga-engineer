@@ -5,6 +5,7 @@ The score is a transparent weighted sum of complexity dimensions, normalised to
 ``docs/evaluation-methodology.md`` and are fixed per suite version for
 reproducibility.
 """
+
 from __future__ import annotations
 
 from .schema import ComplexityMetrics

@@ -1,4 +1,5 @@
 """Result types produced by the evaluation harness."""
+
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field

@@ -1,5 +1,10 @@
 # Implementation tasks — step-by-step guides
 
+**Status: all four tasks below are complete** (Task 1: #5, Task 2: this v1-polish
+pass, Task 3: #4/#6/#7, Task 4: the v0.1.0 release). Kept as a worked example of
+the issue → branch → implement → verify → PR → merge cycle this project uses;
+follow the same shape for future near-term work.
+
 Four near-term tasks, each written as a full issue → branch → implement → verify
 → PR → merge cycle. They assume you work locally with the GitHub CLI (`gh`)
 authenticated and a Python virtual environment.

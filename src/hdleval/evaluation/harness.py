@@ -9,6 +9,7 @@ Model inference is injected as a :class:`ModelProvider`, so adding a model never
 touches evaluation logic. Toolchain stages degrade to ``skipped`` when the tool
 is absent, so the harness runs anywhere while remaining strict in CI.
 """
+
 from __future__ import annotations
 
 import time
@@ -91,14 +92,23 @@ class EvaluationHarness:
         result.metrics["inference_latency_s"] = resp.latency_s
         result.metrics["prompt_tokens"] = resp.prompt_tokens
         result.metrics["completion_tokens"] = resp.completion_tokens
-        self._emit(run_id, benchmark.id, "inference",
-                   "ok" if resp.finish_reason != "no_reference" else "fail",
-                   resp.latency_s, {"tokens": resp.total_tokens})
+        self._emit(
+            run_id,
+            benchmark.id,
+            "inference",
+            "ok" if resp.finish_reason != "no_reference" else "fail",
+            resp.latency_s,
+            {"tokens": resp.total_tokens},
+        )
 
         parsed = extract_vhdl(hdl)
         result.hdl = parsed.code
-        self._stage(result, "parse", "ok" if parsed.found else "fail",
-                    detail={"entity": parsed.entity, "n_blocks": parsed.n_blocks})
+        self._stage(
+            result,
+            "parse",
+            "ok" if parsed.found else "fail",
+            detail={"entity": parsed.entity, "n_blocks": parsed.n_blocks},
+        )
 
         # ---- self-repair loop (optional) ----
         retries = 0
@@ -119,14 +129,20 @@ class EvaluationHarness:
         result.retries = retries
         rec.retry_history = rec.retry_history
 
-        self._stage(result, "compile", compile_res.status,
-                    detail={"stderr": compile_res.stderr[:400]})
+        self._stage(
+            result, "compile", compile_res.status, detail={"stderr": compile_res.stderr[:400]}
+        )
 
         # ---- synthesis ----
-        synth = synthesize(parsed.code, parsed.entity or benchmark.entity,
-                           target=self.experiment.synthesis.target) \
-            if (parsed.found and self.experiment.synthesis.enabled) \
+        synth = (
+            synthesize(
+                parsed.code,
+                parsed.entity or benchmark.entity,
+                target=self.experiment.synthesis.target,
+            )
+            if (parsed.found and self.experiment.synthesis.enabled)
             else _skipped()
+        )
         self._stage(result, "synthesis", synth.status, detail=synth.metrics)
         rmetrics = resource_metrics(synth, clock_ns=self.experiment.synthesis.clock_ns)
         result.metrics["resources"] = rmetrics.to_dict()
@@ -137,17 +153,16 @@ class EvaluationHarness:
             sim = simulate(parsed.code, tb, benchmark.testbench_entity)
         else:
             sim = _skipped()
-        self._stage(result, "simulation", sim.status,
-                    detail={"stderr": sim.stderr[:400]})
+        self._stage(result, "simulation", sim.status, detail={"stderr": sim.stderr[:400]})
 
         # ---- static analysis + properties ----
         static = analyze_vhdl(parsed.code)
         result.metrics["static"] = static.to_dict()
         props = check_properties(parsed.code, benchmark.properties or None)
         result.metrics["properties"] = props.results
-        self._stage(result, "properties",
-                    "ok" if props.n_fail == 0 else "fail",
-                    detail=props.results)
+        self._stage(
+            result, "properties", "ok" if props.n_fail == 0 else "fail", detail=props.results
+        )
 
         # ---- functional determination ----
         # With tools present, functional_ok requires a passing simulation.
@@ -182,7 +197,9 @@ class EvaluationHarness:
     # -- helpers ------------------------------------------------------------
     def _infer(self, provider, model_cfg, system, user, benchmark, ref):
         req = ModelRequest(
-            system=system, prompt=user, config=model_cfg,
+            system=system,
+            prompt=user,
+            config=model_cfg,
             context={
                 "reference_hdl": ref,
                 "entity": benchmark.entity,
@@ -194,18 +211,32 @@ class EvaluationHarness:
         resp = provider.generate(req)
         return resp.text, resp
 
-    def _stage(self, result: BenchmarkResult, name: str, status: str,
-               duration: float = 0.0, detail: dict | None = None) -> None:
+    def _stage(
+        self,
+        result: BenchmarkResult,
+        name: str,
+        status: str,
+        duration: float = 0.0,
+        detail: dict | None = None,
+    ) -> None:
         result.stages.append(StageOutcome(name, status, duration, detail or {}))
         self._emit(None, result.benchmark, name, status, duration, detail or {})
 
     def _emit(self, run_id, benchmark, stage, status, duration, detail):
-        self.logger.log(StageEvent(
-            experiment=self.experiment.name, run_id=run_id or "", benchmark=benchmark,
-            stage=stage, status=status, duration_s=duration, detail=detail or {},
-        ))
+        self.logger.log(
+            StageEvent(
+                experiment=self.experiment.name,
+                run_id=run_id or "",
+                benchmark=benchmark,
+                stage=stage,
+                status=status,
+                duration_s=duration,
+                detail=detail or {},
+            )
+        )
 
 
 def _skipped():
     from ..toolchain.detect import ToolResult
+
     return ToolResult(status="skipped")

@@ -8,8 +8,13 @@ from hdleval.config.schema import BenchmarkSelector
 
 def test_difficulty_monotonic():
     low = ComplexityMetrics(state_complexity=1, interface_count=2)
-    high = ComplexityMetrics(state_complexity=6, concurrency=2, hierarchy_depth=3,
-                             control_complexity=6, interface_count=8)
+    high = ComplexityMetrics(
+        state_complexity=6,
+        concurrency=2,
+        hierarchy_depth=3,
+        control_complexity=6,
+        interface_count=8,
+    )
     assert difficulty_score(low) < difficulty_score(high)
     assert 0 <= difficulty_score(high) <= 100
 
@@ -22,8 +27,7 @@ def test_tiers():
 def test_suite_nonempty_and_categories(suite):
     assert len(suite) >= 15
     cats = {b.category for b in suite}
-    assert {"arithmetic", "fsm", "communication", "memory",
-            "processor", "dsp", "control"} <= cats
+    assert {"arithmetic", "fsm", "communication", "memory", "processor", "dsp", "control"} <= cats
 
 
 def test_every_benchmark_has_reference(suite):

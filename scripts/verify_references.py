@@ -5,11 +5,11 @@ Exit code 0 = all analyze cleanly, 1 = one or more failed, 2 = ghdl not found.
 Requires GHDL on PATH (install the OSS CAD Suite). This is the check behind
 Task 1 in docs/guides/implementation-tasks.md.
 """
+
 from __future__ import annotations
 
 import shutil
 import subprocess
-import sys
 import tempfile
 from pathlib import Path
 
@@ -30,7 +30,9 @@ def main() -> int:
         with tempfile.TemporaryDirectory() as d:
             r = subprocess.run(
                 ["ghdl", "-a", "--std=08", str(ref)],
-                capture_output=True, text=True, cwd=d,
+                capture_output=True,
+                text=True,
+                cwd=d,
             )
         ok = r.returncode == 0
         print(f"{'ok ' if ok else 'FAIL':4}  {ref.parent.name}")

@@ -4,6 +4,7 @@ Supported strategies mirror :class:`PromptConfig.strategy`: ``direct``,
 ``chain_of_thought``, ``few_shot``, ``critique`` and ``rag``. All strategies
 share the same template contract so the evaluation harness is strategy-agnostic.
 """
+
 from __future__ import annotations
 
 from ..config.schema import PromptConfig
@@ -20,7 +21,9 @@ _FORMAT_RULES = (
 )
 
 
-def build_prompt(prompt_cfg: PromptConfig, specification: str, *, rag_context: str = "") -> tuple[str, str]:
+def build_prompt(
+    prompt_cfg: PromptConfig, specification: str, *, rag_context: str = ""
+) -> tuple[str, str]:
     """Return ``(system, user)`` messages for the given strategy."""
     system = prompt_cfg.system or (
         "You are an expert digital design engineer. You write correct, "

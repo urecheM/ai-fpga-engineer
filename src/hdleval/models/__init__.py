@@ -5,18 +5,19 @@ Inference is fully decoupled from evaluation: a provider only turns a
 added by implementing :class:`ModelProvider` and registering it — evaluation
 logic never changes.
 """
+
 from __future__ import annotations
 
 from .base import ModelProvider, ModelRequest, ModelResponse
 from .reference import ReferenceProvider
-from .registry import build_provider, register_provider, available_providers
+from .registry import available_providers, build_provider, register_provider
 
 __all__ = [
     "ModelProvider",
     "ModelRequest",
     "ModelResponse",
     "ReferenceProvider",
+    "available_providers",
     "build_provider",
     "register_provider",
-    "available_providers",
 ]

@@ -1,4 +1,5 @@
 """Shared pytest fixtures."""
+
 from __future__ import annotations
 
 import sys
@@ -18,4 +19,5 @@ def repo_root() -> Path:
 @pytest.fixture
 def suite():
     from hdleval.benchmarks.loader import load_suite
+
     return load_suite("v1")

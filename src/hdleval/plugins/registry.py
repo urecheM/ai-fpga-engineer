@@ -1,8 +1,10 @@
 """A tiny typed plugin registry keyed by capability kind."""
+
 from __future__ import annotations
 
+from collections.abc import Callable
 from enum import Enum
-from typing import Any, Callable
+from typing import Any
 
 
 class PluginKind(str, Enum):
@@ -18,14 +20,15 @@ class PluginKind(str, Enum):
 
 class PluginRegistry:
     def __init__(self) -> None:
-        self._plugins: dict[PluginKind, dict[str, Callable[..., Any]]] = {
-            k: {} for k in PluginKind
-        }
+        self._plugins: dict[PluginKind, dict[str, Callable[..., Any]]] = {k: {} for k in PluginKind}
 
-    def register(self, kind: PluginKind, name: str) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+    def register(
+        self, kind: PluginKind, name: str
+    ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
         def deco(factory: Callable[..., Any]) -> Callable[..., Any]:
             self._plugins[kind][name] = factory
             return factory
+
         return deco
 
     def get(self, kind: PluginKind, name: str) -> Callable[..., Any]:

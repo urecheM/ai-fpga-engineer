@@ -9,6 +9,7 @@ exercisable and reproducible *before* a real model API key is configured.
 It is clearly labelled as synthetic in every artifact. Swap in
 ``provider: anthropic`` to evaluate a real model through the identical harness.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -71,10 +72,14 @@ class SyntheticProvider(ModelProvider):
         ptok = max(1, len(request.system + request.prompt) // 4)
         ctok = max(1, len(text) // 4)
         return ModelResponse(
-            text=text, provider=self.name,
+            text=text,
+            provider=self.name,
             model_id=request.config.model_id or f"synthetic-f{self.fidelity}",
-            prompt_tokens=ptok, completion_tokens=ctok, latency_s=latency,
-            finish_reason=finish, raw={"synthetic": True, "fidelity": self.fidelity},
+            prompt_tokens=ptok,
+            completion_tokens=ctok,
+            latency_s=latency,
+            finish_reason=finish,
+            raw={"synthetic": True, "fidelity": self.fidelity},
         )
 
 

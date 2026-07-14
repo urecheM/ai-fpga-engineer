@@ -5,6 +5,7 @@ experiment names ``models: [claude-sonnet, reference-golden]``) and the
 concrete config files under ``configs/``. This lets experiments compose
 reusable building blocks.
 """
+
 from __future__ import annotations
 
 import os
@@ -89,9 +90,7 @@ def _selector(d: dict[str, Any]) -> BenchmarkSelector:
     )
 
 
-def _named_or_inline(
-    kind: str, spec: Any, cfg_dir: Path, ctor: Any
-) -> Any:
+def _named_or_inline(kind: str, spec: Any, cfg_dir: Path, ctor: Any) -> Any:
     """Accept either a string (name -> file) or an inline mapping."""
     if isinstance(spec, str):
         return ctor(**_load_named(kind, spec, cfg_dir))
@@ -107,17 +106,29 @@ def load_experiment(
     d = load_yaml(path)
     cdir = resolve_config_dir(cfg_dir)
 
-    models = [load_model(m, cdir) if isinstance(m, str) else ModelConfig(**m)
-              for m in d.get("models", [])]
-    prompts = [load_prompt(p, cdir) if isinstance(p, str) else PromptConfig(**p)
-               for p in d.get("prompts", [])]
+    models = [
+        load_model(m, cdir) if isinstance(m, str) else ModelConfig(**m) for m in d.get("models", [])
+    ]
+    prompts = [
+        load_prompt(p, cdir) if isinstance(p, str) else PromptConfig(**p)
+        for p in d.get("prompts", [])
+    ]
 
-    synth = _named_or_inline("synthesis", d["synthesis"], cdir, SynthesisConfig) \
-        if "synthesis" in d else SynthesisConfig()
-    verif = _named_or_inline("verification", d["verification"], cdir, VerificationConfig) \
-        if "verification" in d else VerificationConfig()
-    opt = _named_or_inline("optimization", d["optimization"], cdir, OptimizationConfig) \
-        if "optimization" in d else OptimizationConfig()
+    synth = (
+        _named_or_inline("synthesis", d["synthesis"], cdir, SynthesisConfig)
+        if "synthesis" in d
+        else SynthesisConfig()
+    )
+    verif = (
+        _named_or_inline("verification", d["verification"], cdir, VerificationConfig)
+        if "verification" in d
+        else VerificationConfig()
+    )
+    opt = (
+        _named_or_inline("optimization", d["optimization"], cdir, OptimizationConfig)
+        if "optimization" in d
+        else OptimizationConfig()
+    )
 
     exp = ExperimentConfig(
         name=d["name"],

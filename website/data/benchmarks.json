@@ -199,8 +199,8 @@
       "control_complexity": 5
     },
     "reference_hdl_path": "reference.vhd",
-    "testbench_path": "",
-    "testbench_entity": "",
+    "testbench_path": "testbench.vhd",
+    "testbench_entity": "spi_master_tb",
     "properties": [
       "deadlock_freedom",
       "transaction_completion"
@@ -236,8 +236,8 @@
       "control_complexity": 5
     },
     "reference_hdl_path": "reference.vhd",
-    "testbench_path": "",
-    "testbench_entity": "",
+    "testbench_path": "testbench.vhd",
+    "testbench_entity": "uart_tx_tb",
     "properties": [
       "deadlock_freedom",
       "transaction_completion"

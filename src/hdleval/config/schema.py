@@ -4,6 +4,7 @@ These dataclasses are intentionally free of behaviour; they are the declarative
 surface that experiments are written against. Validation lives in
 :func:`validate` methods that raise :class:`ConfigError`.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -29,7 +30,14 @@ class ModelConfig:
     extra: dict[str, Any] = field(default_factory=dict)
 
     def validate(self) -> None:
-        if self.provider not in {"anthropic", "reference", "synthetic", "rule_based", "openai", "local"}:
+        if self.provider not in {
+            "anthropic",
+            "reference",
+            "synthetic",
+            "rule_based",
+            "openai",
+            "local",
+        }:
             raise ConfigError(f"unknown provider {self.provider!r}")
         if not 0.0 <= self.temperature <= 2.0:
             raise ConfigError("temperature out of range [0, 2]")
