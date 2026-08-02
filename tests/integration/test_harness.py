@@ -6,6 +6,7 @@ from hdleval.benchmarks.loader import load_suite
 from hdleval.config.schema import ExperimentConfig, ModelConfig, PromptConfig
 from hdleval.evaluation.harness import EvaluationHarness
 from hdleval.models.reference import ReferenceProvider
+from hdleval.models.synthetic import SyntheticProvider
 from hdleval.toolchain.detect import detect
 
 
@@ -27,6 +28,17 @@ def test_reference_provider_passes_adder():
     assert result.passed
     assert rec.passed and rec.duration_s >= 0
     assert result.stage("parse").status == "ok"
+
+
+def test_synthetic_run_records_tokens_and_zero_cost():
+    suite = load_suite("v1")
+    bench = next(b for b in suite if b.id == "arith_adder8")
+    harness = EvaluationHarness(_exp())
+    _, rec = harness.evaluate(bench, SyntheticProvider(),
+                              _exp().models[0], _exp().prompts[0], trial=0)
+    assert rec.input_tokens > 0
+    assert rec.output_tokens > 0
+    assert rec.cost_usd == 0.0
 
 
 def test_no_reference_is_no_code():

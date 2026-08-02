@@ -32,6 +32,9 @@ CREATE TABLE IF NOT EXISTS runs (
     duration_s REAL,
     git_commit TEXT,
     started_at REAL,
+    input_tokens INTEGER,
+    output_tokens INTEGER,
+    cost_usd REAL,
     record_json TEXT,
     PRIMARY KEY (run_id, benchmark, trial)
 );
@@ -74,14 +77,15 @@ class ExperimentDB:
                 """INSERT OR REPLACE INTO runs
                 (run_id, experiment, benchmark, benchmark_version, model, prompt,
                  seed, trial, passed, failure_class, duration_s, git_commit,
-                 started_at, record_json)
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                 started_at, input_tokens, output_tokens, cost_usd, record_json)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                 (
                     rec.run_id, rec.experiment, rec.benchmark, rec.benchmark_version,
                     rec.model, rec.prompt, rec.seed, rec.trial, int(rec.passed),
                     rec.failure_class, rec.duration_s,
                     rec.environment.get("git_commit", "unknown"),
-                    rec.started_at, json.dumps(rec.to_dict(), sort_keys=True),
+                    rec.started_at, rec.input_tokens, rec.output_tokens, rec.cost_usd,
+                    json.dumps(rec.to_dict(), sort_keys=True),
                 ),
             )
         self._conn.commit()

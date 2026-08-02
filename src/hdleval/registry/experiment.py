@@ -56,6 +56,9 @@ class ExperimentRecord:
     metrics: dict[str, Any] = field(default_factory=dict)
     failure_class: str = "none"
     passed: bool = False
+    input_tokens: int = 0
+    output_tokens: int = 0
+    cost_usd: float = 0.0
     schema_version: str = SCHEMA_VERSION
 
     def to_dict(self) -> dict[str, Any]:

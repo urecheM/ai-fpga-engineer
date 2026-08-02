@@ -25,6 +25,7 @@ from ..models.base import ModelProvider, ModelRequest
 from ..parsing.hdl_extract import extract_vhdl
 from ..prompts.templates import build_prompt, build_repair_prompt
 from ..registry.experiment import ExperimentRecord
+from ..registry.pricing import compute_cost_usd
 from ..toolchain import compile_vhdl, detect, simulate, synthesize
 from ..verification.failures import classify_failure
 from ..verification.properties import check_properties
@@ -88,6 +89,8 @@ class EvaluationHarness:
         spec = benchmark.specification
         system, user = build_prompt(prompt_cfg, spec)
         hdl, resp = self._infer(provider, model_cfg, system, user, benchmark, ref)
+        input_tokens = resp.prompt_tokens
+        output_tokens = resp.completion_tokens
         result.metrics["inference_latency_s"] = resp.latency_s
         result.metrics["prompt_tokens"] = resp.prompt_tokens
         result.metrics["completion_tokens"] = resp.completion_tokens
@@ -112,6 +115,8 @@ class EvaluationHarness:
             diag = f"Compilation failed:\n{compile_res.stderr[:800]}"
             rsys, ruser = build_repair_prompt(prompt_cfg, spec, parsed.code, diag)
             hdl, resp = self._infer(provider, model_cfg, rsys, ruser, benchmark, ref)
+            input_tokens += resp.prompt_tokens
+            output_tokens += resp.completion_tokens
             parsed = extract_vhdl(hdl)
             result.hdl = parsed.code
             compile_res = compile_vhdl(parsed.code, entity=parsed.entity or benchmark.entity)
@@ -177,6 +182,9 @@ class EvaluationHarness:
         rec.failure_class = result.failure_class
         rec.passed = result.passed
         rec.artifacts = {"hdl_chars": str(len(result.hdl))}
+        rec.input_tokens = input_tokens
+        rec.output_tokens = output_tokens
+        rec.cost_usd = compute_cost_usd(model_cfg.model_id, input_tokens, output_tokens)
         return result, rec
 
     # -- helpers ------------------------------------------------------------
