@@ -3,6 +3,7 @@ from __future__ import annotations
 from hdleval.metrics.static_analysis import analyze_vhdl
 from hdleval.metrics.resources import resource_metrics
 from hdleval.toolchain.detect import ToolResult
+from hdleval.toolchain.yosys import _module_cells
 
 
 FSM = """
@@ -30,3 +31,24 @@ def test_resource_metrics_ok():
     tr = ToolResult(status="ok", metrics={"luts": 20, "ffs": 8})
     r = resource_metrics(tr)
     assert r.available and r.luts == 20 and r.est_fmax_mhz > 0
+
+
+def test_module_cells_resource_lookup_strips_backslash_prefix():
+    # Yosys `stat -json` prefixes module names with a backslash, e.g.
+    # "\\counter" for entity "counter". A bare-name lookup used to miss
+    # every module and silently return {}, so LUT/FF counts stayed zero.
+    stat_json = {
+        "modules": {
+            "\\counter": {
+                "num_cells_by_type": {"SB_LUT4": 4, "SB_DFFSR": 2},
+            }
+        }
+    }
+    cells = _module_cells(stat_json, "counter")
+    assert cells == {"SB_LUT4": 4, "SB_DFFSR": 2}
+
+
+def test_module_cells_resource_lookup_falls_back_to_sole_module():
+    stat_json = {"modules": {"\\top_flattened": {"num_cells_by_type": {"SB_LUT4": 1}}}}
+    cells = _module_cells(stat_json, "different_entity_name")
+    assert cells == {"SB_LUT4": 1}

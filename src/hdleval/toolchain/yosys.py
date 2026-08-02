@@ -9,6 +9,23 @@ from pathlib import Path
 from .detect import ToolResult, detect
 
 
+def _module_cells(data: dict, entity: str) -> dict:
+    """Look up num_cells_by_type for `entity` in a Yosys `stat -json` payload.
+
+    Yosys prefixes module names with a backslash in the JSON output (e.g.
+    "\\counter"), so a bare-name lookup always misses. Strip the prefix
+    before comparing, falling back to the sole module when there is exactly
+    one (post-synth designs are typically flattened to a single top module).
+    """
+    modules = data.get("modules", {})
+    for name, mod in modules.items():
+        if name.lstrip("\\") == entity:
+            return mod.get("num_cells_by_type", {})
+    if len(modules) == 1:
+        return next(iter(modules.values())).get("num_cells_by_type", {})
+    return {}
+
+
 def synthesize(vhdl: str, entity: str, *, target: str = "ice40", timeout: float = 180.0) -> ToolResult:
     """Run Yosys synthesis, returning resource utilisation metrics.
 
@@ -37,7 +54,7 @@ def synthesize(vhdl: str, entity: str, *, target: str = "ice40", timeout: float 
         if stat.exists():
             try:
                 data = json.loads(stat.read_text())
-                cells = data.get("modules", {}).get(entity, {}).get("num_cells_by_type", {})
+                cells = _module_cells(data, entity)
                 metrics["luts"] = float(sum(v for k, v in cells.items() if "LUT" in k.upper()))
                 metrics["ffs"] = float(sum(v for k, v in cells.items()
                                            if "DFF" in k.upper() or "FF" in k.upper()))
