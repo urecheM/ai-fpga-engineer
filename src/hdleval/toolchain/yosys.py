@@ -10,20 +10,17 @@ from .detect import ToolResult, detect
 
 
 def _module_cells(data: dict, entity: str) -> dict:
-    """Look up num_cells_by_type for `entity` in a Yosys `stat -json` payload.
-
-    Yosys prefixes module names with a backslash in the JSON output (e.g.
-    "\\counter"), so a bare-name lookup always misses. Strip the prefix
-    before comparing, falling back to the sole module when there is exactly
-    one (post-synth designs are typically flattened to a single top module).
-    """
+    """Look up num_cells_by_type for `entity` in a Yosys `stat -json` payload."""
     modules = data.get("modules", {})
+    target = entity.casefold()
     for name, mod in modules.items():
-        if name.lstrip("\\") == entity:
+        if name.lstrip("\\").casefold() == target:
             return mod.get("num_cells_by_type", {})
-    if len(modules) == 1:
-        return next(iter(modules.values())).get("num_cells_by_type", {})
-    return {}
+    totals: dict[str, float] = {}
+    for mod in modules.values():
+        for cell, count in mod.get("num_cells_by_type", {}).items():
+            totals[cell] = totals.get(cell, 0) + count
+    return totals
 
 
 def synthesize(vhdl: str, entity: str, *, target: str = "ice40", timeout: float = 180.0) -> ToolResult:
