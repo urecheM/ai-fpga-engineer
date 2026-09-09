@@ -10,6 +10,20 @@ from pathlib import Path
 from .detect import ToolResult, detect
 
 
+def _module_cells(data: dict, entity: str) -> dict:
+    """Look up num_cells_by_type for `entity` in a Yosys `stat -json` payload."""
+    modules = data.get("modules", {})
+    target = entity.casefold()
+    for name, mod in modules.items():
+        if name.lstrip("\\").casefold() == target:
+            return mod.get("num_cells_by_type", {})
+    totals: dict[str, float] = {}
+    for mod in modules.values():
+        for cell, count in mod.get("num_cells_by_type", {}).items():
+            totals[cell] = totals.get(cell, 0) + count
+    return totals
+
+
 def synthesize(
     vhdl: str, entity: str, *, target: str = "ice40", timeout: float = 180.0
 ) -> ToolResult:
@@ -42,7 +56,7 @@ def synthesize(
         if stat.exists():
             try:
                 data = json.loads(stat.read_text())
-                cells = data.get("modules", {}).get(entity, {}).get("num_cells_by_type", {})
+                cells = _module_cells(data, entity)
                 metrics["luts"] = float(sum(v for k, v in cells.items() if "LUT" in k.upper()))
                 metrics["ffs"] = float(
                     sum(v for k, v in cells.items() if "DFF" in k.upper() or "FF" in k.upper())
