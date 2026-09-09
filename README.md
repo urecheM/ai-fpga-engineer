@@ -97,7 +97,7 @@ hdleval run configs/experiments/baseline.yaml # run + populate the registry
 python reproduce.py                           # regenerate every artifact
 ```
 
-Reproducible full-toolchain run (installs GHDL + Yosys):
+Reproducible full-toolchain run (installs GHDL + Yosys + ghdl-yosys-plugin):
 
 ```bash
 docker build -t hdleval . && docker run --rm -v "$PWD/results:/opt/hdleval/results" hdleval

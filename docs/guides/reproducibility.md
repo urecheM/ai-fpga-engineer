@@ -17,9 +17,18 @@ website. Each step is idempotent.
 - **DAG caching.** Content-hashed node results enable incremental recomputation.
 
 ## Full-toolchain runs
-Install GHDL + Yosys (or use the Docker image) and set `HDLEVAL_REQUIRE_TOOLS=1`
-to make compile/synth/sim mandatory. Otherwise those stages are `skipped` and
-recorded as such.
+Install the [OSS CAD Suite](https://github.com/YosysHQ/oss-cad-suite-build) —
+GHDL, Yosys and the **ghdl-yosys-plugin** in one tarball — or use the Docker
+image, and set `HDLEVAL_REQUIRE_TOOLS=1` to make compile/synth/sim mandatory.
+Otherwise those stages are `skipped` and recorded as such. Note that GHDL and
+Yosys alone are not enough: without the plugin `detect().ghdl_plugin` is False
+and synthesis is skipped even though both binaries are on PATH.
+
+Verify the toolchain is complete before trusting any resource numbers:
+
+```bash
+python scripts/check_toolchain.py --synthesize   # exits 1 if the plugin is missing
+```
 
 ```bash
 docker build -t hdleval . && docker run --rm -v "$PWD/results:/opt/hdleval/results" hdleval
