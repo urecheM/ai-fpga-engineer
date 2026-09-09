@@ -45,6 +45,21 @@ CREATE INDEX IF NOT EXISTS idx_runs_model ON runs(model);
 CREATE INDEX IF NOT EXISTS idx_runs_category ON runs(benchmark);
 """
 
+_MIGRATED_COLUMNS = (
+    ("input_tokens", "INTEGER"),
+    ("output_tokens", "INTEGER"),
+    ("cost_usd", "REAL"),
+)
+
+
+def _migrate(conn: sqlite3.Connection) -> None:
+    with closing(conn.cursor()) as cur:
+        cur.execute("PRAGMA table_info(runs)")
+        existing = {row[1] for row in cur.fetchall()}
+        for name, coltype in _MIGRATED_COLUMNS:
+            if name not in existing:
+                cur.execute(f"ALTER TABLE runs ADD COLUMN {name} {coltype}")
+
 
 class ExperimentDB:
     def __init__(self, path: str | Path = "experiments/registry.sqlite") -> None:
@@ -61,6 +76,7 @@ class ExperimentDB:
         self._conn.row_factory = sqlite3.Row
         with closing(self._conn.cursor()) as cur:
             cur.executescript(_SCHEMA)
+        _migrate(self._conn)
         self._conn.commit()
         self._mirror()
 
