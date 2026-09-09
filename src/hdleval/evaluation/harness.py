@@ -93,8 +93,6 @@ class EvaluationHarness:
         input_tokens = resp.prompt_tokens
         output_tokens = resp.completion_tokens
         result.metrics["inference_latency_s"] = resp.latency_s
-        result.metrics["prompt_tokens"] = resp.prompt_tokens
-        result.metrics["completion_tokens"] = resp.completion_tokens
         self._emit(
             run_id,
             benchmark.id,
@@ -193,13 +191,16 @@ class EvaluationHarness:
 
         duration = time.perf_counter() - t_start
         rec.duration_s = round(duration, 4)
-        rec.metrics = result.metrics
         rec.failure_class = result.failure_class
         rec.passed = result.passed
         rec.artifacts = {"hdl_chars": str(len(result.hdl))}
         rec.input_tokens = input_tokens
         rec.output_tokens = output_tokens
         rec.cost_usd = compute_cost_usd(model_cfg.model_id, input_tokens, output_tokens)
+        result.metrics["prompt_tokens"] = input_tokens
+        result.metrics["completion_tokens"] = output_tokens
+        result.metrics["cost_usd"] = rec.cost_usd
+        rec.metrics = result.metrics
         return result, rec
 
     # -- helpers ------------------------------------------------------------
