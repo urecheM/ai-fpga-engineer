@@ -5,6 +5,7 @@ around them, sometimes with multiple blocks. This module extracts the most
 plausible design block and reports what it found so the harness can classify
 "no code produced" separately from "code produced but wrong".
 """
+
 from __future__ import annotations
 
 import re
@@ -24,10 +25,9 @@ class ExtractedHDL:
 
 def extract_vhdl(raw: str) -> ExtractedHDL:
     blocks = _FENCE_RE.findall(raw or "")
-    if not blocks:
+    if not blocks and _ENTITY_RE.search(raw or ""):
         # Fall back: maybe the whole message is code.
-        if _ENTITY_RE.search(raw or ""):
-            blocks = [raw]
+        blocks = [raw]
     if not blocks:
         return ExtractedHDL(code="", entity=None, n_blocks=0, found=False)
 
@@ -38,6 +38,4 @@ def extract_vhdl(raw: str) -> ExtractedHDL:
     )
     m = _ENTITY_RE.search(chosen)
     entity = m.group(1) if m else None
-    return ExtractedHDL(
-        code=chosen.strip(), entity=entity, n_blocks=len(blocks), found=True
-    )
+    return ExtractedHDL(code=chosen.strip(), entity=entity, n_blocks=len(blocks), found=True)

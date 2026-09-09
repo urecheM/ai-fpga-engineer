@@ -5,15 +5,39 @@ from hdleval.verification.properties import check_properties
 
 
 def test_classify_precedence():
-    assert classify_failure(code_found=False, compile_status="ok", synth_status="ok",
-                            sim_status="ok", functional_ok=True, property_fail=False) \
+    assert (
+        classify_failure(
+            code_found=False,
+            compile_status="ok",
+            synth_status="ok",
+            sim_status="ok",
+            functional_ok=True,
+            property_fail=False,
+        )
         == FailureClass.NO_CODE
-    assert classify_failure(code_found=True, compile_status="fail", synth_status="ok",
-                            sim_status="ok", functional_ok=True, property_fail=False) \
+    )
+    assert (
+        classify_failure(
+            code_found=True,
+            compile_status="fail",
+            synth_status="ok",
+            sim_status="ok",
+            functional_ok=True,
+            property_fail=False,
+        )
         == FailureClass.COMPILE
-    assert classify_failure(code_found=True, compile_status="ok", synth_status="ok",
-                            sim_status="ok", functional_ok=True, property_fail=False) \
+    )
+    assert (
+        classify_failure(
+            code_found=True,
+            compile_status="ok",
+            synth_status="ok",
+            sim_status="ok",
+            functional_ok=True,
+            property_fail=False,
+        )
         == FailureClass.NONE
+    )
 
 
 def test_properties_report():

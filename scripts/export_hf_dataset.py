@@ -4,6 +4,7 @@ Emits `external/huggingface/data/benchmarks.jsonl` (one benchmark per line, with
 reference HDL inlined) plus a `dataset_infos`-style summary. The dataset is a
 build product of `benchmarks/v1/`, never hand-maintained.
 """
+
 from __future__ import annotations
 
 import json
@@ -29,8 +30,10 @@ def main() -> None:
     summary = {
         "n_benchmarks": len(suite),
         "categories": cats,
-        "difficulty_range": [min(b.estimated_difficulty for b in suite),
-                             max(b.estimated_difficulty for b in suite)],
+        "difficulty_range": [
+            min(b.estimated_difficulty for b in suite),
+            max(b.estimated_difficulty for b in suite),
+        ],
         "suite_version": "v1",
     }
     (OUT.parent / "dataset_summary.json").write_text(json.dumps(summary, indent=2))

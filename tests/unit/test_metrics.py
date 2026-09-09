@@ -4,11 +4,10 @@ from pathlib import Path
 
 import pytest
 
-from hdleval.metrics.static_analysis import analyze_vhdl
 from hdleval.metrics.resources import resource_metrics
+from hdleval.metrics.static_analysis import analyze_vhdl
 from hdleval.toolchain.detect import ToolResult, detect
 from hdleval.toolchain.yosys import _module_cells, synthesize
-
 
 FSM = """
 entity t is port(clk: in bit); end entity;
@@ -79,7 +78,9 @@ def test_synthesize_mem_fifo_reports_nonzero_luts_and_ffs():
     tc = detect()
     if not (tc.has("yosys") and tc.ghdl_plugin):
         pytest.skip("yosys/ghdl-plugin not available")
-    reference = Path(__file__).resolve().parents[2] / "benchmarks" / "v1" / "mem_fifo" / "reference.vhd"
+    reference = (
+        Path(__file__).resolve().parents[2] / "benchmarks" / "v1" / "mem_fifo" / "reference.vhd"
+    )
     result = synthesize(reference.read_text(), "fifo16")
     assert result.status == "ok"
     r = resource_metrics(result)

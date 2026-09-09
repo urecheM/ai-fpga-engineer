@@ -1,6 +1,7 @@
 """Centralised structured (JSONL) logging for every experiment stage."""
+
 from __future__ import annotations
 
-from .structured import StructuredLogger, StageEvent
+from .structured import StageEvent, StructuredLogger
 
-__all__ = ["StructuredLogger", "StageEvent"]
+__all__ = ["StageEvent", "StructuredLogger"]

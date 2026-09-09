@@ -7,6 +7,7 @@ Subcommands:
     toolchain              print detected HDL toolchain status
     version                print the platform version
 """
+
 from __future__ import annotations
 
 import argparse
@@ -27,8 +28,10 @@ from .toolchain import detect
 def _cmd_list_benchmarks(args: argparse.Namespace) -> int:
     suite = load_suite(args.suite)
     for b in suite:
-        print(f"{b.id:22s} {b.category:14s} diff={b.estimated_difficulty:3d} "
-              f"({difficulty_tier(b.estimated_difficulty)})  {b.title}")
+        print(
+            f"{b.id:22s} {b.category:14s} diff={b.estimated_difficulty:3d} "
+            f"({difficulty_tier(b.estimated_difficulty)})  {b.title}"
+        )
     print(f"\n{len(suite)} benchmarks in suite {args.suite}")
     return 0
 
@@ -38,16 +41,17 @@ def _cmd_toolchain(_: argparse.Namespace) -> int:
     return 0
 
 
-
 def _preflight(exp) -> None:
     """Warn (do not fail) when an experiment references providers whose runtime
     prerequisites are absent, so a real-model run gives an actionable message."""
     import os
+
     for m in exp.models:
         if m.provider == "anthropic":
             has_key = bool(os.environ.get("ANTHROPIC_API_KEY"))
             try:
                 import anthropic  # noqa: F401
+
                 has_sdk = True
             except Exception:
                 has_sdk = False
@@ -57,10 +61,12 @@ def _preflight(exp) -> None:
                     miss.append("ANTHROPIC_API_KEY")
                 if not has_sdk:
                     miss.append("the `anthropic` SDK (pip install 'hdleval[anthropic]')")
-                print(f"[preflight] model '{m.name}' uses the anthropic provider but "
-                      f"{' and '.join(miss)} {'is' if len(miss)==1 else 'are'} missing; "
-                      "its benchmarks will be recorded as generation failures. "
-                      "Set the key / install the SDK for a real run.")
+                print(
+                    f"[preflight] model '{m.name}' uses the anthropic provider but "
+                    f"{' and '.join(miss)} {'is' if len(miss) == 1 else 'are'} missing; "
+                    "its benchmarks will be recorded as generation failures. "
+                    "Set the key / install the SDK for a real run."
+                )
 
 
 def _cmd_run(args: argparse.Namespace) -> int:
@@ -74,8 +80,9 @@ def _cmd_run(args: argparse.Namespace) -> int:
     suite = {b.id: b.to_dict() for b in load_suite(exp.benchmarks.suite_version, args.benchmarks)}
     lb = build_leaderboard([r.to_dict() for r in records], suite)
     written = write_all_reports([r.to_dict() for r in records], lb, args.out, exp.name)
-    figs = write_all_figures(lb.to_dict(), [r.to_dict() for r in records],
-                             str(Path(args.out) / "figures"))
+    figs = write_all_figures(
+        lb.to_dict(), [r.to_dict() for r in records], str(Path(args.out) / "figures")
+    )
     passed = sum(1 for r in results if r.passed)
     print(f"ran {len(results)} evaluations · {passed} passed")
     print(json.dumps({**written, **figs}, indent=2))
@@ -100,7 +107,9 @@ def _cmd_report(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(prog="hdleval", description="LLM-Assisted Hardware Design Research Platform")
+    p = argparse.ArgumentParser(
+        prog="hdleval", description="LLM-Assisted Hardware Design Research Platform"
+    )
     p.add_argument("--version", action="version", version=f"hdleval {__version__}")
     sub = p.add_subparsers(dest="cmd", required=True)
 

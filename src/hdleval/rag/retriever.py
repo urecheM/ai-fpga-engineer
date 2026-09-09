@@ -5,6 +5,7 @@ benchmark exemplars by TF-style term overlap. It is intentionally simple and
 embedding-free so it runs anywhere; a vector-DB retriever can replace it behind
 the same interface.
 """
+
 from __future__ import annotations
 
 import math
@@ -37,7 +38,7 @@ class KnowledgeRetriever:
     def retrieve(self, query: str, k: int = 3) -> list[Document]:
         q = Counter(_tokens(query))
         scored: list[tuple[float, Document]] = []
-        for doc, tf in zip(self.docs, self._tok):
+        for doc, tf in zip(self.docs, self._tok, strict=False):
             score = sum(q[t] * tf.get(t, 0) * self._idf.get(t, 0.0) for t in q)
             scored.append((score, doc))
         scored.sort(key=lambda x: -x[0])

@@ -4,6 +4,7 @@ Records every fact needed to reproduce a run: model version, prompt template,
 benchmark version, compiler/synth/verifier, OS, hardware, git commit, timestamp,
 random seed, inference config, duration, retry history and produced artifacts.
 """
+
 from __future__ import annotations
 
 import platform

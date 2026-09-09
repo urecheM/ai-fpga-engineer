@@ -1,4 +1,5 @@
 """GHDL adapter: analyze/elaborate for compilation, run a testbench for sim."""
+
 from __future__ import annotations
 
 import subprocess
@@ -19,21 +20,29 @@ def compile_vhdl(vhdl: str, *, entity: str | None = None, timeout: float = 60.0)
         try:
             a = subprocess.run(
                 ["ghdl", "-a", "--std=08", str(src)],
-                capture_output=True, text=True, timeout=timeout, cwd=d,
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+                cwd=d,
             )
         except subprocess.TimeoutExpired:
             return ToolResult(status="fail", stderr="ghdl analyze timeout")
         if a.returncode != 0:
-            return ToolResult(status="fail", stdout=a.stdout, stderr=a.stderr,
-                              returncode=a.returncode)
+            return ToolResult(
+                status="fail", stdout=a.stdout, stderr=a.stderr, returncode=a.returncode
+            )
         if entity:
             e = subprocess.run(
                 ["ghdl", "-e", "--std=08", entity],
-                capture_output=True, text=True, timeout=timeout, cwd=d,
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+                cwd=d,
             )
             if e.returncode != 0:
-                return ToolResult(status="fail", stdout=e.stdout, stderr=e.stderr,
-                                  returncode=e.returncode)
+                return ToolResult(
+                    status="fail", stdout=e.stdout, stderr=e.stderr, returncode=e.returncode
+                )
         return ToolResult(status="ok", stdout=a.stdout)
 
 
@@ -48,12 +57,29 @@ def simulate(
         (Path(d) / "design.vhd").write_text(design_vhdl)
         (Path(d) / "tb.vhd").write_text(testbench_vhdl)
         try:
-            subprocess.run(["ghdl", "-a", "--std=08", "design.vhd", "tb.vhd"],
-                           capture_output=True, text=True, timeout=timeout, cwd=d, check=True)
-            subprocess.run(["ghdl", "-e", "--std=08", tb_entity],
-                           capture_output=True, text=True, timeout=timeout, cwd=d, check=True)
-            r = subprocess.run(["ghdl", "-r", "--std=08", tb_entity, "--assert-level=error"],
-                               capture_output=True, text=True, timeout=timeout, cwd=d)
+            subprocess.run(
+                ["ghdl", "-a", "--std=08", "design.vhd", "tb.vhd"],
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+                cwd=d,
+                check=True,
+            )
+            subprocess.run(
+                ["ghdl", "-e", "--std=08", tb_entity],
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+                cwd=d,
+                check=True,
+            )
+            r = subprocess.run(
+                ["ghdl", "-r", "--std=08", tb_entity, "--assert-level=error"],
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+                cwd=d,
+            )
         except subprocess.CalledProcessError as exc:
             return ToolResult(status="fail", stdout=exc.stdout or "", stderr=exc.stderr or "")
         except subprocess.TimeoutExpired:

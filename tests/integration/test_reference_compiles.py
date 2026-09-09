@@ -1,4 +1,5 @@
 """Every v1 reference design must analyze under GHDL (skipped if ghdl absent)."""
+
 from __future__ import annotations
 
 import shutil
@@ -23,6 +24,8 @@ def test_reference_compiles(bench):
         p.write_text(code)
         r = subprocess.run(
             ["ghdl", "-a", "--std=08", str(p)],
-            capture_output=True, text=True, cwd=d,
+            capture_output=True,
+            text=True,
+            cwd=d,
         )
     assert r.returncode == 0, f"{bench.id} failed GHDL analysis:\n{r.stderr}"

@@ -11,10 +11,24 @@ def test_wilson_bounds():
 
 def test_build_leaderboard_counts():
     records = [
-        {"model": "m", "prompt": "p", "benchmark": "b1", "passed": True,
-         "failure_class": "none", "metrics": {}, "retry_history": []},
-        {"model": "m", "prompt": "p", "benchmark": "b1", "passed": False,
-         "failure_class": "syntax_error", "metrics": {}, "retry_history": []},
+        {
+            "model": "m",
+            "prompt": "p",
+            "benchmark": "b1",
+            "passed": True,
+            "failure_class": "none",
+            "metrics": {},
+            "retry_history": [],
+        },
+        {
+            "model": "m",
+            "prompt": "p",
+            "benchmark": "b1",
+            "passed": False,
+            "failure_class": "syntax_error",
+            "metrics": {},
+            "retry_history": [],
+        },
     ]
     meta = {"b1": {"category": "arithmetic", "estimated_difficulty": 10}}
     lb = build_leaderboard(records, meta)

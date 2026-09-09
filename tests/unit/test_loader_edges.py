@@ -20,6 +20,7 @@ def test_load_yaml_not_mapping(tmp_path):
 
 def test_load_named_synthesis(repo_root):
     from hdleval.config.loader import load_experiment
+
     exp = load_experiment(repo_root / "configs/experiments/prompt-ablation.yaml")
     assert exp.synthesis.name == "yosys-ice40"
     assert exp.verification.strategy == "properties"

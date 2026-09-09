@@ -5,17 +5,18 @@ returns a ``ToolResult`` with ``status='skipped'`` rather than failing, so the
 pipeline runs end-to-end in any environment while CI (``HDLEVAL_REQUIRE_TOOLS=1``)
 demands real tools.
 """
+
 from __future__ import annotations
 
-from .detect import ToolResult, Toolchain, detect
+from .detect import Toolchain, ToolResult, detect
 from .ghdl import compile_vhdl, simulate
 from .yosys import synthesize
 
 __all__ = [
     "ToolResult",
     "Toolchain",
-    "detect",
     "compile_vhdl",
+    "detect",
     "simulate",
     "synthesize",
 ]

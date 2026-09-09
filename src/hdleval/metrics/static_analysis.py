@@ -5,6 +5,7 @@ synthesizer: hierarchy, combinational complexity, inferred latches, reset
 strategy, FSM complexity, module decomposition and fan-out. They are heuristic
 but deterministic and are useful comparative signals across models.
 """
+
 from __future__ import annotations
 
 import re
@@ -55,9 +56,10 @@ def analyze_vhdl(vhdl: str) -> StaticMetrics:
     comb = ifs + cases + whens
 
     reset_style = "none"
-    if re.search(r"rising_edge|falling_edge", text, re.I):
-        if re.search(r"if\s+\w*rst\w*\s*=\s*'1'.*?then", text, re.I | re.S):
-            reset_style = "sync"
+    if re.search(r"rising_edge|falling_edge", text, re.I) and re.search(
+        r"if\s+\w*rst\w*\s*=\s*'1'.*?then", text, re.I | re.S
+    ):
+        reset_style = "sync"
     if re.search(r"if\s+\w*rst\w*\s*=\s*'1'\s*then", text, re.I) and re.search(
         r"process\s*\([^)]*\brst\w*\b", text, re.I
     ):
@@ -67,7 +69,11 @@ def analyze_vhdl(vhdl: str) -> StaticMetrics:
     # crude latch risk: combinational process with if but no else / default
     latch_risk = 0
     for block in re.findall(r"process\b.*?end\s+process", text, re.I | re.S):
-        if "rising_edge" not in block.lower() and "if" in block.lower() and "else" not in block.lower():
+        if (
+            "rising_edge" not in block.lower()
+            and "if" in block.lower()
+            and "else" not in block.lower()
+        ):
             latch_risk += 1
 
     # FSM state count: entries in a state type enum

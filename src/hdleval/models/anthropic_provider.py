@@ -6,6 +6,7 @@ that experiments remain reproducible despite non-deterministic sampling: a
 re-run reads the cached completion instead of issuing a new billable call.
 Set ``HDLEVAL_DISABLE_CACHE=1`` to force fresh calls.
 """
+
 from __future__ import annotations
 
 import hashlib

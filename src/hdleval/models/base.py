@@ -1,4 +1,5 @@
 """Provider-neutral request/response types and the provider interface."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field

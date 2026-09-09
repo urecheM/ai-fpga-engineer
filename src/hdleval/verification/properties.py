@@ -5,6 +5,7 @@ is unavailable we run deterministic *static* property heuristics so every run
 produces a property report. Each property returns pass/fail/unknown. The
 strategy pattern lets a formal engine be dropped in behind the same interface.
 """
+
 from __future__ import annotations
 
 import re

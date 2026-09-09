@@ -1,9 +1,9 @@
 """Objective functions and Pareto-frontier computation for design tradeoffs."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any
 
 
 class Objective(str, Enum):
@@ -17,9 +17,9 @@ class Objective(str, Enum):
 @dataclass(frozen=True)
 class DesignPoint:
     name: str
-    area: float          # lower better (LUTs+FFs)
-    fmax: float          # higher better
-    latency: float       # lower better (cycles)
+    area: float  # lower better (LUTs+FFs)
+    fmax: float  # higher better
+    latency: float  # lower better (cycles)
 
 
 def score_design(point: DesignPoint, objective: Objective) -> float:
@@ -42,8 +42,12 @@ def pareto_frontier(points: list[DesignPoint]) -> list[DesignPoint]:
         for q in points:
             if q is p:
                 continue
-            if (q.area <= p.area and q.latency <= p.latency and q.fmax >= p.fmax
-                    and (q.area < p.area or q.latency < p.latency or q.fmax > p.fmax)):
+            if (
+                q.area <= p.area
+                and q.latency <= p.latency
+                and q.fmax >= p.fmax
+                and (q.area < p.area or q.latency < p.latency or q.fmax > p.fmax)
+            ):
                 dominated = True
                 break
         if not dominated:

@@ -13,6 +13,7 @@ supported classes and an honest zero elsewhere, so a leaderboard that includes i
 exposes exactly the coverage/quality trade-off between a narrow rule-based system
 and broader LLM generation. Fully deterministic; no network, no API key.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -47,7 +48,6 @@ class RuleBasedProvider(ModelProvider):
     def generate(self, request: ModelRequest) -> ModelResponse:
         t0 = time.perf_counter()
         spec_text = request.context.get("specification", "") or request.prompt
-        entity = request.context.get("entity", "design")
         text, finish = self._generate_vhdl(spec_text)
         latency = round(time.perf_counter() - t0, 4)
         ptok = max(1, len(request.system + request.prompt) // 4)
@@ -65,8 +65,9 @@ class RuleBasedProvider(ModelProvider):
 
     def _generate_vhdl(self, specification: str) -> tuple[str, str]:
         if not self.available:
-            return ("The ai_fpga_engineer pipeline is not importable in this "
-                    "environment."), "unavailable"
+            return (
+                "The ai_fpga_engineer pipeline is not importable in this environment."
+            ), "unavailable"
         _ensure_importable()
         import tempfile
 
@@ -75,13 +76,16 @@ class RuleBasedProvider(ModelProvider):
         from ai_fpga_engineer.core.project import Project
 
         h = hashlib.sha256(specification.encode()).hexdigest()[:8]
-        proj = Project(f"hdleval_{h}", Path(tempfile.mkdtemp()) / "p",
-                       request=specification, quiet=True).init()
+        proj = Project(
+            f"hdleval_{h}", Path(tempfile.mkdtemp()) / "p", request=specification, quiet=True
+        ).init()
         spec = RequirementsAgent().run(proj)
         if spec.design_class == "unknown":
-            return ("This specification is outside the rule-based pipeline's four "
-                    "supported design classes (alu, counter, register, comparator); "
-                    "no VHDL was generated."), "unsupported_class"
+            return (
+                "This specification is outside the rule-based pipeline's four "
+                "supported design classes (alu, counter, register, comparator); "
+                "no VHDL was generated."
+            ), "unsupported_class"
         design = HDLAgent().run(proj, spec)
         return f"```vhdl\n{design.vhdl.strip()}\n```", "stop"
 

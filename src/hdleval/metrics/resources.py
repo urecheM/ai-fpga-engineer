@@ -1,4 +1,5 @@
 """Derive resource-efficiency metrics from synthesis output."""
+
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass

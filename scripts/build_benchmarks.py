@@ -5,6 +5,7 @@ structured metadata plus a verified-by-construction reference implementation.
 This generator is itself part of the reproducibility story: the dataset is a
 build product, not hand-edited files.
 """
+
 from __future__ import annotations
 
 import textwrap
@@ -24,21 +25,54 @@ def bench(**kw):
 BENCHMARKS = []
 
 
-def add(id, category, title, spec, entity, complexity, tags, ref, reqs, props=None,
-        expected=""):
-    BENCHMARKS.append(dict(
-        id=id, category=category, title=title, spec=spec, entity=entity,
-        complexity=complexity, tags=tags, ref=textwrap.dedent(ref).strip() + "\n",
-        reqs=reqs, props=props or [], expected=expected,
-    ))
+def add(
+    id,
+    category,
+    title,
+    spec,
+    entity,
+    complexity,
+    tags,
+    ref,
+    reqs,
+    props=None,
+    expected="",
+    tb=None,
+    tb_entity="",
+):
+    BENCHMARKS.append(
+        {
+            "id": id,
+            "category": category,
+            "title": title,
+            "spec": spec,
+            "entity": entity,
+            "complexity": complexity,
+            "tags": tags,
+            "ref": textwrap.dedent(ref).strip() + "\n",
+            "reqs": reqs,
+            "props": props or [],
+            "expected": expected,
+            "tb": textwrap.dedent(tb).strip() + "\n" if tb else None,
+            "tb_entity": tb_entity,
+        }
+    )
 
 
 # ---------------- ARITHMETIC ----------------
-add("arith_adder8", "arithmetic", "8-bit ripple-carry adder",
+add(
+    "arith_adder8",
+    "arithmetic",
+    "8-bit ripple-carry adder",
     "Design an 8-bit adder with carry-in and carry-out. Inputs a and b are 8-bit "
     "unsigned vectors, cin is a single bit. Output sum is 8 bits and cout is the carry out.",
     "adder8",
-    dict(arithmetic_complexity=2, interface_count=5, control_complexity=0, timing_constraints=0),
+    {
+        "arithmetic_complexity": 2,
+        "interface_count": 5,
+        "control_complexity": 0,
+        "timing_constraints": 0,
+    },
     ["adder", "combinational"],
     """
     library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all;
@@ -57,13 +91,22 @@ add("arith_adder8", "arithmetic", "8-bit ripple-carry adder",
     end architecture;
     """,
     ["sum = a + b + cin (mod 256)", "cout is the 9th bit of the sum"],
-    ["overflow_detection"])
+    ["overflow_detection"],
+)
 
-add("arith_alu8", "arithmetic", "8-bit ALU (ADD/SUB/AND/OR/XOR)",
+add(
+    "arith_alu8",
+    "arithmetic",
+    "8-bit ALU (ADD/SUB/AND/OR/XOR)",
     "Design an 8-bit ALU with a 3-bit opcode selecting ADD(000), SUB(001), AND(010), "
     "OR(011), XOR(100). Inputs a and b are 8-bit. Outputs result (8-bit) and a zero flag.",
     "alu8",
-    dict(arithmetic_complexity=5, interface_count=5, control_complexity=3, timing_constraints=0),
+    {
+        "arithmetic_complexity": 5,
+        "interface_count": 5,
+        "control_complexity": 3,
+        "timing_constraints": 0,
+    },
     ["alu", "combinational"],
     """
     library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all;
@@ -91,13 +134,17 @@ add("arith_alu8", "arithmetic", "8-bit ALU (ADD/SUB/AND/OR/XOR)",
     end architecture;
     """,
     ["opcode selects the operation", "zero=1 iff result is 0"],
-    ["overflow_detection", "mutual_exclusion"])
+    ["overflow_detection", "mutual_exclusion"],
+)
 
-add("arith_mul8", "arithmetic", "8x8 unsigned multiplier",
+add(
+    "arith_mul8",
+    "arithmetic",
+    "8x8 unsigned multiplier",
     "Design an 8x8 unsigned combinational multiplier. Inputs a and b are 8-bit; "
     "output product is 16-bit.",
     "mul8",
-    dict(arithmetic_complexity=6, interface_count=3, timing_constraints=0),
+    {"arithmetic_complexity": 6, "interface_count": 3, "timing_constraints": 0},
     ["multiplier", "combinational", "dsp"],
     """
     library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all;
@@ -109,12 +156,17 @@ add("arith_mul8", "arithmetic", "8x8 unsigned multiplier",
       product <= std_logic_vector(unsigned(a) * unsigned(b));
     end architecture;
     """,
-    ["product = a * b"], [])
+    ["product = a * b"],
+    [],
+)
 
-add("arith_cmp8", "arithmetic", "8-bit magnitude comparator",
+add(
+    "arith_cmp8",
+    "arithmetic",
+    "8-bit magnitude comparator",
     "Design an 8-bit unsigned comparator with outputs gt, eq, lt.",
     "cmp8",
-    dict(arithmetic_complexity=2, interface_count=5, control_complexity=2),
+    {"arithmetic_complexity": 2, "interface_count": 5, "control_complexity": 2},
     ["comparator", "combinational"],
     """
     library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all;
@@ -128,15 +180,20 @@ add("arith_cmp8", "arithmetic", "8-bit magnitude comparator",
       lt <= '1' when unsigned(a) <  unsigned(b) else '0';
     end architecture;
     """,
-    ["exactly one of gt/eq/lt is high"], ["mutual_exclusion"])
+    ["exactly one of gt/eq/lt is high"],
+    ["mutual_exclusion"],
+)
 
 # ---------------- FSM ----------------
-add("fsm_traffic", "fsm", "Traffic-light controller FSM",
+add(
+    "fsm_traffic",
+    "fsm",
+    "Traffic-light controller FSM",
     "Design a traffic-light FSM with states RED, GREEN, YELLOW cycling on each clock "
     "tick enable. Synchronous active-high reset returns to RED. Output lights is a "
     "3-bit one-hot (RED=100, GREEN=010, YELLOW=001).",
     "traffic_light",
-    dict(state_complexity=3, control_complexity=3, timing_constraints=2, interface_count=4),
+    {"state_complexity": 3, "control_complexity": 3, "timing_constraints": 2, "interface_count": 4},
     ["fsm", "sequential"],
     """
     library ieee; use ieee.std_logic_1164.all;
@@ -165,13 +222,17 @@ add("fsm_traffic", "fsm", "Traffic-light controller FSM",
     end architecture;
     """,
     ["cycles RED->GREEN->YELLOW->RED on tick", "reset forces RED"],
-    ["deadlock_freedom", "unreachable_state"])
+    ["deadlock_freedom", "unreachable_state"],
+)
 
-add("fsm_seqdet", "fsm", "Sequence detector (1011, overlapping)",
+add(
+    "fsm_seqdet",
+    "fsm",
+    "Sequence detector (1011, overlapping)",
     "Design an overlapping Mealy/Moore sequence detector that asserts found for one "
     "cycle when the serial input bit stream contains 1011. Synchronous active-high reset.",
     "seq_detect",
-    dict(state_complexity=4, control_complexity=4, timing_constraints=2, interface_count=4),
+    {"state_complexity": 4, "control_complexity": 4, "timing_constraints": 2, "interface_count": 4},
     ["fsm", "sequential"],
     """
     library ieee; use ieee.std_logic_1164.all;
@@ -199,15 +260,25 @@ add("fsm_seqdet", "fsm", "Sequence detector (1011, overlapping)",
     end architecture;
     """,
     ["asserts found on 1011", "overlapping matches supported"],
-    ["deadlock_freedom", "unreachable_state"])
+    ["deadlock_freedom", "unreachable_state"],
+)
 
 # ---------------- COMMUNICATION ----------------
-add("comm_uart_tx", "communication", "UART transmitter (8N1)",
+add(
+    "comm_uart_tx",
+    "communication",
+    "UART transmitter (8N1)",
     "Design a UART transmitter for 8 data bits, no parity, 1 stop bit. A start pulse "
     "latches data and shifts it out LSB-first framed by a start (0) and stop (1) bit. "
     "tx_busy is high during transmission. Assume a one-clock-per-bit baud tick.",
     "uart_tx",
-    dict(state_complexity=4, control_complexity=5, timing_constraints=3, interface_count=6, concurrency=1),
+    {
+        "state_complexity": 4,
+        "control_complexity": 5,
+        "timing_constraints": 3,
+        "interface_count": 6,
+        "concurrency": 1,
+    },
     ["uart", "protocol", "sequential"],
     """
     library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all;
@@ -217,7 +288,7 @@ add("comm_uart_tx", "communication", "UART transmitter (8N1)",
            tx : out std_logic; tx_busy : out std_logic);
     end entity;
     architecture rtl of uart_tx is
-      type st is (IDLE, START, DATA, STOP);
+      type st is (IDLE, ST_START, ST_DATA, ST_STOP);
       signal state : st := IDLE;
       signal sh : std_logic_vector(7 downto 0);
       signal idx : integer range 0 to 7 := 0;
@@ -228,11 +299,11 @@ add("comm_uart_tx", "communication", "UART transmitter (8N1)",
           else
             case state is
               when IDLE => tx<='1'; tx_busy<='0';
-                if start='1' then sh<=data; tx_busy<='1'; state<=START; end if;
-              when START => if tick='1' then tx<='0'; idx<=0; state<=DATA; end if;
-              when DATA => if tick='1' then tx<=sh(idx);
-                if idx=7 then state<=STOP; else idx<=idx+1; end if; end if;
-              when STOP => if tick='1' then tx<='1'; state<=IDLE; end if;
+                if start='1' then sh<=data; tx_busy<='1'; state<=ST_START; end if;
+              when ST_START => if tick='1' then tx<='0'; idx<=0; state<=ST_DATA; end if;
+              when ST_DATA => if tick='1' then tx<=sh(idx);
+                if idx=7 then state<=ST_STOP; else idx<=idx+1; end if; end if;
+              when ST_STOP => if tick='1' then tx<='1'; state<=IDLE; end if;
             end case;
           end if;
         end if;
@@ -240,13 +311,89 @@ add("comm_uart_tx", "communication", "UART transmitter (8N1)",
     end architecture;
     """,
     ["frames data with start=0 and stop=1", "LSB-first", "tx_busy asserted during frame"],
-    ["deadlock_freedom", "transaction_completion"])
+    ["deadlock_freedom", "transaction_completion"],
+    tb="""
+    -- Self-checking testbench for uart_tx (8N1, one clock per bit via tick='1').
+    -- Drives a byte and verifies the serial frame: start(0), data LSB-first, stop(1).
+    -- Pass => "ALL TESTS PASSED"; mismatch => severity failure (non-zero exit).
+    -- NOTE: outputs of uart_tx are registered, so tx updates one clock after the
+    -- state/tick condition; the checks below account for that latency.
+    library ieee;
+    use ieee.std_logic_1164.all;
+    use ieee.numeric_std.all;
 
-add("comm_spi_master", "communication", "SPI master (mode 0)",
+    entity uart_tx_tb is
+    end entity uart_tx_tb;
+
+    architecture tb of uart_tx_tb is
+      signal clk, rst, tick, start, tx, tx_busy : std_logic := '0';
+      signal data : std_logic_vector(7 downto 0) := (others => '0');
+      constant BYTE : std_logic_vector(7 downto 0) := "10110010";
+    begin
+      dut : entity work.uart_tx
+        port map (clk => clk, rst => rst, tick => tick, start => start,
+                  data => data, tx => tx, tx_busy => tx_busy);
+
+      stim : process
+        variable errors : natural := 0;
+        variable expect : std_logic_vector(0 to 9);  -- start + 8 data + stop
+
+        procedure tick_clk is
+        begin
+          clk <= '0'; wait for 5 ns;
+          clk <= '1'; wait for 5 ns;
+        end procedure;
+      begin
+        expect(0) := '0';                              -- start bit
+        for i in 0 to 7 loop
+          expect(i + 1) := BYTE(i);                     -- data, LSB first
+        end loop;
+        expect(9) := '1';                              -- stop bit
+
+        tick <= '1';
+        rst  <= '1';                 tick_clk;          -- reset -> IDLE
+        rst  <= '0'; data <= BYTE; start <= '1'; tick_clk;  -- IDLE -> START (latch)
+        start <= '0';                tick_clk;          -- START -> DATA, tx <= start bit
+
+        if tx /= expect(0) then
+          errors := errors + 1;
+          report "start bit mismatch" severity error;
+        end if;
+
+        for i in 1 to 9 loop
+          tick_clk;                                     -- each subsequent bit
+          if tx /= expect(i) then
+            errors := errors + 1;
+            report "frame bit " & integer'image(i) & " mismatch" severity error;
+          end if;
+        end loop;
+
+        if errors = 0 then
+          report "ALL TESTS PASSED (uart_tx frame verified)" severity note;
+        else
+          report integer'image(errors) & " frame bit(s) FAILED" severity failure;
+        end if;
+        wait;
+      end process;
+    end architecture tb;
+    """,
+    tb_entity="uart_tx_tb",
+)
+
+add(
+    "comm_spi_master",
+    "communication",
+    "SPI master (mode 0)",
     "Design an SPI master in mode 0 (CPOL=0, CPHA=0) shifting 8 bits MSB-first. On "
     "start, generate sclk, drive mosi, sample miso, and assert done when complete.",
     "spi_master",
-    dict(state_complexity=4, control_complexity=5, timing_constraints=3, interface_count=8, concurrency=1),
+    {
+        "state_complexity": 4,
+        "control_complexity": 5,
+        "timing_constraints": 3,
+        "interface_count": 8,
+        "concurrency": 1,
+    },
     ["spi", "protocol", "sequential"],
     """
     library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all;
@@ -285,14 +432,90 @@ add("comm_spi_master", "communication", "SPI master (mode 0)",
     end architecture;
     """,
     ["MSB-first 8-bit transfer", "mode 0 timing", "done pulses on completion"],
-    ["deadlock_freedom", "transaction_completion"])
+    ["deadlock_freedom", "transaction_completion"],
+    tb="""
+    -- Self-checking testbench for spi_master (mode 0, MSB-first, 8 bits).
+    -- Robust checks that don't depend on exact internal phase counting:
+    --   1. the first mosi bit equals tx_data(7)  (MSB-first);
+    --   2. 'done' asserts within a bounded number of clocks (transaction completes,
+    --      i.e. no deadlock).
+    -- Full rx_data equivalence checking is left as a follow-up.
+    -- Pass => "ALL TESTS PASSED"; failure => severity failure (non-zero exit).
+    library ieee;
+    use ieee.std_logic_1164.all;
+    use ieee.numeric_std.all;
+
+    entity spi_master_tb is
+    end entity spi_master_tb;
+
+    architecture tb of spi_master_tb is
+      signal clk, rst, start, miso, sclk, mosi, done : std_logic := '0';
+      signal tx_data : std_logic_vector(7 downto 0) := (others => '0');
+      signal rx_data : std_logic_vector(7 downto 0);
+      constant TXD : std_logic_vector(7 downto 0) := "10100011";
+    begin
+      dut : entity work.spi_master
+        port map (clk => clk, rst => rst, start => start, tx_data => tx_data,
+                  miso => miso, sclk => sclk, mosi => mosi, done => done,
+                  rx_data => rx_data);
+
+      stim : process
+        variable errors : natural := 0;
+        variable cycles : natural := 0;
+
+        procedure tick_clk is
+        begin
+          clk <= '0'; wait for 5 ns;
+          clk <= '1'; wait for 5 ns;
+        end procedure;
+      begin
+        miso <= '1';
+        rst  <= '1';                       tick_clk;    -- reset -> IDLE
+        rst  <= '0'; tx_data <= TXD; start <= '1'; tick_clk;  -- IDLE -> RUN (latch)
+        start <= '0';                      tick_clk;    -- first RUN edge: mosi <= TXD(7)
+
+        if mosi /= TXD(7) then
+          errors := errors + 1;
+          report "mosi not MSB-first (expected tx_data(7))" severity error;
+        end if;
+
+        while done /= '1' and cycles < 40 loop
+          tick_clk;
+          cycles := cycles + 1;
+        end loop;
+
+        if done /= '1' then
+          errors := errors + 1;
+          report "done never asserted within 40 clocks (possible deadlock)" severity error;
+        end if;
+
+        if errors = 0 then
+          report "ALL TESTS PASSED (spi_master completion + MSB-first verified)" severity note;
+        else
+          report integer'image(errors) & " check(s) FAILED" severity failure;
+        end if;
+        wait;
+      end process;
+    end architecture tb;
+    """,
+    tb_entity="spi_master_tb",
+)
 
 # ---------------- MEMORY ----------------
-add("mem_fifo", "memory", "Synchronous FIFO (depth 16)",
+add(
+    "mem_fifo",
+    "memory",
+    "Synchronous FIFO (depth 16)",
     "Design a synchronous FIFO, 8-bit wide, depth 16, with wr_en/rd_en, full and empty "
     "flags, and synchronous active-high reset.",
     "fifo16",
-    dict(state_complexity=0, control_complexity=4, timing_constraints=2, interface_count=8, concurrency=2),
+    {
+        "state_complexity": 0,
+        "control_complexity": 4,
+        "timing_constraints": 2,
+        "interface_count": 8,
+        "concurrency": 2,
+    },
     ["fifo", "memory", "sequential"],
     """
     library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all;
@@ -322,13 +545,23 @@ add("mem_fifo", "memory", "Synchronous FIFO (depth 16)",
     end architecture;
     """,
     ["FIFO ordering preserved", "full/empty flags correct", "no overflow/underflow"],
-    ["overflow_detection", "mutual_exclusion"])
+    ["overflow_detection", "mutual_exclusion"],
+)
 
-add("mem_regfile", "memory", "32x32 register file (2R1W)",
+add(
+    "mem_regfile",
+    "memory",
+    "32x32 register file (2R1W)",
     "Design a 32-entry, 32-bit register file with two read ports and one write port. "
     "Register 0 always reads as zero. Writes are synchronous.",
     "regfile",
-    dict(control_complexity=3, timing_constraints=1, interface_count=9, concurrency=2, hierarchy_depth=1),
+    {
+        "control_complexity": 3,
+        "timing_constraints": 1,
+        "interface_count": 9,
+        "concurrency": 2,
+        "hierarchy_depth": 1,
+    },
     ["register-file", "memory", "processor", "sequential"],
     """
     library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all;
@@ -352,15 +585,19 @@ add("mem_regfile", "memory", "32x32 register file (2R1W)",
     end architecture;
     """,
     ["reg 0 reads zero", "two independent read ports", "synchronous write"],
-    ["mutual_exclusion"])
+    ["mutual_exclusion"],
+)
 
 # ---------------- PROCESSOR ----------------
-add("proc_branch_pred", "processor", "2-bit saturating branch predictor",
+add(
+    "proc_branch_pred",
+    "processor",
+    "2-bit saturating branch predictor",
     "Design a 2-bit saturating counter branch predictor. On each resolved branch "
     "(taken input), update the state; predict output is high when in a 'taken' state. "
     "Synchronous active-high reset to weakly-not-taken.",
     "branch_pred",
-    dict(state_complexity=4, control_complexity=4, timing_constraints=2, interface_count=4),
+    {"state_complexity": 4, "control_complexity": 4, "timing_constraints": 2, "interface_count": 4},
     ["branch-predictor", "processor", "fsm", "sequential"],
     """
     library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all;
@@ -382,13 +619,17 @@ add("proc_branch_pred", "processor", "2-bit saturating branch predictor",
     end architecture;
     """,
     ["saturates at strongly taken/not-taken", "predict = MSB of counter"],
-    ["deadlock_freedom"])
+    ["deadlock_freedom"],
+)
 
-add("proc_alu_ctrl", "processor", "ALU control decoder",
+add(
+    "proc_alu_ctrl",
+    "processor",
+    "ALU control decoder",
     "Design an ALU control unit: given a 2-bit ALUOp and a 4-bit funct field, output a "
     "4-bit ALU control signal following the classic MIPS mapping (add/sub/and/or/slt).",
     "alu_control",
-    dict(control_complexity=5, arithmetic_complexity=1, interface_count=3),
+    {"control_complexity": 5, "arithmetic_complexity": 1, "interface_count": 3},
     ["processor", "combinational", "control"],
     """
     library ieee; use ieee.std_logic_1164.all;
@@ -416,14 +657,24 @@ add("proc_alu_ctrl", "processor", "ALU control decoder",
     end architecture;
     """,
     ["decodes ALUOp+funct to control", "defaults defined for all inputs"],
-    ["mutual_exclusion"])
+    ["mutual_exclusion"],
+)
 
 # ---------------- DSP ----------------
-add("dsp_fir4", "dsp", "4-tap FIR filter",
+add(
+    "dsp_fir4",
+    "dsp",
+    "4-tap FIR filter",
     "Design a 4-tap FIR filter with fixed coefficients [1,2,2,1] over signed 8-bit "
     "samples. On each clock, shift in a new sample and output the convolution sum.",
     "fir4",
-    dict(arithmetic_complexity=6, control_complexity=2, timing_constraints=2, interface_count=4, concurrency=1),
+    {
+        "arithmetic_complexity": 6,
+        "control_complexity": 2,
+        "timing_constraints": 2,
+        "interface_count": 4,
+        "concurrency": 1,
+    },
     ["fir", "dsp", "sequential"],
     """
     library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all;
@@ -447,13 +698,22 @@ add("dsp_fir4", "dsp", "4-tap FIR filter",
     end architecture;
     """,
     ["y = 1*x0 + 2*x1 + 2*x2 + 1*x3", "signed arithmetic"],
-    ["overflow_detection"])
+    ["overflow_detection"],
+)
 
-add("dsp_movavg", "dsp", "Moving-average filter (window 4)",
+add(
+    "dsp_movavg",
+    "dsp",
+    "Moving-average filter (window 4)",
     "Design a moving-average filter over the last 4 unsigned 8-bit samples, outputting "
     "the average (sum divided by 4).",
     "movavg4",
-    dict(arithmetic_complexity=4, control_complexity=2, timing_constraints=2, interface_count=4),
+    {
+        "arithmetic_complexity": 4,
+        "control_complexity": 2,
+        "timing_constraints": 2,
+        "interface_count": 4,
+    },
     ["moving-average", "dsp", "sequential"],
     """
     library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all;
@@ -477,14 +737,24 @@ add("dsp_movavg", "dsp", "Moving-average filter (window 4)",
       y <= std_logic_vector(acc(9 downto 2));
     end architecture;
     """,
-    ["output = mean of last 4 samples"], [])
+    ["output = mean of last 4 samples"],
+    [],
+)
 
 # ---------------- CONTROL ----------------
-add("ctrl_pwm", "control", "PWM generator (8-bit duty)",
+add(
+    "ctrl_pwm",
+    "control",
+    "PWM generator (8-bit duty)",
     "Design an 8-bit PWM generator. A free-running 8-bit counter compares against an "
     "input duty value; pwm_out is high while counter < duty. Synchronous reset.",
     "pwm8",
-    dict(arithmetic_complexity=1, control_complexity=2, timing_constraints=2, interface_count=4),
+    {
+        "arithmetic_complexity": 1,
+        "control_complexity": 2,
+        "timing_constraints": 2,
+        "interface_count": 4,
+    },
     ["pwm", "control", "sequential"],
     """
     library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all;
@@ -504,13 +774,18 @@ add("ctrl_pwm", "control", "PWM generator (8-bit duty)",
       pwm_out <= '1' when cnt < unsigned(duty) else '0';
     end architecture;
     """,
-    ["duty cycle proportional to duty input"], [])
+    ["duty cycle proportional to duty input"],
+    [],
+)
 
-add("ctrl_debounce", "control", "Switch debouncer",
+add(
+    "ctrl_debounce",
+    "control",
+    "Switch debouncer",
     "Design a switch debouncer that only propagates the input to the output after it "
     "has been stable for N=8 consecutive clock cycles.",
     "debounce",
-    dict(state_complexity=0, control_complexity=3, timing_constraints=2, interface_count=3),
+    {"state_complexity": 0, "control_complexity": 3, "timing_constraints": 2, "interface_count": 3},
     ["debouncer", "control", "sequential"],
     """
     library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all;
@@ -536,13 +811,18 @@ add("ctrl_debounce", "control", "Switch debouncer",
       dout <= stable;
     end architecture;
     """,
-    ["output changes only after 8 stable cycles"], [])
+    ["output changes only after 8 stable cycles"],
+    [],
+)
 
-add("mem_sync_ram", "memory", "Synchronous single-port RAM (256x8)",
+add(
+    "mem_sync_ram",
+    "memory",
+    "Synchronous single-port RAM (256x8)",
     "Design a synchronous single-port RAM, 256 words x 8 bits, with a registered read "
     "output and a write-enable.",
     "sync_ram",
-    dict(control_complexity=2, timing_constraints=1, interface_count=6),
+    {"control_complexity": 2, "timing_constraints": 1, "interface_count": 6},
     ["ram", "memory", "sequential"],
     """
     library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all;
@@ -564,14 +844,25 @@ add("mem_sync_ram", "memory", "Synchronous single-port RAM (256x8)",
       end process;
     end architecture;
     """,
-    ["registered read", "write-enable gated write"], [])
+    ["registered read", "write-enable gated write"],
+    [],
+)
 
-add("comm_i2c_ctrl", "communication", "I2C bit-level controller (start/stop/byte)",
+add(
+    "comm_i2c_ctrl",
+    "communication",
+    "I2C bit-level controller (start/stop/byte)",
     "Design an I2C master byte controller that generates START and STOP conditions and "
     "shifts out 8 bits MSB-first on sda synchronised to scl, asserting done after the "
     "byte and sampling the ack bit.",
     "i2c_byte",
-    dict(state_complexity=5, control_complexity=6, timing_constraints=3, interface_count=8, concurrency=1),
+    {
+        "state_complexity": 5,
+        "control_complexity": 6,
+        "timing_constraints": 3,
+        "interface_count": 8,
+        "concurrency": 1,
+    },
     ["i2c", "protocol", "sequential"],
     """
     library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all;
@@ -605,7 +896,8 @@ add("comm_i2c_ctrl", "communication", "I2C bit-level controller (start/stop/byte
     end architecture;
     """,
     ["generates START and STOP", "8-bit MSB-first shift", "samples ack"],
-    ["deadlock_freedom", "transaction_completion"])
+    ["deadlock_freedom", "transaction_completion"],
+)
 
 
 def main() -> None:
@@ -626,8 +918,12 @@ def main() -> None:
             "tags": b["tags"],
             "complexity": b["complexity"],
             "reference_hdl_path": "reference.vhd",
-            "properties": b["props"],
         }
+        if b.get("tb"):
+            (bdir / "testbench.vhd").write_text(b["tb"])
+            meta["testbench_path"] = "testbench.vhd"
+            meta["testbench_entity"] = b["tb_entity"]
+        meta["properties"] = b["props"]
         with (bdir / "benchmark.yaml").open("w") as fh:
             yaml.safe_dump(meta, fh, sort_keys=False, default_flow_style=False)
     print(f"wrote {len(BENCHMARKS)} benchmarks to {ROOT}")

@@ -1,4 +1,5 @@
 """Detect which HDL tools are present in the environment."""
+
 from __future__ import annotations
 
 import os
@@ -48,7 +49,9 @@ def _ghdl_plugin_ok(timeout: float = 30.0) -> bool:
     try:
         r = subprocess.run(
             ["yosys", "-p", "plugin -i ghdl"],
-            capture_output=True, text=True, timeout=timeout,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
         )
         return r.returncode == 0
     except Exception:

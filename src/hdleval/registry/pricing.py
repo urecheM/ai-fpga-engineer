@@ -5,6 +5,7 @@ can be re-priced correctly even after a provider changes its rates. Unknown
 model ids (e.g. the synthetic provider's ``synthetic-f{fidelity}``) price at
 $0.0 rather than raising, so non-billed runs still flow through unchanged.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass

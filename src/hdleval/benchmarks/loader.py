@@ -1,4 +1,5 @@
 """Load benchmark metadata from ``benchmarks/<version>/<id>/benchmark.yaml``."""
+
 from __future__ import annotations
 
 import os
@@ -46,9 +47,7 @@ def load_benchmark(bench_dir: str | os.PathLike[str]) -> Benchmark:
     )
 
 
-def load_suite(
-    version: str = "v1", root: str | os.PathLike[str] | None = None
-) -> list[Benchmark]:
+def load_suite(version: str = "v1", root: str | os.PathLike[str] | None = None) -> list[Benchmark]:
     base = benchmarks_root(root) / version
     if not base.exists():
         return []
@@ -65,9 +64,7 @@ def select(benchmarks: list[Benchmark], sel: BenchmarkSelector) -> list[Benchmar
             return False
         if sel.categories and b.category not in sel.categories:
             return False
-        if not (sel.difficulty_min <= b.estimated_difficulty <= sel.difficulty_max):
-            return False
-        return True
+        return sel.difficulty_min <= b.estimated_difficulty <= sel.difficulty_max
 
     return [b for b in benchmarks if keep(b)]
 

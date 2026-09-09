@@ -4,6 +4,7 @@ Success rates are reported with Wilson score 95% confidence intervals so that
 comparisons across models account for sample size — essential when the suite is
 small. Category- and difficulty-tier breakdowns are produced from the same rows.
 """
+
 from __future__ import annotations
 
 import math
@@ -84,7 +85,7 @@ def _accumulate(records: list[dict[str, Any]], keyfn) -> dict[Any, ModelStats]:
         st.total_tokens += int(metrics.get("prompt_tokens", 0)) + int(
             metrics.get("completion_tokens", 0)
         )
-        st.total_retries += int(r.get("retry_history", []) and len(r["retry_history"]) or 0)
+        st.total_retries += int((r.get("retry_history", []) and len(r["retry_history"])) or 0)
         st.failure_counts[r.get("failure_class", "none")] += 1
         # stage-derived counters live in metrics for records; recompute leniently
         if r.get("failure_class") not in ("compilation_error", "no_code_generated"):
@@ -97,19 +98,23 @@ def _accumulate(records: list[dict[str, Any]], keyfn) -> dict[Any, ModelStats]:
     return stats
 
 
-def build_leaderboard(records: list[dict[str, Any]], benchmark_meta: dict[str, dict]) -> Leaderboard:
+def build_leaderboard(
+    records: list[dict[str, Any]], benchmark_meta: dict[str, dict]
+) -> Leaderboard:
     def mp(r: dict) -> tuple[str, str]:
         return (r["model"], r["prompt"])
 
-    overall = [s.row() for s in sorted(
-        _accumulate(records, mp).values(), key=lambda s: -(s.passed / s.n if s.n else 0)
-    )]
+    overall = [
+        s.row()
+        for s in sorted(
+            _accumulate(records, mp).values(), key=lambda s: -(s.passed / s.n if s.n else 0)
+        )
+    ]
 
     by_cat: dict[str, list[dict[str, Any]]] = defaultdict(list)
     cats = {benchmark_meta.get(r["benchmark"], {}).get("category", "unknown") for r in records}
     for c in sorted(cats):
-        subset = [r for r in records
-                  if benchmark_meta.get(r["benchmark"], {}).get("category") == c]
+        subset = [r for r in records if benchmark_meta.get(r["benchmark"], {}).get("category") == c]
         by_cat[c] = [s.row() for s in _accumulate(subset, mp).values()]
 
     by_diff: dict[str, list[dict[str, Any]]] = defaultdict(list)

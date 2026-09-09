@@ -3,6 +3,7 @@
 Not a substitute for coverage.py (used in CI) but gives a realistic figure for
 the README when the dev extras are unavailable.
 """
+
 from __future__ import annotations
 
 import ast
@@ -29,15 +30,15 @@ def statement_lines(path: Path) -> set[int]:
     lines: set[int] = set()
     for node in ast.walk(tree):
         if isinstance(node, ast.stmt) and not isinstance(
-            node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Import,
-                   ast.ImportFrom)
+            node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Import, ast.ImportFrom)
         ):
             lines.add(node.lineno)
     return lines
 
 
 def main() -> int:
-    import scripts.run_tests_nodeps as runner  # noqa
+    import scripts.run_tests_nodeps as runner
+
     sys.settrace(_tracer)
     runner.main()
     sys.settrace(None)
@@ -55,7 +56,7 @@ def main() -> int:
         pct = 100 * hit / len(stmts) if stmts else 100
         per_file.append((pct, py.relative_to(PKG), hit, len(stmts)))
     for pct, rel, hit, n in sorted(per_file):
-        print(f"{pct:5.0f}%  {str(rel):40s} {hit}/{n}")
+        print(f"{pct:5.0f}%  {rel!s:40s} {hit}/{n}")
     overall = 100 * covered / total if total else 0
     print(f"\nOVERALL: {overall:.1f}%  ({covered}/{total} statements)")
     Path(ROOT / "results").mkdir(exist_ok=True)
