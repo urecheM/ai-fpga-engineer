@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: "hdleval: An Extensible, Reproducible Platform for Evaluating LLM-Assisted Hardware Design"
-message: "If you use this platform or benchmark suite, please cite it."
+message: ""
 type: software
 authors:
   - name: "hdleval contributors"
@@ -13,4 +13,4 @@ keywords:
   - benchmark
   - VHDL
   - reproducibility
-repository-code: "https://github.com/your-org/hdleval"
+repository-code: "https://github.com/urecheM/ai-fpga-engineer"
