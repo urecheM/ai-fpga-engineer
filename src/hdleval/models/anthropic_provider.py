@@ -13,9 +13,10 @@ import hashlib
 import json
 import os
 import time
+from dataclasses import replace
 from pathlib import Path
 
-from .base import ModelProvider, ModelRequest, ModelResponse
+from .base import ModelProvider, ModelRequest, ModelResponse, estimate_cost
 
 _CACHE_DIR = Path(os.environ.get("HDLEVAL_CACHE_DIR", ".hdleval_cache/responses"))
 
@@ -105,5 +106,6 @@ class AnthropicProvider(ModelProvider):
             finish_reason=msg.stop_reason or "stop",
             raw={"id": msg.id},
         )
+        resp = replace(resp, cost_usd=estimate_cost(resp))
         self._write_cache(key, resp)
         return resp
