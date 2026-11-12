@@ -1,0 +1,21 @@
+name: baseline-semantic-v1
+description: >
+  Graded negative controls whose faults compile and synthesise (inverted
+  conditions, off-by-one bounds, swapped operators, stuck-at bits, flipped
+  reset polarity, dropped case branches, wrong clock edge). Measures how far a
+  static-only evaluator overstates correctness.
+models:
+  - reference-golden
+  - synthetic-high-semantic
+  - synthetic-mid-semantic
+  - synthetic-low-semantic
+prompts:
+  - direct
+benchmarks:
+  suite_version: v1
+trials: 3
+seed: 20260707
+synthesis: yosys-ice40
+verification: equivalence
+optimization: baseline
+tags: [baseline, reproducible, synthetic, semantic-faults]

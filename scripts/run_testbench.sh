@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
-# Analyze + elaborate + run a benchmark's reference design against its testbench.
+# run a benchmark's reference design against its testbench
 # Usage:  ./scripts/run_testbench.sh <benchmark_id> <tb_entity>
-#   e.g.  ./scripts/run_testbench.sh comm_uart_tx uart_tx_tb
-# A pass prints "ALL TESTS PASSED"; a mismatch ends with severity failure.
-# Supports Task 3 in docs/guides/implementation-tasks.md.
+
 set -euo pipefail
 cd "$(dirname "$0")/.."
 

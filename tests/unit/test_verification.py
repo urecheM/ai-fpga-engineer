@@ -12,7 +12,6 @@ def test_classify_precedence():
             synth_status="ok",
             sim_status="ok",
             functional_ok=True,
-            property_fail=False,
         )
         == FailureClass.NO_CODE
     )
@@ -23,7 +22,6 @@ def test_classify_precedence():
             synth_status="ok",
             sim_status="ok",
             functional_ok=True,
-            property_fail=False,
         )
         == FailureClass.COMPILE
     )
@@ -34,7 +32,6 @@ def test_classify_precedence():
             synth_status="ok",
             sim_status="ok",
             functional_ok=True,
-            property_fail=False,
         )
         == FailureClass.NONE
     )
@@ -45,3 +42,15 @@ def test_properties_report():
     rep = check_properties(fsm, ["deadlock_freedom", "unreachable_state"])
     assert set(rep.results) == {"deadlock_freedom", "unreachable_state"}
     assert rep.n_pass + rep.n_fail <= 2
+
+def test_lint_never_decides_pass_fail():
+    assert (
+        classify_failure(
+            code_found=True,
+            compile_status="ok",
+            synth_status="ok",
+            sim_status="ok",
+            functional_ok=True,
+        )
+        == FailureClass.NONE
+    )

@@ -1,12 +1,3 @@
-"""Structural VHDL lint.
-
-Fast, text-level checks that gate generated RTL before any expensive stage.
-``fixable=True`` marks defect classes the debug agent knows how to repair
-mechanically (missing library/use clauses); everything else is reported for
-the HDL critic / a human. This is a *linter*, not a compiler — GHDL remains
-the authority, and the lint gate exists only to fail fast and to give the
-repair loop something well-defined to act on.
-"""
 from __future__ import annotations
 
 import re
@@ -19,7 +10,7 @@ class Issue:
     message: str
     fixable: bool = False
 
-    def __repr__(self) -> str:  # keeps assertion messages readable
+    def __repr__(self) -> str:
         return f"{self.code}({'fixable' if self.fixable else 'manual'})"
 
 
@@ -51,7 +42,6 @@ def lint(vhdl: str) -> list[Issue]:
                          f"architecture targets '{arch.group(1)}' but entity is "
                          f"'{ent.group(1)}'"))
 
-    # undriven outputs: every 'out' port must appear on the left of an assignment
     if ent:
         port_block = re.search(r"\bport\s*\((.*?)\)\s*;", vhdl, re.I | re.S)
         if port_block:

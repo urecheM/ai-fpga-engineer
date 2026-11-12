@@ -1,19 +1,6 @@
-"""Assert the HDL toolchain is complete, and optionally synthesize the v1 suite.
-
-Usage:
-    python scripts/check_toolchain.py               # assert ghdl-yosys-plugin=yes
-    python scripts/check_toolchain.py --synthesize  # ...and report cell counts
-
-Without the ghdl-yosys-plugin, ``Toolchain.ghdl_plugin`` is False and every
-synthesis stage silently degrades to ``status='skipped'`` — so a CI run can be
-green while measuring nothing. This script turns that silent degradation into a
-hard failure. Install the OSS CAD Suite (which bundles GHDL, Yosys and the
-plugin) and put its ``bin/`` on PATH; see .github/workflows/ci.yml.
-
-Exit code 0 = toolchain complete (and, with --synthesize, every reference
-design synthesized with non-zero cell counts); 1 = otherwise.
+"""python scripts/check_toolchain.py
+python scripts/check_toolchain.py --synthesize
 """
-
 from __future__ import annotations
 
 import sys
@@ -24,8 +11,8 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from hdleval.toolchain.detect import detect  # noqa: E402
-from hdleval.toolchain.yosys import synthesize  # noqa: E402
+from hdleval.toolchain.detect import detect
+from hdleval.toolchain.yosys import synthesize
 
 V1 = ROOT / "benchmarks" / "v1"
 

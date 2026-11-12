@@ -1,12 +1,4 @@
-"""Generate publication artifacts (technical report + preprint) from results.
-
-Reads the leaderboard and records produced by an experiment run and fills a
-static narrative template with generated tables and statistics. The narrative
-(motivation, methodology, related work) is fixed prose; every number, table and
-figure is injected from the experiment registry, so the paper cannot drift from
-the data.
-"""
-
+#report generation.. why? ....
 from __future__ import annotations
 
 import json
@@ -198,7 +190,7 @@ def main() -> None:
     (PUB / "technical-report").mkdir(parents=True, exist_ok=True)
     (PUB / "figures").mkdir(parents=True, exist_ok=True)
 
-    # copy figures into the publication tree
+    # copy figures into publication tree
     figdir = RESULTS / "figures"
     if figdir.exists():
         for svg in figdir.glob("*.svg"):
@@ -210,6 +202,7 @@ def main() -> None:
         "n",
         "pass_rate",
         "pass_ci95",
+        "sim_coverage",
         "compile_rate",
         "synth_rate",
         "avg_latency_s",
@@ -220,12 +213,16 @@ def main() -> None:
     for cat, rows in lb["by_category"].items():
         for r in rows:
             cat_rows.append({**r, "category": cat})
-    cat_table = _md_table(cat_rows, ["category", "model", "n", "pass_rate", "pass_ci95"])
+    cat_table = _md_table(
+        cat_rows, ["category", "model", "n", "pass_rate", "pass_ci95", "sim_coverage"]
+    )
     diff_rows = []
     for tier, rows in lb["by_difficulty"].items():
         for r in rows:
             diff_rows.append({**r, "tier": tier})
-    diff_table = _md_table(diff_rows, ["tier", "model", "n", "pass_rate", "pass_ci95"])
+    diff_table = _md_table(
+        diff_rows, ["tier", "model", "n", "pass_rate", "pass_ci95", "sim_coverage"]
+    )
 
     stats = _stats(lb, recs)
     report = REPORT_TEMPLATE.format(
@@ -238,14 +235,12 @@ def main() -> None:
     (PUB / "technical-report" / "TECHNICAL_REPORT.md").write_text(report)
     (PUB / "technical-report" / "generated_stats.json").write_text(json.dumps(stats, indent=2))
 
-    # references.bib
     (PUB / "technical-report" / "references.bib").write_text(
         "@misc{hdleval2026,\n  title={hdleval: An Extensible, Reproducible Platform "
         "for Evaluating LLM-Assisted Hardware Design},\n  author={hdleval contributors},\n"
         "  year={2026},\n  note={https://github.com/your-org/hdleval}\n}\n"
     )
 
-    # preprint (condensed 6-10pp derivative)
     _write_preprint(stats, overall, PUB)
     print("publication artifacts written to", PUB)
 

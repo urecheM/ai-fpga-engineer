@@ -1,11 +1,5 @@
-"""Self-test and regression suite — tool-aware and non-circular.
-
-Run standalone::
-
+"""Run standalone::
     python -m ai_fpga_engineer.selftest
-
-or under pytest (each ``check_*`` has a ``test_*`` wrapper; tool-gated checks
-skip cleanly when the toolchain is absent, unless AIFPGA_REQUIRE_TOOLS=1).
 """
 from __future__ import annotations
 
@@ -15,7 +9,7 @@ from pathlib import Path
 
 try:
     import pytest
-except ImportError:            # standalone mode
+except ImportError:
     pytest = None
 
 from .core.orchestrator import Orchestrator
@@ -38,10 +32,7 @@ REG8 = "Design an 8-bit register with synchronous load and reset."
 CNT8 = "Design an 8-bit up counter with synchronous reset and enable."
 CMP8 = "Design an 8-bit comparator with gt, eq, lt outputs."
 
-
 class Skip(Exception):
-    """Raised when a check needs tools that are absent (fatal in CI)."""
-
 
 def _need(condition: bool, why: str) -> None:
     if not condition:

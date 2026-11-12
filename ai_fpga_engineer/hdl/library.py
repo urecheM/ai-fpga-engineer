@@ -1,19 +1,3 @@
-"""Parameterised synthesizable-VHDL generators, each paired with an executable
-Python golden-reference model -- driven by architecture decisions.
-
-The generator reads an :class:`ArchDecisions` contract and emits RTL that
-reflects it: a binary or one-hot opcode encoding, a shared add/sub datapath, and
-optional output registering (a one-stage pipeline). Different decisions therefore
-produce meaningfully different hardware with different area/timing, which is what
-makes design intent and optimization actually change the design.
-
-Golden-model policy: expected values come from the single spec-derived oracle
-in ``ai_fpga_engineer/reference/models.py`` (deduplication). Independence from
-the RTL is established by GHDL executing the emitted VHDL against those values
-and by the mutation campaign — see docs/CLAIMS.md. ``alu_rtl_emulate`` remains
-as a fast in-Python pre-check of the decision-specific datapaths (notably the
-shared add/sub arithmetic); the authoritative evidence is the simulator.
-"""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -23,24 +7,20 @@ import random
 
 from ..core.spec import Specification, Port
 from ..core.decisions import ArchDecisions, QoR
-from ..reference import models as _refmodels   # single oracle import
+from ..reference import models as _refmodels
 
-
-# ---------------------------------------------------------------------------
 # Result containers
-# ---------------------------------------------------------------------------
 @dataclass
 class TestPlan:
-    kind: str                       # "combinational" | "sequential"
+    kind: str
     vectors: list[dict]
     notes: list[str] = field(default_factory=list)
-
 
 @dataclass
 class GeneratedDesign:
     entity: str
     vhdl: str
-    kind: str                       # combinational | sequential
+    kind: str
     ports: list[Port]
     eval_fn: Callable | None
     run_fn: Callable | None
@@ -48,7 +28,7 @@ class GeneratedDesign:
     resources: dict
     opcode_map: dict = field(default_factory=dict)
     decisions: ArchDecisions = field(default_factory=ArchDecisions)
-    latency: int = 0                # output latency in clocks
+    latency: int = 0
 
 
 VHDL_HEADER = """library ieee;
@@ -56,13 +36,6 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 """
 
-
-# ===========================================================================
-# ALU
-# ===========================================================================
-# Each op: a VHDL expression building a (WIDTH+1)-bit result vector `res_i`
-# (bit WIDTH = carry/borrow, low WIDTH bits = value). The Python golden model
-# is bound below from the reference oracle.
 _ALU_OPS: dict[str, dict] = {
     "ADD": dict(vhdl="std_logic_vector(resize(unsigned(a), WIDTH+1) + resize(unsigned(b), WIDTH+1))",
                 desc="Unsigned addition; carry = carry-out."),
@@ -82,7 +55,7 @@ _ALU_OPS: dict[str, dict] = {
                 desc="Shift a right 1; carry = bit out."),
 }
 
-# Golden-model dedup: expected values come from the single spec-derived oracle.
+# Golden-model dedup. Expected vals come from the single spec-derived oracle
 for _op in _ALU_OPS:
     _ALU_OPS[_op]["py"] = (lambda o: lambda a, b, W, m: _refmodels.alu(o, a, b, W))(_op)
 
@@ -115,12 +88,10 @@ def generate_alu(spec: Specification, d: ArchDecisions) -> GeneratedDesign:
         f'    constant OP_{op:<4}: std_logic_vector(OPW-1 downto 0) := "{code}";'
         for op, code in opcode_map.items())
 
-    # --- per-op result expression (shared adder reuses precomputed sumv) ---
     def res_expr(op: str) -> str:
         if share and op == "ADD":
             return "std_logic_vector(sumv)"
         if share and op == "SUB":
-            # replace the carry bit with the borrow (= not carry)
             return "(not sumv(WIDTH)) & std_logic_vector(sumv(WIDTH-1 downto 0))"
         return _ALU_OPS[op]["vhdl"]
 
@@ -198,14 +169,11 @@ begin
 {out_drive}
 end architecture rtl;
 """
-
-    # ---- golden model (semantics; identical for every decision) ----
     def combo(inp: dict) -> dict:
         a, b, opname = inp["a"], inp["b"], inp["op"]
         value, carry = _ALU_OPS[opname]["py"](a, b, W, mask)
         return {"result": value, "carry": carry, "zero": 1 if value == 0 else 0}
 
-    # ---- test plan ----
     edges = sorted({0, 1, 2, mask, mask - 1, mask >> 1, (mask >> 1) + 1})
     vectors = [{"a": a, "b": b, "op": op} for op in ops for a in edges for b in edges]
     rng = random.Random(42)
@@ -218,7 +186,7 @@ end architecture rtl;
     if d.register_output:
         plan = TestPlan("sequential", vectors,
                         [f"{len(edges)}x{len(edges)} boundary grid/op + 64 random, clocked (latency 1)"])
-        run_fn = lambda seq: [combo(v) for v in seq]  # each vector independent
+        run_fn = lambda seq: [combo(v) for v in seq]
         return GeneratedDesign(entity, vhdl, "sequential", ports, None, run_fn,
                                plan, resources, opcode_map, d, latency=1)
     plan = TestPlan("combinational", vectors,
@@ -227,26 +195,20 @@ end architecture rtl;
     return GeneratedDesign(entity, vhdl, "combinational", ports, combo, None,
                            plan, resources, opcode_map, d, latency=0)
 
-
+    
+#Mirror datapath that emitted VHDL implements and return (result, carry)
 def alu_rtl_emulate(d: ArchDecisions, a: int, b: int, opname: str, W: int) -> tuple[int, int]:
-    """Mirror the *exact* datapath the emitted VHDL implements, returning
-    (result, carry). A fast in-Python pre-check of the decision-specific
-    datapaths (especially the shared add/sub arithmetic) against the oracle;
-    the authoritative evidence is GHDL executing the RTL. Opcode encoding and
-    output registering do not change the computed value, so only the
-    shared-adder path needs special handling here."""
     mask = (1 << W) - 1
     share = d.share_add_sub and opname in ("ADD", "SUB")
     if share:
         sub_sel = 1 if opname == "SUB" else 0
-        addend = (mask ^ b) if sub_sel else b          # not(b) over W bits when subtracting
-        summ = a + addend + sub_sel                    # WIDTH+1-bit sum
+        addend = (mask ^ b) if sub_sel else b
+        summ = a + addend + sub_sel
         value = summ & mask
         carry_bit = (summ >> W) & 1
-        carry = (1 - carry_bit) if sub_sel else carry_bit   # SUB exposes borrow = not carry
+        carry = (1 - carry_bit) if sub_sel else carry_bit
         return value, carry
     return _ALU_OPS[opname]["py"](a, b, W, mask)
-
 
 def alu_exhaustive_plan(spec: Specification) -> TestPlan:
     W = spec.data_width
@@ -254,7 +216,6 @@ def alu_exhaustive_plan(spec: Specification) -> TestPlan:
     n = 1 << W
     vectors = [{"a": a, "b": b, "op": op} for op in ops for a in range(n) for b in range(n)]
     return TestPlan("combinational", vectors, [f"Exhaustive: {len(vectors)} vectors"])
-
 
 def _alu_ports(W: int, opw: int, registered: bool) -> list[Port]:
     ports = []
@@ -268,15 +229,10 @@ def _alu_ports(W: int, opw: int, registered: bool) -> list[Port]:
     ]
     return ports
 
-
 def estimate_alu(W: int, ops: list[str], d: ArchDecisions) -> dict:
-    """Heuristic, decision-aware QoR estimate. Clearly pre-synthesis and used
-    only for RANKING; acceptance uses measured numbers when the flow exists.
-    Its error band is published by `cli calibrate` (see docs/CLAIMS.md)."""
     n = len(ops)
     arith = [o for o in ops if o in ("ADD", "SUB", "INC", "DEC")]
     share = d.share_add_sub and ("ADD" in ops and "SUB" in ops)
-    # adders: one per arithmetic op, unless ADD+SUB are shared into one
     n_adders = len(arith) - (1 if share else 0)
     adder_luts = W * max(0, n_adders)
     mux_luts = int(W * max(1, math.log2(max(2, n))))
@@ -284,20 +240,17 @@ def estimate_alu(W: int, ops: list[str], d: ArchDecisions) -> dict:
     luts = adder_luts + mux_luts + decode_luts
     registers = (W + 2) if d.register_output else 0
 
-    # critical path: arithmetic depth + result-mux depth + opcode decode
+    # critical path
     base_cp = 0.6 + (0.18 * W if arith else 0.05 * W) + 0.03 * math.log2(max(2, n))
     if d.opcode_encoding == "onehot":
-        base_cp -= 0.04 * math.log2(max(2, n))     # flatter decode
+        base_cp -= 0.04 * math.log2(max(2, n))
     if d.register_output:
-        base_cp *= 0.78                            # output register isolates downstream timing
+        base_cp *= 0.78
     cp = round(max(0.2, base_cp), 2)
     return {"luts": luts, "registers": registers, "dsp": 0,
             "critical_path_ns": cp, "fmax_mhz": round(1000.0 / cp, 1)}
 
-
-# ===========================================================================
-# Counter (sequential)
-# ===========================================================================
+#counter
 def generate_counter(spec: Specification, d: ArchDecisions) -> GeneratedDesign:
     W = spec.data_width
     mask = (1 << W) - 1
@@ -355,10 +308,7 @@ end architecture rtl;
     return GeneratedDesign(entity, vhdl, "sequential", ports, None, run_fn, plan,
                            resources, {}, d, latency=0)
 
-
-# ===========================================================================
-# Register (sequential)
-# ===========================================================================
+# Register
 def generate_register(spec: Specification, d: ArchDecisions) -> GeneratedDesign:
     W = spec.data_width
     mask = (1 << W) - 1
@@ -417,10 +367,7 @@ end architecture rtl;
     return GeneratedDesign(entity, vhdl, "sequential", ports, None, run_fn, plan,
                            resources, {}, d, latency=0)
 
-
-# ===========================================================================
-# Comparator (combinational; supports optional output registering)
-# ===========================================================================
+# Comparator
 def generate_comparator(spec: Specification, d: ArchDecisions) -> GeneratedDesign:
     W = spec.data_width
     mask = (1 << W) - 1
@@ -491,10 +438,7 @@ end architecture rtl;
     return GeneratedDesign(entity, vhdl, "combinational", ports, combo, None, plan,
                            resources, {}, d, latency=0)
 
-
-# ===========================================================================
 # Dispatch
-# ===========================================================================
 _GENERATORS: dict[str, Callable[[Specification, ArchDecisions], GeneratedDesign]] = {
     "alu": generate_alu,
     "counter": generate_counter,
@@ -523,16 +467,15 @@ def candidate_decisions(spec: Specification) -> list[ArchDecisions]:
         cands = [
             ArchDecisions("binary", False, False),
             ArchDecisions("onehot", False, False),
-            ArchDecisions("binary", True, False),    # registered
+            ArchDecisions("binary", True, False),
             ArchDecisions("onehot", True, False),
         ]
         if "ADD" in ops and "SUB" in ops:
-            cands.append(ArchDecisions("binary", False, True))   # shared add/sub
+            cands.append(ArchDecisions("binary", False, True))
             cands.append(ArchDecisions("binary", True, True))
         return cands
     if spec.design_class == "comparator":
         return [ArchDecisions(register_output=False), ArchDecisions(register_output=True)]
-    # counter / register: already sequential; single architecture
     return [ArchDecisions()]
 
 

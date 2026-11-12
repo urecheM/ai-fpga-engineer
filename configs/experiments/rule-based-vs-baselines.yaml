@@ -1,9 +1,7 @@
 name: rule-based-vs-baselines-v1
 description: >
   Compare the deterministic rule-based ai_fpga_engineer pipeline against the
-  synthetic-fidelity and reference baselines across the full v1 suite. Exposes
-  the coverage/quality trade-off: the rule-based system is verified-by-construction
-  on arithmetic/FSM-adjacent classes it supports, and produces no code elsewhere.
+  synthetic-fidelity and reference baselines across the full v1 suite. 
 models:
   - rule-based
   - synthetic-high

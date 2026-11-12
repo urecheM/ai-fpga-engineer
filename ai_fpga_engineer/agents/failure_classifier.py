@@ -1,22 +1,12 @@
-"""Failure classification (pre-debug triage).
-
-A syntax error, an assertion mismatch, a timing violation, and a resource
-overflow demand very different responses. Before the debugger runs, this module
-inspects the available evidence — lint issues, the reference-model property
-result, the simulation log, and QoR vs. targets — and assigns a failure
-*category* plus a recommended repair strategy. The debugger and orchestrator use
-the category to pick a targeted action instead of one generic fix.
-"""
 from __future__ import annotations
 
 from dataclasses import dataclass
 
-# category -> default repair strategy the orchestrator/debugger should pursue
 STRATEGY = {
-    "compilation": "code correction (insert missing clauses / fix syntax), then re-elaborate",
+    "compilation": "code correction (insert missing clauses/fix syntax), then re-elaborate",
     "assertion":   "logic/property fix: re-examine the function unit against the golden model",
     "simulation":  "inspect the failing vector, repair the offending logic, re-simulate",
-    "timing":      "pipeline / retime: register the critical path (set register_output)",
+    "timing":      "pipeline/retime: register the critical path (set register_output)",
     "resource":    "reduce area: share datapath resources (set share_add_sub) or simplify",
     "architectural": "revise architecture decisions and regenerate",
     "none":        "no action required",
@@ -38,17 +28,13 @@ def classify(*, lint_codes: list[str] | None = None,
              sim_ran: bool = False, sim_passed: bool | None = None,
              sim_log: str | None = None,
              qor_unmet: list[str] | None = None) -> FailureClass:
-    """Return the most actionable failure category given the evidence.
 
-    Precedence: compilation defects first (nothing else runs until RTL elaborates),
-    then assertion/simulation failures, then unmet timing/area targets.
-    """
+    # Precedence-compilation defects first,then assertion/simulation failures, then unmet timing/area targets
     lint_codes = lint_codes or []
     property_failures = property_failures or []
     qor_unmet = qor_unmet or []
     low = (sim_log or "").lower()
 
-    # 1. compilation / elaboration
     compile_codes = {"MISSING_STD_LOGIC", "MISSING_NUMERIC_STD", "NO_ENTITY",
                      "NO_ARCH", "ARCH_ENTITY_MISMATCH", "PAREN_IMBALANCE"}
     if compile_codes.intersection(lint_codes):
@@ -58,7 +44,6 @@ def classify(*, lint_codes: list[str] | None = None,
                               "cannot elaborate")):
         return FailureClass("compilation", "compiler reported a syntax/elaboration error")
 
-    # 2. functional failures
     if property_failures:
         return FailureClass("assertion",
                             f"{len(property_failures)} reference-model property "
@@ -69,12 +54,10 @@ def classify(*, lint_codes: list[str] | None = None,
             return FailureClass("simulation", "self-checking testbench reported a mismatch")
         return FailureClass("simulation", "simulation failed (see log)")
 
-    # 3. structural latch/undriven issues that are not strictly compile-blocking
     if "INFERRED_LATCH" in lint_codes or "UNDRIVEN_OUTPUT" in lint_codes:
         return FailureClass("architectural",
                             "inferred latch / undriven output indicates a structural defect")
 
-    # 4. QoR closure misses
     if qor_unmet:
         miss = qor_unmet[0].lower()
         if "fmax" in miss:

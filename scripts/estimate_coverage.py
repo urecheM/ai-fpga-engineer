@@ -1,9 +1,3 @@
-"""Approximate statement coverage of hdleval using sys.settrace (no deps).
-
-Not a substitute for coverage.py (used in CI) but gives a realistic figure for
-the README when the dev extras are unavailable.
-"""
-
 from __future__ import annotations
 
 import ast

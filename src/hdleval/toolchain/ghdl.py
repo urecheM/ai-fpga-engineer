@@ -84,5 +84,7 @@ def simulate(
             return ToolResult(status="fail", stdout=exc.stdout or "", stderr=exc.stderr or "")
         except subprocess.TimeoutExpired:
             return ToolResult(status="fail", stderr="ghdl sim timeout")
-        status = "ok" if r.returncode == 0 and "error" not in r.stderr.lower() else "fail"
+        out = (r.stdout + r.stderr).lower()
+        bad = "(assertion error)" in out or "(assertion failure)" in out
+        status = "ok" if r.returncode == 0 and not bad else "fail"
         return ToolResult(status=status, stdout=r.stdout, stderr=r.stderr, returncode=r.returncode)

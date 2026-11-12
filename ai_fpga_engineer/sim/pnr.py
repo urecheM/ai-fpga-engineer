@@ -1,4 +1,3 @@
-"""Measured QoR via a real place-and-route flow (iCE40 UP5K)."""
 from __future__ import annotations
 
 import json
@@ -12,7 +11,7 @@ from ..hdl.library import GeneratedDesign
 
 DEVICE = "up5k"
 SEED = 1
-FREQ_TARGET_MHZ = 40   # placement target only; achieved Fmax is what we report
+FREQ_TARGET_MHZ = 40
 
 
 @dataclass
@@ -20,7 +19,7 @@ class PnrResult:
     ran: bool
     qor: QoR | None = None
     log: str = ""
-    reason: str = ""            # why it did not run, if it didn't
+    reason: str = ""
     harness_path: str = ""
     report_path: str = ""
 
@@ -35,10 +34,7 @@ def available() -> tuple[bool, str]:
         return False, "nextpnr-ice40 not installed"
     return True, ""
 
-
-# ---------------------------------------------------------------------------
 # Timing harness generation
-# ---------------------------------------------------------------------------
 def timing_harness_vhdl(design: GeneratedDesign) -> str:
     e = design.entity
     ins = [p for p in design.ports if p.direction == "in" and p.role != "clock"]
@@ -112,10 +108,7 @@ begin
 end architecture harness;
 """
 
-
-# ---------------------------------------------------------------------------
-# Flow execution and parsing
-# ---------------------------------------------------------------------------
+# Flow execution, parsing
 def run_ice40(project, design: GeneratedDesign, timeout: int = 600) -> PnrResult:
     ok, why = available()
     if not ok:
@@ -183,6 +176,6 @@ def _fmax_from_report(report: Path) -> float | None:
         fmax = data.get("fmax") or {}
         achieved = [v.get("achieved") for v in fmax.values()
                     if isinstance(v, dict) and v.get("achieved")]
-        return min(achieved) if achieved else None   # design Fmax = slowest clock
+        return min(achieved) if achieved else None
     except Exception:
         return None

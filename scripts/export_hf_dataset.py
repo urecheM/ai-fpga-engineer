@@ -1,10 +1,4 @@
-"""Export the v1 benchmark suite as a Hugging Face-ready dataset.
-
-Emits `external/huggingface/data/benchmarks.jsonl` (one benchmark per line, with
-reference HDL inlined) plus a `dataset_infos`-style summary. The dataset is a
-build product of `benchmarks/v1/`, never hand-maintained.
-"""
-
+#pointless file honeslty
 from __future__ import annotations
 
 import json
@@ -13,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from hdleval.benchmarks.loader import load_suite, reference_hdl  # noqa: E402
+from hdleval.benchmarks.loader import load_suite, reference_hdl
 
 OUT = ROOT / "external" / "huggingface" / "data"
 

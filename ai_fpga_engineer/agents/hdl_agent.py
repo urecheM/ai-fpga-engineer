@@ -1,5 +1,4 @@
-"""HDL Generation Agent: emits synthesizable VHDL + design notes from the
-architecture decisions chosen upstream."""
+#HDL Generation Agent
 from __future__ import annotations
 
 from .base import Agent

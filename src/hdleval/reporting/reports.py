@@ -88,6 +88,7 @@ def write_all_reports(
         "n",
         "pass_rate",
         "pass_ci95",
+        "sim_coverage",
         "compile_rate",
         "synth_rate",
         "avg_latency_s",
@@ -106,6 +107,14 @@ def write_all_reports(
     for tier, rows in leaderboard.by_difficulty.items():
         md.append(f"\n## Difficulty tier: {tier}\n\n")
         md.append(_md_table(rows, cols))
+    kind_rows = [
+        {"model": r["model"], "prompt": r["prompt"], "failure:kind": k, "count": v}
+        for r in leaderboard.overall
+        for k, v in sorted(r.get("error_kinds", {}).items(), key=lambda kv: -kv[1])
+    ]
+    if kind_rows:
+        md.append("\n## Failures by error kind\n\n")
+        md.append(_md_table(kind_rows, ["model", "prompt", "failure:kind", "count"]))
     p = out / "reports" / f"{experiment_name}_report.md"
     p.write_text("".join(md))
     written["report_md"] = str(p)

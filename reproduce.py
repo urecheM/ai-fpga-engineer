@@ -1,19 +1,12 @@
 #!/usr/bin/env python3
-"""One-command reproduction of every figure, table, report and artifact.
-
+"""reproduction:
     python reproduce.py [--experiment configs/experiments/baseline.yaml]
 
 Steps (each idempotent):
-  1. (re)build the versioned benchmark suite
-  2. run the experiment through the evaluation harness -> experiment registry
+  1. (re)build versioned benchmark suite
+  2. run the experiment through the eval harness -> experiment registry
   3. regenerate leaderboards, reports (JSON/CSV/MD/HTML) and figures
   4. regenerate publication tables/figures and the research website data
-
-Nothing downstream is hand-edited; this script is the single source of truth
-for reproducibility. In an environment with GHDL + Yosys installed (see the
-Dockerfile) the compile/synthesis/simulation stages run for real; otherwise
-they are recorded as 'skipped' and functional correctness falls back to the
-documented static signal.
 """
 from __future__ import annotations
 
@@ -50,6 +43,9 @@ def main() -> int:
     env["PYTHONPATH"] = str(SRC)
 
     print("== [1/4] build benchmark suite ==")
+    subprocess.check_call([sys.executable, "scripts/build_benchmarks.py"], cwd=ROOT, env=env)
+
+    subprocess.check_call([sys.executable, "scripts/build_golden_vectors.py"], cwd=ROOT, env=env)
     subprocess.check_call([sys.executable, "scripts/build_benchmarks.py"], cwd=ROOT, env=env)
 
     print("== [2/4] run experiment ==")

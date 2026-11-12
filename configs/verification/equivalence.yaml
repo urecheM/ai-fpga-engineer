@@ -1,0 +1,8 @@
+name: equivalence
+strategy: formal_equiv
+n_vectors: 0
+enabled: true
+# Symbiyosys miter: unbounded proof (abc pdr), BMC fallback for sequential designs
+equivalence: true
+equivalence_depth: 24
+prove_timeout_s: 120

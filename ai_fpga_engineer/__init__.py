@@ -1,1 +1,1 @@
-"""AI FPGA Engineer — rule-based closed-loop spec-to-verified-VHDL pipeline."""
+"""Spec-to-verified-VHDL pipeline.... more generalized init comments"""

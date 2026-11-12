@@ -1,11 +1,3 @@
-"""Model-inference subsystem.
-
-Inference is fully decoupled from evaluation: a provider only turns a
-:class:`ModelRequest` into a :class:`ModelResponse`. New language models are
-added by implementing :class:`ModelProvider` and registering it — evaluation
-logic never changes.
-"""
-
 from __future__ import annotations
 
 from .base import ModelProvider, ModelRequest, ModelResponse

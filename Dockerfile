@@ -1,18 +1,10 @@
-# hdleval — reproducible research platform image.
-# A fresh environment can execute the full pipeline with only:
-#   docker build -t hdleval .
-#   docker run --rm hdleval            # runs reproduce.py end-to-end
-#
-# The image installs the open-source HDL toolchain (GHDL + Yosys +
-# ghdl-yosys-plugin) so the compile/synthesis/simulation stages run for real,
-# not 'skipped'.
 FROM python:3.11-slim AS base
 
 ARG OSS_CAD_SUITE_TAG=2026-07-09
 
 ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
-    HDLEVAL_REQUIRE_TOOLS=0 \
+    HDLEVAL_REQUIRE_TOOLS=1 \
     PATH="/opt/oss-cad-suite/bin:${PATH}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -31,11 +23,10 @@ RUN set -eux; \
 WORKDIR /opt/hdleval
 COPY pyproject.toml README.md ./
 COPY src ./src
-RUN pip install -e ".[dev]" || pip install pyyaml
+RUN pip install -e ".[dev]"
 
 COPY . .
 
 RUN python scripts/check_toolchain.py
 
-# deterministic default entrypoint: reproduce every artifact
 CMD ["python", "reproduce.py"]

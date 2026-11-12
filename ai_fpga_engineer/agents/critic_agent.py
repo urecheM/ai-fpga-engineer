@@ -1,9 +1,5 @@
-"""Architecture critic: reviews design *intent* before anything is generated.
+#Architecture critic reviews design *intent* before anything is generated
 
-Rule-based checks on the specification/architecture pair. 'block' findings
-send the architecture back for revision (bounded loop in the orchestrator);
-the RTL-level critic (hdl_critic_agent) reviews the *generated code* later.
-"""
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -15,7 +11,7 @@ from .architecture_agent import Architecture
 
 @dataclass
 class Finding:
-    severity: str        # block | warn | info
+    severity: str
     rule: str
     message: str
 

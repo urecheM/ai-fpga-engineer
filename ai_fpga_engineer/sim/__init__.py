@@ -1,1 +1,1 @@
-"""Simulation, lint, synthesis, and place-and-route adapters."""
+"""Simulation, lint, synthesis, place-and-route adapters."""

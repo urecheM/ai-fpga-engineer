@@ -1,11 +1,3 @@
-"""Objective difficulty scoring.
-
-The score is a transparent weighted sum of complexity dimensions, normalised to
-0-100 and bucketed into tiers. Weights are documented in
-``docs/evaluation-methodology.md`` and are fixed per suite version for
-reproducibility.
-"""
-
 from __future__ import annotations
 
 from .schema import ComplexityMetrics
@@ -20,7 +12,7 @@ _WEIGHTS = {
     "control_complexity": 2.5,
 }
 
-# scaling divisor so a "hard" design lands near 100
+#scaling divisor
 _SCALE = 1.6
 
 

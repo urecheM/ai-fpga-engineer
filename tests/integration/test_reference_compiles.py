@@ -1,5 +1,3 @@
-"""Every v1 reference design must analyze under GHDL (skipped if ghdl absent)."""
-
 from __future__ import annotations
 
 import shutil

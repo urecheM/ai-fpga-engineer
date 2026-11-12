@@ -1,8 +1,3 @@
-"""Generate Colab/Kaggle notebooks (.ipynb) for onboarding and reproduction.
-
-Notebooks are build products so they stay in sync with the platform API.
-"""
-
 from __future__ import annotations
 
 import json

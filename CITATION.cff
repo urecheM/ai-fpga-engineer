@@ -4,8 +4,8 @@ message: ""
 type: software
 authors:
   - name: "hdleval contributors"
-version: 0.1.0
-date-released: 2026-07-07
+version: 1.0.0
+date-released: 2026-11-12
 license: MIT
 keywords:
   - hardware design

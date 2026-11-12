@@ -3,3 +3,4 @@ backend: yosys
 target: ice40
 clock_ns: 10.0
 enabled: true
+place_and_route: true

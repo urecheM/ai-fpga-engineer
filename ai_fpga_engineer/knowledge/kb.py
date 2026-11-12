@@ -1,10 +1,3 @@
-"""Offline engineering knowledge base.
-
-Naive keyword retrieval over Markdown notes bundled with the package (and any
-notes the user adds under knowledge/notes/). Deliberately simple and honest
-about being so — it exists to answer quick 'how do I raise Fmax'-style
-questions without a network, not to impersonate a search engine.
-"""
 from __future__ import annotations
 
 import re
@@ -12,10 +5,9 @@ from pathlib import Path
 
 _NOTES_DIR = Path(__file__).parent / "notes"
 
-
 class KnowledgeBase:
     def __init__(self, notes_dir: Path | None = None):
-        self.passages: list[tuple[str, str]] = []   # (source, text)
+        self.passages: list[tuple[str, str]] = []
         d = notes_dir or _NOTES_DIR
         if d.is_dir():
             for f in sorted(d.glob("*.md")):

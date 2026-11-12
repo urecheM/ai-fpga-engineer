@@ -1,7 +1,4 @@
-"""Common base for pipeline stage agents: a name, an optional LLM seam, and
-structured logging into the project's event stream."""
 from __future__ import annotations
-
 
 class Agent:
     name = "agent"

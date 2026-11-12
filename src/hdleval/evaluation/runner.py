@@ -1,5 +1,3 @@
-"""Drive a full experiment: models x prompts x benchmarks x trials."""
-
 from __future__ import annotations
 
 from pathlib import Path

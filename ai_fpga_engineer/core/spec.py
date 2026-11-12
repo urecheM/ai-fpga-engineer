@@ -1,9 +1,3 @@
-"""Specification datamodel: the machine-readable record of *what* to build.
-
-Produced by the requirements agent from the natural-language request and
-consumed by every downstream stage. Deliberately small: ports, width, clocking,
-operations, assumptions.
-"""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -12,9 +6,9 @@ from dataclasses import dataclass, field
 @dataclass
 class Port:
     name: str
-    direction: str          # "in" | "out"
+    direction: str
     width: int
-    role: str               # clock | reset | enable | data | opcode | flag
+    role: str
 
     def to_dict(self) -> dict:
         return {"name": self.name, "direction": self.direction,
@@ -31,7 +25,7 @@ class Operation:
 class Specification:
     name: str
     title: str
-    design_class: str                       # alu | counter | register | comparator | unknown
+    design_class: str
     data_width: int = 8
     clocking: str = "combinational"
     operations: list[Operation] = field(default_factory=list)
