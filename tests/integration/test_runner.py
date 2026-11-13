@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from conftest import reference_verdict_ok
 from hdleval.config.schema import (
     BenchmarkSelector,
     ExperimentConfig,
@@ -21,5 +22,5 @@ def test_run_small_experiment(tmp_path):
         exp, out_dir=tmp_path / "results", db_path=tmp_path / "db.sqlite"
     )
     assert results and len(results) == len(records)
-    assert all(r.passed for r in results)  # reference provider is the upper bound
+    assert all(reference_verdict_ok(r) for r in results)
     assert (tmp_path / "results" / "small.jsonl").exists()

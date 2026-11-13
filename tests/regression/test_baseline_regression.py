@@ -1,7 +1,6 @@
-"""Golden regression: the deterministic providers must not silently drift."""
-
 from __future__ import annotations
 
+from conftest import reference_verdict_ok
 from hdleval.config.schema import (
     BenchmarkSelector,
     ExperimentConfig,
@@ -26,8 +25,7 @@ def _run(model_name, provider, extra, tmp_path):
 
 def test_reference_full_pass(tmp_path):
     results = _run("reference-golden", "reference", {}, tmp_path)
-    # reference provider is the upper bound: all benchmarks pass
-    assert all(r.passed for r in results)
+    assert all(reference_verdict_ok(r) for r in results)
     assert len(results) >= 15
 
 

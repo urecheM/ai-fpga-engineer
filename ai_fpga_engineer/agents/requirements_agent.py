@@ -1,10 +1,3 @@
-"""Requirements agent: natural-language request -> machine-readable Specification.
-
-Deliberately rule-based and transparent: keyword classification into the four
-supported design classes, width extraction, and case-sensitive operation-token
-scanning (so prose 'and'/'or' never become ALU ops). Anything unrecognised is
-classified 'unknown' and reported — never guessed at.
-"""
 from __future__ import annotations
 
 import math
@@ -23,9 +16,9 @@ _CLASS_KEYWORDS = [
 
 _TITLES = {
     "alu": "{w}-bit ALU",
-    "comparator": "{w}-bit Unsigned Comparator",
-    "counter": "{w}-bit Synchronous Up-Counter",
-    "register": "{w}-bit Register with Load Enable",
+    "comparator": "{w} bit Unsigned Comparator",
+    "counter": "{w} bit Synchronous Up-Counter",
+    "register": "{w} bit Register with Load Enable",
     "unknown": "Unclassified Design Request",
 }
 
@@ -46,7 +39,7 @@ class RequirementsAgent(Agent):
         m = re.search(r"(\d+)\s*[- ]?\s*bit", low)
         width = max(1, min(64, int(m.group(1)))) if m else 8
 
-        # case-sensitive scan: 'ADD'/'SUB' are ops, prose 'and'/'or' are not
+        # case-sensitive check
         ops: list[Operation] = []
         if design_class == "alu":
             seen = []
@@ -100,7 +93,7 @@ class RequirementsAgent(Agent):
     def _assumptions(cls: str) -> list[str]:
         common = ["Unsigned interpretation of all data buses."]
         if cls in ("counter", "register"):
-            return common + ["Synchronous active-high reset; single clock domain.",
+            return common + ["Synchronous active-high reset, single clock domain.",
                              "Enable is sampled on the rising edge."]
         if cls in ("alu", "comparator"):
             return common + ["Purely combinational unless the chosen architecture "

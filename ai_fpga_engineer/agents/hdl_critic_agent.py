@@ -1,17 +1,4 @@
-"""HDL Critic Agent (RTL review).
-
-The architecture critic reviews *intent*; this critic reviews the *generated RTL*
-before verification begins, catching the hardware-specific defect classes that
-only appear after code generation: missing library clauses, undriven outputs,
-potential inferred latches (a combinational process whose ``case`` lacks a
-``when others``), sequential logic without a clock or reset, and entity/
-architecture mismatches. Blocking findings that the linter knows how to repair
-are handed to the debug agent; the rest are reported so downstream tools are not
-the first to discover them.
-
-It reuses the structural linter for the cheap checks and adds RTL-structure
-heuristics on top.
-"""
+#RTL review
 from __future__ import annotations
 
 import re
@@ -26,7 +13,7 @@ from ..sim.lint import lint
 
 @dataclass
 class HDLFinding:
-    severity: str        # block | warn | info
+    severity: str
     rule: str
     message: str
     fixable: bool = False
@@ -63,21 +50,17 @@ class HDLCriticAgent(Agent):
         self._write(project, design, review)
         return review
 
-    # ------------------------------------------------------------------
     def _analyze(self, spec: Specification, design: GeneratedDesign,
                  vhdl: str) -> list[HDLFinding]:
         out: list[HDLFinding] = []
         low = vhdl.lower()
 
-        # 1. structural defects from the linter (libraries, undriven outputs, ...)
         for i in lint(vhdl):
             sev = "block" if i.code in ("MISSING_STD_LOGIC", "MISSING_NUMERIC_STD",
                                         "NO_ENTITY", "NO_ARCH", "ARCH_ENTITY_MISMATCH",
                                         "UNDRIVEN_OUTPUT", "PAREN_IMBALANCE") else "warn"
             out.append(HDLFinding(sev, i.code, i.message, i.fixable))
 
-        # 2. inferred-latch risk: a combinational process with a case but no
-        #    'when others' leaves the target unassigned for unlisted choices.
         for proc in self._combinational_processes(vhdl):
             if re.search(r"\bcase\b", proc, re.I) and not re.search(r"when\s+others", proc, re.I):
                 out.append(HDLFinding("block", "INFERRED_LATCH",
@@ -90,7 +73,6 @@ class HDLCriticAgent(Agent):
                                       "combinational 'if' without 'else' may infer a latch.",
                                       fixable=False))
 
-        # 3. sequential designs must be clocked and (for state) reset.
         is_seq = design.kind == "sequential"
         has_clk = any(p.role == "clock" for p in design.ports)
         if is_seq and not has_clk:
@@ -106,13 +88,11 @@ class HDLCriticAgent(Agent):
                                   "stateful design has no reset; power-up state is "
                                   "undefined in hardware.", fixable=False))
 
-        # 4. reset polarity / style note (informational, good practice signal)
         if is_seq and re.search(r"if\s+\w*rst\w*\s*=\s*'1'", low):
             out.append(HDLFinding("info", "SYNC_RESET",
                                   "synchronous active-high reset detected (maps cleanly "
                                   "to FPGA FF reset).", fixable=False))
 
-        # 5. registered-output timing note
         if getattr(design, "latency", 0) >= 1:
             out.append(HDLFinding("info", "PIPELINE_LATENCY",
                                   f"output is registered (latency {design.latency} "
@@ -122,8 +102,7 @@ class HDLCriticAgent(Agent):
 
     @staticmethod
     def _combinational_processes(vhdl: str) -> list[str]:
-        """Return the text of processes that are NOT edge-sensitive (i.e. likely
-        combinational), so latch heuristics only apply to them."""
+        #Return text of processes that arent edge-sensitive so latch heuristics only apply to them.
         procs = re.findall(r"\bprocess\b.*?\bend\s+process\b", vhdl, re.I | re.S)
         return [p for p in procs if "rising_edge" not in p.lower()
                 and "falling_edge" not in p.lower()]

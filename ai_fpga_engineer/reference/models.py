@@ -1,27 +1,9 @@
 """Single, spec-derived reference semantics — "the oracle".
-
-This module is the ONE place the intended behaviour of each design class is
-written down in executable form. It is deliberately independent of the VHDL
-templates in ``hdl/library.py``: it is written from the prose specification
-below, not derived from the RTL, and it contains no VHDL.
-
-How correctness is established (see docs/CLAIMS.md):
-
-1. The testbench embeds expected values produced by THIS module.
-2. GHDL compiles and executes the *actual emitted VHDL* against those values,
-   so the RTL — an independent artifact — is checked against the oracle.
-3. The mutation campaign (``python -m ai_fpga_engineer.cli mutation-campaign``)
-   seeds defects into the RTL text and demonstrates the flow detects them,
-   which is the evidence that step 2 has real discriminating power.
-
-The previous codebase carried three separately written ALU oracles (in
-hdl/library.py, agents/formal_agent.py, and selftest.py). Duplicates invite
-divergence without adding independence — independence now comes from the
-simulator executing real RTL, so the duplicates were removed in favour of this
-single module.
-
-Specification (prose)
----------------------
+How correctness is established:
+1. Testbench embeds expected values produced by this module.
+2. GHDL compiles and executes the actual emitted VHDL against those values
+3. The mutation campaign seeds defects into the RTL text
+Gen spec-
 ALU: unsigned, WIDTH-bit operands. result is the low WIDTH bits of the
 operation; carry is the carry-out for ADD/INC, the borrow for SUB/DEC
 (1 when the true result is negative), the shifted-out bit for SLL/SRL, and 0
@@ -37,7 +19,6 @@ ALU_OP_NAMES = ("ADD", "SUB", "AND", "OR", "XOR", "NOT", "INC", "DEC", "SLL", "S
 
 
 def alu(op: str, a: int, b: int, width: int) -> tuple[int, int]:
-    """Return (result, carry) for one ALU operation."""
     mask = (1 << width) - 1
     a &= mask
     b &= mask
@@ -71,12 +52,10 @@ def alu_zero(result: int) -> int:
 
 
 def comparator(a: int, b: int) -> tuple[int, int, int]:
-    """Return (gt, eq, lt)."""
     return int(a > b), int(a == b), int(a < b)
 
 
 def counter_step(count: int, rst: int, en: int, width: int) -> tuple[int, int]:
-    """Advance the counter one clock; return (new_count, tc)."""
     mask = (1 << width) - 1
     if rst:
         count = 0
@@ -86,7 +65,6 @@ def counter_step(count: int, rst: int, en: int, width: int) -> tuple[int, int]:
 
 
 def register_step(q: int, rst: int, en: int, d: int, width: int) -> int:
-    """Advance the register one clock; return new q."""
     mask = (1 << width) - 1
     if rst:
         return 0

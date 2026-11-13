@@ -1,16 +1,4 @@
-"""Documentation agent.
-
-Aggregates every artifact the closed loop produces — specification, architecture,
-design-space exploration, design review, generated RTL, HDL review, verification,
-formal checks, simulation status, debugging history, the QoR refinement loop,
-optimization proposals, synthesis status, and per-stage confidence — into one
-Markdown engineering report. Wording policy: every claim in the report names its
-evidence and its source (measured vs estimated, tool-run vs model-only); see
-docs/CLAIMS.md.
-
-PDF export is left as an optional downstream step (`pandoc report.md -o report.pdf`)
-so the core tool carries no heavyweight rendering dependency.
-"""
+#Documentation agent aggregates every artifact the closed loop produces into one .md report.
 from __future__ import annotations
 
 from datetime import datetime, timezone

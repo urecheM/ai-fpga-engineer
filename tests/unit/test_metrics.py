@@ -33,13 +33,18 @@ def test_resource_metrics_skipped():
 def test_resource_metrics_ok():
     tr = ToolResult(status="ok", metrics={"luts": 20, "ffs": 8})
     r = resource_metrics(tr)
-    assert r.available and r.luts == 20 and r.est_fmax_mhz > 0
+    assert r.available and r.luts == 20
+    assert r.fmax_mhz is None and r.fmax_source == "not_measured"
+
+
+def test_resource_metrics_uses_measured_fmax():
+    synth = ToolResult(status="ok", metrics={"luts": 20, "ffs": 8})
+    pnr = ToolResult(status="ok", metrics={"fmax_mhz": 123.4})
+    r = resource_metrics(synth, pnr)
+    assert r.fmax_mhz == 123.4 and r.fmax_source == "nextpnr-ice40-up5k"
 
 
 def test_module_cells_resource_lookup_strips_backslash_prefix():
-    # Yosys `stat -json` prefixes module names with a backslash, e.g.
-    # "\\counter" for entity "counter". A bare-name lookup used to miss
-    # every module and silently return {}, so LUT/FF counts stayed zero.
     stat_json = {
         "modules": {
             "\\counter": {

@@ -1,10 +1,3 @@
-"""Typed configuration schema.
-
-These dataclasses are intentionally free of behaviour; they are the declarative
-surface that experiments are written against. Validation lives in
-:func:`validate` methods that raise :class:`ConfigError`.
-"""
-
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -12,7 +5,7 @@ from typing import Any
 
 
 class ConfigError(ValueError):
-    """Raised when a configuration file is structurally invalid."""
+    """Raised when a config file is structurally invalid."""
 
 
 @dataclass(frozen=True)
@@ -20,7 +13,7 @@ class ModelConfig:
     """Description of a language-model provider and its inference settings."""
 
     name: str
-    provider: str  # "anthropic" | "reference" | "openai" | "local"
+    provider: str
     model_id: str = ""
     temperature: float = 0.0
     max_tokens: int = 4096
@@ -47,10 +40,10 @@ class ModelConfig:
 
 @dataclass(frozen=True)
 class PromptConfig:
-    """A named prompt strategy: a system message plus a user template."""
+    """a system message plus a user template"""
 
     name: str
-    strategy: str = "direct"  # direct | chain_of_thought | few_shot | critique | rag
+    strategy: str = "direct"
     system: str = ""
     template: str = "{specification}"
     few_shot_examples: list[dict[str, str]] = field(default_factory=list)
@@ -64,43 +57,47 @@ class PromptConfig:
 @dataclass(frozen=True)
 class SynthesisConfig:
     name: str = "yosys-ice40"
-    backend: str = "yosys"  # yosys | vivado | quartus | stub
+    backend: str = "yosys"
     target: str = "ice40"
     clock_ns: float = 10.0
     enabled: bool = True
+    place_and_route: bool = False
 
 
 @dataclass(frozen=True)
 class VerificationConfig:
     name: str = "reference-vectors"
-    strategy: str = "reference_vectors"  # reference_vectors | formal_equiv | properties
+    strategy: str = "reference_vectors"
     n_vectors: int = 256
     properties: list[str] = field(default_factory=list)
     enabled: bool = True
+    equivalence: bool = False
+    equivalence_depth: int = 24
+    prove_timeout_s: int = 120
 
 
 @dataclass(frozen=True)
 class OptimizationConfig:
     name: str = "baseline"
-    objective: str = "none"  # none | area | timing | power | latency | throughput
+    objective: str = "none"
     max_iterations: int = 0
     constraints: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
 class BenchmarkSelector:
-    """Selects a slice of the benchmark suite for an experiment."""
+    """Selects a section of the benchmark suite for an experiment."""
 
     suite_version: str = "v1"
-    categories: list[str] = field(default_factory=list)  # empty => all
+    categories: list[str] = field(default_factory=list)
     difficulty_min: int = 0
     difficulty_max: int = 100
-    ids: list[str] = field(default_factory=list)  # empty => all matching
+    ids: list[str] = field(default_factory=list)
 
 
 @dataclass(frozen=True)
 class ExperimentConfig:
-    """Top-level experiment: a cartesian product of models x prompts x benchmarks."""
+    """Cartesian product of models x prompts x benchmarks."""
 
     name: str
     description: str = ""

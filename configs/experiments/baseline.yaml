@@ -1,8 +1,7 @@
 name: baseline-v1
 description: >
   Reproducible baseline across the v1 benchmark suite using the deterministic
-  reference (upper-bound) provider and three synthetic-fidelity baselines. This
-  establishes the metric/leaderboard machinery before real-model evaluation.
+  reference (upper-bound) provider and three synthetic-fidelity baselines.
 models:
   - reference-golden
   - synthetic-high

@@ -1,4 +1,3 @@
-"""The contract between planning and implementation."""
 from __future__ import annotations
 
 from dataclasses import dataclass, field, replace
@@ -7,9 +6,9 @@ from typing import Any
 
 @dataclass(frozen=True)
 class ArchDecisions:
-    opcode_encoding: str = "binary"   # "binary" | "onehot"  (ALU)
-    register_output: bool = False     # add an output pipeline register (latency +1)
-    share_add_sub: bool = False       # implement ADD and SUB through one shared adder
+    opcode_encoding: str = "binary"
+    register_output: bool = False
+    share_add_sub: bool = False
 
     def label(self) -> str:
         bits = [self.opcode_encoding]

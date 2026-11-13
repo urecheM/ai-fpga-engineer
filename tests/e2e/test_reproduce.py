@@ -1,5 +1,3 @@
-"""End-to-end: benchmark build + experiment + report generation."""
-
 from __future__ import annotations
 
 import json
@@ -41,8 +39,7 @@ def test_end_to_end(tmp_path):
     )
 
     assert lb.overall
-    # reference should outrank the low-fidelity synthetic model
     ranks = {r["model"]: r["pass_rate"] for r in lb.overall}
     assert ranks["reference-golden"] >= ranks["synthetic-low"]
     for path in {**written, **figs}.values():
-        assert json.dumps(path)  # all paths recorded
+        assert json.dumps(path)

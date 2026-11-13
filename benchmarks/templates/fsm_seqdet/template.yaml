@@ -1,0 +1,17 @@
+id: fsm_seqdet_p${PATTERN}
+category: fsm
+title: Overlapping sequence detector (${PATTERN})
+entity: seqdet_p${PATTERN}
+specification: >-
+  Design an overlapping Mealy sequence detector for the serial bit pattern ${PATTERN}
+  (first bit received first). din is sampled on each rising clock edge. found is a
+  combinational output that is '1' in the cycle in which din carries the final bit of
+  an occurrence of the pattern (overlapping occurrences count), and '0' otherwise.
+  Synchronous active-high reset clears all history.
+functional_requirements:
+  - detects overlapping occurrences of ${PATTERN}
+  - Mealy timing (found asserted with the final bit)
+tags: [fsm, sequence-detector, sequential, variant]
+complexity: {state_complexity: 5, control_complexity: 3, timing_constraints: 1, interface_count: 4}
+parameters:
+  PATTERN: ["1101", "0110", "10010", "111001"]

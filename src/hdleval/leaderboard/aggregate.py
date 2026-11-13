@@ -1,10 +1,3 @@
-"""Aggregate records into leaderboards with confidence measures.
-
-Success rates are reported with Wilson score 95% confidence intervals so that
-comparisons across models account for sample size — essential when the suite is
-small. Category- and difficulty-tier breakdowns are produced from the same rows.
-"""
-
 from __future__ import annotations
 
 import math
@@ -32,10 +25,12 @@ class ModelStats:
     compile_ok: int = 0
     synth_ok: int = 0
     sim_ok: int = 0
+    sim_ran: int = 0
     total_latency: float = 0.0
     total_tokens: int = 0
     total_retries: int = 0
     failure_counts: dict[str, int] = field(default_factory=lambda: defaultdict(int))
+    error_kinds: dict[str, int] = field(default_factory=lambda: defaultdict(int))
 
     def row(self) -> dict[str, Any]:
         lo, hi = wilson_interval(self.passed, self.n)
@@ -48,10 +43,12 @@ class ModelStats:
             "compile_rate": round(self.compile_ok / self.n, 4) if self.n else 0.0,
             "synth_rate": round(self.synth_ok / self.n, 4) if self.n else 0.0,
             "sim_rate": round(self.sim_ok / self.n, 4) if self.n else 0.0,
+            "sim_coverage": round(self.sim_ran / self.n, 4) if self.n else 0.0,
             "avg_latency_s": round(self.total_latency / self.n, 4) if self.n else 0.0,
             "avg_tokens": round(self.total_tokens / self.n, 1) if self.n else 0.0,
             "avg_retries": round(self.total_retries / self.n, 3) if self.n else 0.0,
             "failures": dict(self.failure_counts),
+            "error_kinds": dict(self.error_kinds),
         }
 
 
@@ -87,14 +84,17 @@ def _accumulate(records: list[dict[str, Any]], keyfn) -> dict[Any, ModelStats]:
         )
         st.total_retries += int((r.get("retry_history", []) and len(r["retry_history"])) or 0)
         st.failure_counts[r.get("failure_class", "none")] += 1
-        # stage-derived counters live in metrics for records; recompute leniently
+        if "error_kind" in metrics:
+            st.error_kinds[f"{r.get('failure_class')}:{metrics['error_kind']}"] += 1
         if r.get("failure_class") not in ("compilation_error", "no_code_generated"):
             st.compile_ok += 1
         res = metrics.get("resources", {})
         if res.get("available"):
             st.synth_ok += 1
-        if r.get("passed"):
-            st.sim_ok += 1
+        if metrics.get("simulated"):
+            st.sim_ran += 1
+            if r.get("passed"):
+                st.sim_ok += 1
     return stats
 
 

@@ -1,19 +1,3 @@
-"""Rule-based provider backed by the ``ai_fpga_engineer`` pipeline.
-
-This adapter lets the mature, deterministic rule-based VHDL pipeline (the
-``ai_fpga_engineer`` package that this repository grew from) be evaluated as a
-*model* through the identical hdleval harness. It classifies the benchmark's
-natural-language specification and, for the four design classes the pipeline
-supports (ALU, counter, register, comparator), emits synthesizable VHDL via the
-template generators. For specifications outside that scope it returns no code —
-which the harness records as ``no_code_generated``.
-
-The scientific value: this is a strong, verified-by-construction baseline on its
-supported classes and an honest zero elsewhere, so a leaderboard that includes it
-exposes exactly the coverage/quality trade-off between a narrow rule-based system
-and broader LLM generation. Fully deterministic; no network, no API key.
-"""
-
 from __future__ import annotations
 
 import hashlib
@@ -26,7 +10,6 @@ from .base import ModelProvider, ModelRequest, ModelResponse
 
 
 def _ensure_importable() -> None:
-    # ai_fpga_engineer lives at the repository root, alongside src/.
     repo_root = Path(__file__).resolve().parents[3]
     if str(repo_root) not in sys.path:
         sys.path.insert(0, str(repo_root))

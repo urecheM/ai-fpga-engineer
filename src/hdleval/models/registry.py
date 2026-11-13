@@ -1,5 +1,3 @@
-"""Provider registry: build a provider from a :class:`ModelConfig`."""
-
 from __future__ import annotations
 
 from collections.abc import Callable

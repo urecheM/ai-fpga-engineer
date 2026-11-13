@@ -1,1 +1,1 @@
-"""Pipeline stage agents."""
+"""Pipeline stage agents"""

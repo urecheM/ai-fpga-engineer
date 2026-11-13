@@ -1,5 +1,4 @@
-"""Load benchmark metadata from ``benchmarks/<version>/<id>/benchmark.yaml``."""
-
+# Load benchmark metadata from ``benchmarks/<version>/<id>/benchmark.yaml``
 from __future__ import annotations
 
 import os
@@ -21,7 +20,7 @@ def benchmarks_root(explicit: str | os.PathLike[str] | None = None) -> Path:
     return Path(__file__).resolve().parents[3] / "benchmarks"
 
 
-def load_benchmark(bench_dir: str | os.PathLike[str]) -> Benchmark:
+def load_benchmark(bench_dir: str | os.PathLike[str], suite: str = "") -> Benchmark:
     bdir = Path(bench_dir)
     d = yaml.safe_load((bdir / "benchmark.yaml").read_text())
     comp = ComplexityMetrics(**d.get("complexity", {}))
@@ -44,6 +43,7 @@ def load_benchmark(bench_dir: str | os.PathLike[str]) -> Benchmark:
         testbench_entity=d.get("testbench_entity", ""),
         properties=d.get("properties", []),
         estimated_difficulty=est,
+        suite=suite,
     )
 
 
@@ -54,7 +54,7 @@ def load_suite(version: str = "v1", root: str | os.PathLike[str] | None = None) 
     out: list[Benchmark] = []
     for bdir in sorted(base.iterdir()):
         if (bdir / "benchmark.yaml").exists():
-            out.append(load_benchmark(bdir))
+            out.append(load_benchmark(bdir, suite=version))
     return out
 
 
@@ -70,8 +70,8 @@ def select(benchmarks: list[Benchmark], sel: BenchmarkSelector) -> list[Benchmar
 
 
 def _suite_dir(b: Benchmark) -> str:
-    """Map a benchmark's semantic version to its suite directory (1.x -> v1)."""
-    return f"v{b.version.split('.')[0]}"
+    """The benchmark's suite directory: as loaded, else from its version (1.x -> v1)."""
+    return b.suite or f"v{b.version.split('.')[0]}"
 
 
 def reference_hdl(b: Benchmark, root: str | os.PathLike[str] | None = None) -> str:

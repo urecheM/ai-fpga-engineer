@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
-# Local quality gate: run the same checks CI runs, in order.
-# Usage:  ./scripts/check.sh          (report only)
-#         ./scripts/check.sh --fix    (auto-fix ruff issues first)
-# Supports Task 2 (flip Ruff/mypy CI back to strict) in
-# docs/guides/implementation-tasks.md.
+# Local 
+#run same checks as ci
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
@@ -19,8 +16,8 @@ echo "== mypy ==";             mypy src/hdleval                    || rc=1
 echo "== pytest ==";           pytest -q                           || rc=1
 
 if [[ $rc -eq 0 ]]; then
-  echo -e "\nAll checks passed — safe to flip CI to strict."
+  echo -e "\nAll checks passed. Safe to flip CI to strict."
 else
-  echo -e "\nSome checks failed — fix before making CI strict."
+  echo -e "\nSome checks failed. Fix before making CI strict."
 fi
 exit $rc

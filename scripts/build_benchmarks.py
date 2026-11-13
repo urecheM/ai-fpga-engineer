@@ -1,10 +1,4 @@
-"""Generate the v1 benchmark suite (metadata + reference VHDL).
-
-Run once to materialise ``benchmarks/v1/``. Each benchmark is emitted as
-structured metadata plus a verified-by-construction reference implementation.
-This generator is itself part of the reproducibility story: the dataset is a
-build product, not hand-edited files.
-"""
+# Run once to materialise ``benchmarks/v1/``
 
 from __future__ import annotations
 
@@ -21,7 +15,6 @@ def bench(**kw):
     return kw
 
 
-# (id, category, title, spec, entity, complexity, tags, ref_vhdl, requirements, properties)
 BENCHMARKS = []
 
 
@@ -59,7 +52,6 @@ def add(
     )
 
 
-# ---------------- ARITHMETIC ----------------
 add(
     "arith_adder8",
     "arithmetic",
@@ -184,7 +176,6 @@ add(
     ["mutual_exclusion"],
 )
 
-# ---------------- FSM ----------------
 add(
     "fsm_traffic",
     "fsm",
@@ -263,7 +254,6 @@ add(
     ["deadlock_freedom", "unreachable_state"],
 )
 
-# ---------------- COMMUNICATION ----------------
 add(
     "comm_uart_tx",
     "communication",
@@ -501,7 +491,7 @@ add(
     tb_entity="spi_master_tb",
 )
 
-# ---------------- MEMORY ----------------
+# memory
 add(
     "mem_fifo",
     "memory",
@@ -588,7 +578,7 @@ add(
     ["mutual_exclusion"],
 )
 
-# ---------------- PROCESSOR ----------------
+# processor
 add(
     "proc_branch_pred",
     "processor",
@@ -660,7 +650,7 @@ add(
     ["mutual_exclusion"],
 )
 
-# ---------------- DSP ----------------
+# dsp
 add(
     "dsp_fir4",
     "dsp",
@@ -741,7 +731,7 @@ add(
     [],
 )
 
-# ---------------- CONTROL ----------------
+# control
 add(
     "ctrl_pwm",
     "control",
@@ -923,6 +913,9 @@ def main() -> None:
             (bdir / "testbench.vhd").write_text(b["tb"])
             meta["testbench_path"] = "testbench.vhd"
             meta["testbench_entity"] = b["tb_entity"]
+        elif (bdir / "golden_tb.vhd").exists():
+            meta["testbench_path"] = "golden_tb.vhd"
+            meta["testbench_entity"] = f"{b['entity']}_golden_tb"
         meta["properties"] = b["props"]
         with (bdir / "benchmark.yaml").open("w") as fh:
             yaml.safe_dump(meta, fh, sort_keys=False, default_flow_style=False)

@@ -18,4 +18,6 @@ complexity:
   timing_constraints: 2
   interface_count: 4
 reference_hdl_path: reference.vhd
+testbench_path: golden_tb.vhd
+testbench_entity: pwm8_golden_tb
 properties: []

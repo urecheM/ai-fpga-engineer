@@ -1,15 +1,3 @@
-"""The evaluation harness.
-
-Every benchmark, for every model, goes through one identical procedure:
-
-    load spec -> build prompt -> infer -> parse -> compile -> synthesize
-    -> simulate -> compute metrics -> check properties -> classify -> record
-
-Model inference is injected as a :class:`ModelProvider`, so adding a model never
-touches evaluation logic. Toolchain stages degrade to ``skipped`` when the tool
-is absent, so the harness runs anywhere while remaining strict in CI.
-"""
-
 from __future__ import annotations
 
 import time
@@ -22,14 +10,19 @@ from ..config.schema import ExperimentConfig, ModelConfig, PromptConfig
 from ..logging.structured import StageEvent, StructuredLogger
 from ..metrics.resources import resource_metrics
 from ..metrics.static_analysis import analyze_vhdl
-from ..models.base import ModelProvider, ModelRequest
+from ..models.base import ModelProvider, ModelRequest, derive_run_seed
 from ..parsing.hdl_extract import extract_vhdl
+from ..parsing.ports import PortSig, compare_interfaces, entity_declaration, parse_ports
 from ..prompts.templates import build_prompt, build_repair_prompt
 from ..registry.experiment import ExperimentRecord
 from ..registry.pricing import compute_cost_usd
 from ..toolchain import compile_vhdl, detect, simulate, synthesize
-from ..verification.failures import classify_failure
-from ..verification.properties import check_properties
+from ..toolchain.detect import ToolchainMissingError, missing_tools, require_tools
+from ..toolchain.nextpnr import place_and_route
+from ..verification.equivalence import EquivResult, check_equivalence
+from ..verification.error_kinds import classify_tool_error
+from ..verification.failures import FailureClass, classify_failure
+from ..verification.properties import run_lint
 from .result import BenchmarkResult, StageOutcome
 
 
@@ -45,8 +38,20 @@ class EvaluationHarness:
         self.logger = logger or StructuredLogger()
         self.benchmarks_root = benchmarks_root
         self.toolchain = detect()
+        if require_tools():
+            missing = missing_tools(
+                self.toolchain,
+                place_and_route=experiment.synthesis.place_and_route,
+                equivalence=experiment.verification.equivalence,
+            )
+            if missing:
+                raise ToolchainMissingError(
+                    "HDLEVAL_REQUIRE_TOOLS=1 but missing: "
+                    + ", ".join(missing)
+                    + ". Install them (see Dockerfile) or unset the variable for a "
+                    "degraded, non-publishable run."
+                )
 
-    # -- one benchmark x model x prompt x trial -----------------------------
     def evaluate(
         self,
         benchmark: Benchmark,
@@ -57,6 +62,7 @@ class EvaluationHarness:
         run_id: str | None = None,
     ) -> tuple[BenchmarkResult, ExperimentRecord]:
         run_id = run_id or uuid.uuid4().hex[:12]
+        run_seed = derive_run_seed(self.experiment.seed, model_cfg.name, benchmark.id, trial)
         result = BenchmarkResult(
             benchmark=benchmark.id,
             category=benchmark.category,
@@ -80,19 +86,22 @@ class EvaluationHarness:
                 "top_p": model_cfg.top_p,
                 "max_tokens": model_cfg.max_tokens,
                 "seed": model_cfg.seed,
+                "run_seed": run_seed,
             },
             toolchain={"summary": self.toolchain.summary()},
         )
         t_start = time.perf_counter()
         ref = reference_hdl(benchmark, self.benchmarks_root)
 
-        # ---- inference ----
-        spec = benchmark.specification
+        spec = with_interface(benchmark.specification, ref, benchmark.entity)
+        expected_ports = expected_interface(benchmark, ref)
         system, user = build_prompt(prompt_cfg, spec)
-        hdl, resp = self._infer(provider, model_cfg, system, user, benchmark, ref)
+        hdl, resp = self._infer(provider, model_cfg, system, user, benchmark, ref, trial, run_seed)
         input_tokens = resp.prompt_tokens
         output_tokens = resp.completion_tokens
         result.metrics["inference_latency_s"] = resp.latency_s
+        if "fault" in resp.raw:
+            result.metrics["injected_fault"] = resp.raw["fault"]
         self._emit(
             run_id,
             benchmark.id,
@@ -111,7 +120,6 @@ class EvaluationHarness:
             detail={"entity": parsed.entity, "n_blocks": parsed.n_blocks},
         )
 
-        # ---- self-repair loop (optional) ----
         retries = 0
         compile_res = compile_vhdl(parsed.code, entity=parsed.entity or benchmark.entity)
         while (
@@ -122,7 +130,9 @@ class EvaluationHarness:
             retries += 1
             diag = f"Compilation failed:\n{compile_res.stderr[:800]}"
             rsys, ruser = build_repair_prompt(prompt_cfg, spec, parsed.code, diag)
-            hdl, resp = self._infer(provider, model_cfg, rsys, ruser, benchmark, ref)
+            hdl, resp = self._infer(
+                provider, model_cfg, rsys, ruser, benchmark, ref, trial, run_seed
+            )
             input_tokens += resp.prompt_tokens
             output_tokens += resp.completion_tokens
             parsed = extract_vhdl(hdl)
@@ -136,7 +146,23 @@ class EvaluationHarness:
             result, "compile", compile_res.status, detail={"stderr": compile_res.stderr[:400]}
         )
 
-        # ---- synthesis ----
+        iface_problems: list[str] = []
+        if parsed.found and expected_ports:
+            if (parsed.entity or "").lower() != benchmark.entity.lower():
+                iface_problems.append(
+                    f"entity named {parsed.entity!r}, expected {benchmark.entity!r}"
+                )
+            else:
+                iface_problems = compare_interfaces(
+                    expected_ports, parse_ports(parsed.code, benchmark.entity)
+                )
+        iface_status = (
+            "skipped"
+            if not (parsed.found and expected_ports)
+            else ("fail" if iface_problems else "ok")
+        )
+        self._stage(result, "interface", iface_status, detail={"problems": iface_problems})
+
         synth = (
             synthesize(
                 parsed.code,
@@ -147,10 +173,17 @@ class EvaluationHarness:
             else _skipped()
         )
         self._stage(result, "synthesis", synth.status, detail=synth.metrics)
-        rmetrics = resource_metrics(synth, clock_ns=self.experiment.synthesis.clock_ns)
+        pnr = (
+            place_and_route(parsed.code, parsed.entity or benchmark.entity)
+            if synth.ok and self.experiment.synthesis.place_and_route
+            else _skipped()
+        )
+        self._stage(
+            result, "place_and_route", pnr.status, detail={**pnr.metrics, "err": pnr.stderr[:200]}
+        )
+        rmetrics = resource_metrics(synth, pnr)
         result.metrics["resources"] = rmetrics.to_dict()
 
-        # ---- simulation (reference vectors) ----
         tb = testbench_hdl(benchmark, self.benchmarks_root)
         if parsed.found and tb and benchmark.testbench_entity:
             sim = simulate(parsed.code, tb, benchmark.testbench_entity)
@@ -158,25 +191,45 @@ class EvaluationHarness:
             sim = _skipped()
         self._stage(result, "simulation", sim.status, detail={"stderr": sim.stderr[:400]})
 
-        # ---- static analysis + properties ----
-        static = analyze_vhdl(parsed.code)
-        result.metrics["static"] = static.to_dict()
-        props = check_properties(parsed.code, benchmark.properties or None)
-        result.metrics["properties"] = props.results
+        vcfg = self.experiment.verification
+        if (
+            vcfg.equivalence
+            and parsed.found
+            and compile_res.status == "ok"
+            and iface_status != "fail"
+            and sim.status != "fail"
+            and ref
+        ):
+            equiv = check_equivalence(
+                parsed.code,
+                ref,
+                benchmark.entity,
+                sequential_depth=vcfg.equivalence_depth,
+                prove_timeout_s=vcfg.prove_timeout_s,
+            )
+        else:
+            equiv = EquivResult("skipped")
+        result.metrics["equivalence"] = {"status": equiv.status, "depth": equiv.depth}
         self._stage(
-            result, "properties", "ok" if props.n_fail == 0 else "fail", detail=props.results
+            result,
+            "equivalence",
+            "ok" if equiv.ok else ("skipped" if equiv.status == "skipped" else equiv.status),
+            detail={"status": equiv.status, "depth": equiv.depth, "detail": equiv.detail},
         )
 
-        # ---- functional determination ----
-        # With tools present, functional_ok requires a passing simulation.
-        # Without a simulator, we fall back to a successful compile + no failed
-        # properties (a weaker, clearly-labelled signal).
-        if sim.status == "ok":
-            functional_ok = True
-        elif sim.status == "skipped":
-            functional_ok = compile_res.status in ("ok", "skipped") and props.n_fail == 0
-        else:
-            functional_ok = False
+        static = analyze_vhdl(parsed.code)
+        result.metrics["static"] = static.to_dict()
+        lint = run_lint(parsed.code, benchmark.properties or None)
+        result.metrics["lint"] = lint.results
+        result.metrics["static_pass"] = bool(
+            parsed.found
+            and parsed.entity
+            and "architecture" in parsed.code.lower()
+            and lint.n_fail == 0
+        )
+        self._stage(result, "lint", "ok" if lint.n_fail == 0 else "warn", detail=lint.results)
+        functional_ok = sim.status == "ok" or equiv.ok
+        result.metrics["simulated"] = sim.status in ("ok", "fail")
 
         failure = classify_failure(
             code_found=parsed.found,
@@ -184,9 +237,17 @@ class EvaluationHarness:
             synth_status=synth.status,
             sim_status=sim.status,
             functional_ok=functional_ok,
-            property_fail=props.n_fail > 0,
+            interface_ok=iface_status != "fail",
+            equiv_status=equiv.status,
         )
         result.failure_class = failure.value
+        stage_output = {
+            FailureClass.COMPILE: ("compile", compile_res.stderr),
+            FailureClass.SYNTHESIS: ("synthesis", synth.stderr),
+            FailureClass.SIMULATION: ("simulation", sim.stdout + sim.stderr),
+        }.get(failure)
+        if stage_output is not None:
+            result.metrics["error_kind"] = classify_tool_error(stage_output[1], stage_output[0])
         result.passed = failure.value == "none"
 
         duration = time.perf_counter() - t_start
@@ -203,12 +264,13 @@ class EvaluationHarness:
         rec.metrics = result.metrics
         return result, rec
 
-    # -- helpers ------------------------------------------------------------
-    def _infer(self, provider, model_cfg, system, user, benchmark, ref):
+    def _infer(self, provider, model_cfg, system, user, benchmark, ref, trial=0, run_seed=0):
         req = ModelRequest(
             system=system,
             prompt=user,
             config=model_cfg,
+            trial=trial,
+            run_seed=run_seed,
             context={
                 "reference_hdl": ref,
                 "entity": benchmark.entity,
@@ -243,6 +305,27 @@ class EvaluationHarness:
                 detail=detail or {},
             )
         )
+
+
+def with_interface(specification: str, reference: str, entity: str) -> str:
+    """Append the reference's entity declaration to the natural-language spec."""
+    decl = entity_declaration(reference, entity)
+    if not decl:
+        return specification
+    return (
+        f"{specification}\n\nImplement exactly this entity declaration "
+        f"(same entity name, port names, directions and widths):\n```vhdl\n{decl}\n```"
+    )
+
+
+def expected_interface(benchmark: Benchmark, reference: str) -> list[PortSig]:
+    """Declared interfaces if the benchmark lists them, else the reference's ports."""
+    if benchmark.interfaces:
+        return [
+            PortSig(p.name.lower(), p.direction, p.width, "", p.width > 1)
+            for p in benchmark.interfaces
+        ]
+    return parse_ports(reference, benchmark.entity) or []
 
 
 def _skipped():

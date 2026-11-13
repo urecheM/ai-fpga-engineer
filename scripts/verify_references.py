@@ -1,10 +1,4 @@
-"""Analyze every v1 reference design under GHDL and report pass/fail.
-
-Usage:  python scripts/verify_references.py
-Exit code 0 = all analyze cleanly, 1 = one or more failed, 2 = ghdl not found.
-Requires GHDL on PATH (install the OSS CAD Suite). This is the check behind
-Task 1 in docs/guides/implementation-tasks.md.
-"""
+# Analyse v1 reference design under GHDL and report pass/fail
 
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-"""EDA toolchain discovery and the require-tools policy."""
+#EDA toolchain discovery
 from __future__ import annotations
 
 import os
@@ -8,18 +8,14 @@ from dataclasses import dataclass, field
 
 TOOLS = ("ghdl", "yosys", "nextpnr-ice40", "sby", "icepack")
 
-
 def have(tool: str) -> bool:
     return shutil.which(tool) is not None
 
 
 def require_tools() -> bool:
-    """True when the environment demands real tools (CI sets this)."""
     return os.environ.get("AIFPGA_REQUIRE_TOOLS", "") == "1"
 
-
 def ghdl_plugin_ok(timeout: float = 30.0) -> bool:
-    """True if yosys can load the GHDL front-end plugin (needed for VHDL synth)."""
     if not have("yosys"):
         return False
     try:
@@ -28,7 +24,6 @@ def ghdl_plugin_ok(timeout: float = 30.0) -> bool:
         return r.returncode == 0
     except Exception:
         return False
-
 
 @dataclass
 class Toolchain:

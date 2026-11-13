@@ -1,15 +1,8 @@
-"""Command-line interface for AI FPGA Engineer.
-
-Subcommands
------------
-build              run the closed-loop pipeline on a natural-language request
-tools              show which EDA tools were detected (ghdl / yosys / nextpnr / sby)
-mutation-campaign  seed every known defect class and report, honestly, which
-                   pipeline stage caught each one (and which escaped)
-calibrate          measure the heuristic QoR estimator against real
-                   yosys+nextpnr results across the design space (CSV + summary)
-ask                query the offline engineering knowledge base
-list-classes       list supported design classes
+"""Subcommands
+build: run the closed-loop pipeline on a natural-language request
+tools: show which EDA tools were detected (ghdl / yosys / nextpnr / sby)
+mutation-campaign: seed every known defect class and report which pipeline stage caught each
+calibrate: measure the heuristic QoR estimator against real yosys+nextpnr results across the design space (CSV + summary)
 """
 from __future__ import annotations
 
@@ -45,17 +38,13 @@ _REQ = {
 
 
 def _tmp_spec_design(request: str, decisions=None):
-    """Build (project, spec, design) in a temp workspace without the full pipeline."""
     project = Project("scratch", Path(tempfile.mkdtemp()) / "scratch",
                       request=request, quiet=True).init()
     spec = RequirementsAgent().run(project)
     design = HDLAgent().run(project, spec, decisions)
     return project, spec, design
 
-
-# ---------------------------------------------------------------------------
 # build
-# ---------------------------------------------------------------------------
 def _targets_from_args(args: argparse.Namespace) -> Targets:
     return Targets(fmax_mhz=args.target_fmax, max_luts=args.max_luts,
                    max_registers=args.max_registers)
@@ -119,10 +108,7 @@ def _cmd_build(args: argparse.Namespace) -> int:
         print(f"\n  summary JSON written to {args.json}")
     return 0 if result.ok else 1
 
-
-# ---------------------------------------------------------------------------
 # tools
-# ---------------------------------------------------------------------------
 def _cmd_tools(_args: argparse.Namespace) -> int:
     tc = toolchain.detect(refresh=True)
     print("Detected EDA toolchain:")
@@ -136,12 +122,9 @@ def _cmd_tools(_args: argparse.Namespace) -> int:
     return 0 if not tc.missing() else 1
 
 
-# ---------------------------------------------------------------------------
-# mutation-campaign
-# ---------------------------------------------------------------------------
+# mutation/
 def _detect_stage(project, spec, design, run_sim: bool) -> str:
-    """Run the detection cascade on an already-mutated design; return the first
-    stage that flags it, or an honest 'ESCAPED' / 'UNDETECTED (needs ghdl)'."""
+    # Run detection cascade on already-mutated design and return the first stage that flags it, or identify as undetected/escaped.
     issues = lint(design.vhdl)
     if any(i.fixable for i in issues):
         return "lint-gate"
@@ -196,7 +179,7 @@ def _cmd_mutation_campaign(args: argparse.Namespace) -> int:
                 if r[2] not in ("ESCAPED",) and not r[2].startswith("UNDETECTED")]
     rate = len(detected) / len(applicable) if applicable else 0.0
 
-    lines = ["# Mutation Campaign — defect-detection evidence", "",
+    lines = ["# Mutation Campaign: defect-detection evidence", "",
              "Each row seeds one independent defect class into freshly generated RTL "
              "and reports the FIRST pipeline stage that flagged it. Escapes are "
              "reported honestly; they are the interesting result.", "",
@@ -215,10 +198,7 @@ def _cmd_mutation_campaign(args: argparse.Namespace) -> int:
           f"report -> {out}")
     return 0 if rate >= args.min_detect else 1
 
-
-# ---------------------------------------------------------------------------
 # calibrate
-# ---------------------------------------------------------------------------
 def _cmd_calibrate(args: argparse.Namespace) -> int:
     ok, why = pnr.available()
     if not ok:
@@ -277,10 +257,6 @@ def _cmd_calibrate(args: argparse.Namespace) -> int:
     print(f"\nwrote {outdir/'calibration.csv'} and {outdir/'calibration.md'}")
     return 0
 
-
-# ---------------------------------------------------------------------------
-# ask / list-classes
-# ---------------------------------------------------------------------------
 def _cmd_ask(args: argparse.Namespace) -> int:
     kb = KnowledgeBase()
     if not kb.passages:
@@ -297,8 +273,6 @@ def _cmd_list_classes(_args: argparse.Namespace) -> int:
     print("\nAnything else is classified as 'unknown' and reported, not generated.")
     return 0
 
-
-# ---------------------------------------------------------------------------
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="ai_fpga_engineer",

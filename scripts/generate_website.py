@@ -1,11 +1,4 @@
-"""Generate the research website from repository artifacts.
-
-Emits a static, dependency-free multi-page site under ``website/`` whose data
-(leaderboards, figures, benchmark catalogue, experiment summary) is copied from
-``results/`` and the benchmark suite — never hand-duplicated. Pages: Home,
-Architecture, Pipeline, Benchmarks, Experiments, Results, Future Work.
-"""
-
+# need to scrap
 from __future__ import annotations
 
 import json
@@ -19,8 +12,8 @@ WEB = ROOT / "website"
 RESULTS = ROOT / "results"
 EXP = "baseline-v1"
 
-from hdleval.benchmarks.difficulty import difficulty_tier  # noqa: E402
-from hdleval.benchmarks.loader import load_suite  # noqa: E402
+from hdleval.benchmarks.difficulty import difficulty_tier
+from hdleval.benchmarks.loader import load_suite
 
 _CSS = """
 :root{--bg:#0f1226;--card:#1a1f3a;--ink:#e8e8f0;--accent:#e94560;--muted:#9aa0c0}
@@ -57,7 +50,6 @@ def main() -> None:
     (WEB / "assets").mkdir(exist_ok=True)
     (WEB / "data").mkdir(exist_ok=True)
 
-    # copy figures + data
     figdir = RESULTS / "figures"
     if figdir.exists():
         for svg in figdir.glob("*.svg"):
@@ -75,7 +67,6 @@ def main() -> None:
         json.dumps([b.to_dict() for b in suite], indent=2)
     )
 
-    # Home
     (WEB / "index.html").write_text(
         page(
             "Home",
@@ -93,7 +84,6 @@ provenance, and automatically generated leaderboards, reports and figures.</p></
         )
     )
 
-    # Architecture
     (WEB / "architecture.html").write_text(
         page(
             "Architecture",
@@ -112,7 +102,6 @@ logic.</p></div>
         )
     )
 
-    # Pipeline
     (WEB / "pipeline.html").write_text(
         page(
             "Pipeline",
@@ -127,7 +116,6 @@ pipeline runs anywhere and is strict in CI.</p></div>""",
         )
     )
 
-    # Benchmarks
     rows = "".join(
         f"<tr><td>{b.id}</td><td>{b.category}</td><td>{b.estimated_difficulty} "
         f"({difficulty_tier(b.estimated_difficulty)})</td><td>{b.title}</td>"
@@ -147,7 +135,6 @@ an objective difficulty score and a verified reference implementation.</p>
         )
     )
 
-    # Experiments
     (WEB / "experiments.html").write_text(
         page(
             "Experiments",
@@ -163,7 +150,6 @@ self-repair prompting on a fixed model.</p></div>""",
         )
     )
 
-    # Results
     def tbl(rows, cols):
         if not rows:
             return "<p>run <code>reproduce.py</code> to populate.</p>"
@@ -190,7 +176,6 @@ self-repair prompting on a fixed model.</p></div>""",
         )
     )
 
-    # Future work
     (WEB / "future.html").write_text(
         page(
             "Future Work",

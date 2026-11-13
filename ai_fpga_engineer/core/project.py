@@ -1,10 +1,3 @@
-"""Project workspace.
-
-One directory per design run, holding every artifact the pipeline produces
-(rtl/, tb/, docs/, reports/, formal/, synth/, build/) plus a structured event
-log, an artifact index, run metrics, and a JSON manifest so the whole run is
-reproducible and inspectable after the fact.
-"""
 from __future__ import annotations
 
 import json
@@ -14,7 +7,6 @@ from pathlib import Path
 from typing import Any
 
 _LEVEL_TAG = {"info": "  ", "success": "ok", "warn": "! ", "error": "!!"}
-
 
 @dataclass
 class Event:
@@ -36,11 +28,10 @@ class Project:
         self.request = request
         self.quiet = quiet
         self.events: list[Event] = []
-        self.artifacts: dict[str, str] = {}      # label -> path relative to root
+        self.artifacts: dict[str, str] = {}
         self.metrics: dict[str, Any] = {}
-        self.context = None                      # EngineeringContext, set by orchestrator
+        self.context = None
 
-    # ------------------------------------------------------------------
     def init(self) -> "Project":
         self.root.mkdir(parents=True, exist_ok=True)
         for sub in ("rtl", "tb", "docs", "reports"):

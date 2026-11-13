@@ -1,14 +1,4 @@
-"""Optimization Agent.
-
-Corrective, not advisory. Instead of emitting prose suggestions, it returns
-machine-readable :class:`OptProposal` objects, each describing a concrete change
-to the architecture decisions (register the output, switch opcode encoding,
-share the add/sub adder, ...) together with the QoR that change is estimated to
-achieve. The orchestrator applies a proposal by regenerating the RTL with the new
-decisions, which is what closes the optimization loop. Estimates are heuristic
-(pre-synthesis) and used for RANKING only; acceptance in the QoR loop uses
-measured place-and-route numbers whenever the flow is available.
-"""
+#returns machine readable :class:`OptProposal` objects
 from __future__ import annotations
 
 import json
@@ -24,12 +14,12 @@ from ..hdl.library import GeneratedDesign
 
 @dataclass
 class OptProposal:
-    kind: str                         # short machine id, e.g. "register_output"
+    kind: str
     rationale: str
     target_decisions: ArchDecisions
-    decision_delta: dict              # fields that change vs the current design
+    decision_delta: dict
     est_qor: QoR
-    est_gain: str                     # human summary of the win
+    est_gain: str
 
     def to_dict(self) -> dict:
         return {"kind": self.kind, "rationale": self.rationale,
@@ -81,10 +71,9 @@ class OptimizationAgent(Agent):
         project.metrics["resources"] = current.to_dict()
         return report
 
-    # ------------------------------------------------------------------
     def propose(self, spec: Specification, current: ArchDecisions, current_qor: QoR,
                 objective: str, targets: Targets) -> list[OptProposal]:
-        """Rank concrete decision changes that improve on the current design."""
+        #Rank decision changes
         out: list[OptProposal] = []
         cur_score = score(current_qor, objective)
         for cand in library.candidate_decisions(spec):
@@ -96,7 +85,7 @@ class OptimizationAgent(Agent):
             if not delta:
                 continue
             kind = self._delta_kind(delta)
-            # accept if it improves the objective, or if it helps meet an unmet target
+            # accept if helpful for improvement
             helps_target = bool(targets.unmet(current_qor)) and not targets.unmet(q)
             if score(q, objective) > cur_score + 1e-9 or helps_target:
                 out.append(OptProposal(

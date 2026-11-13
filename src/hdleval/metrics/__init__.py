@@ -1,5 +1,3 @@
-"""Quantitative metrics: static HDL analysis + resource/timing accounting."""
-
 from __future__ import annotations
 
 from .resources import ResourceMetrics, resource_metrics

@@ -1,5 +1,5 @@
 name: prompt-ablation-v1
-description: Effect of prompting strategy and self-repair on the synthetic-mid model.
+description: Effect of prompting strategy and self-repair on the synthetic-mid model
 models:
   - synthetic-mid
 prompts:

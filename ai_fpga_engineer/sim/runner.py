@@ -1,11 +1,3 @@
-"""Simulation runner: GHDL executes the emitted RTL against the oracle testbench.
-
-If ``ghdl`` is on PATH the flow runs here and now — analyze (VHDL-2008),
-elaborate, run, parse — and ``SimulationResult.passed`` reflects the *actual
-RTL's* behaviour. If GHDL is absent, a ready-to-run script is emitted and
-``ran=False`` says so honestly; with ``AIFPGA_REQUIRE_TOOLS=1`` (CI) the
-absent-tool path is a hard failure so a green badge means the simulator ran.
-"""
 from __future__ import annotations
 
 import subprocess
@@ -17,12 +9,11 @@ from ..core.spec import Specification
 from ..hdl.library import GeneratedDesign
 from ..agents.verification_agent import VerificationResult
 
-
 @dataclass
 class SimulationResult:
     ran: bool
-    passed: bool | None            # None when the simulator did not run
-    backend: str                   # "ghdl" | "flow-emitted"
+    passed: bool | None #default val
+    backend: str
     log: str = ""
 
 

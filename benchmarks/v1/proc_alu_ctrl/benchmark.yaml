@@ -18,5 +18,7 @@ complexity:
   arithmetic_complexity: 1
   interface_count: 3
 reference_hdl_path: reference.vhd
+testbench_path: golden_tb.vhd
+testbench_entity: alu_control_golden_tb
 properties:
 - mutual_exclusion

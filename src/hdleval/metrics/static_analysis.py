@@ -1,11 +1,3 @@
-"""Static (tool-free) analysis of VHDL source.
-
-These metrics quantify design *structure* independently of any simulator or
-synthesizer: hierarchy, combinational complexity, inferred latches, reset
-strategy, FSM complexity, module decomposition and fan-out. They are heuristic
-but deterministic and are useful comparative signals across models.
-"""
-
 from __future__ import annotations
 
 import re
@@ -32,7 +24,7 @@ class StaticMetrics:
     combinational_complexity: int
     inferred_latch_risk: int
     has_reset: bool
-    reset_style: str  # none | async | sync
+    reset_style: str
     fsm_states: int
     modules: int
     max_fan_out: int
@@ -49,7 +41,7 @@ def _count(rx: re.Pattern[str], text: str) -> int:
 def analyze_vhdl(vhdl: str) -> StaticMetrics:
     text = vhdl or ""
     lines = text.count("\n") + 1 if text else 0
-    processes = _count(_KEYWORDS["process"], text) // 2  # process ... end process
+    processes = _count(_KEYWORDS["process"], text) // 2
     ifs = _count(_KEYWORDS["if"], text)
     cases = _count(_KEYWORDS["case"], text)
     whens = _count(_KEYWORDS["when"], text)
@@ -66,7 +58,6 @@ def analyze_vhdl(vhdl: str) -> StaticMetrics:
         reset_style = "async"
     has_reset = reset_style != "none"
 
-    # crude latch risk: combinational process with if but no else / default
     latch_risk = 0
     for block in re.findall(r"process\b.*?end\s+process", text, re.I | re.S):
         if (
@@ -76,7 +67,6 @@ def analyze_vhdl(vhdl: str) -> StaticMetrics:
         ):
             latch_risk += 1
 
-    # FSM state count: entries in a state type enum
     fsm_states = 0
     m = re.search(r"type\s+\w*state\w*\s+is\s*\((.*?)\)", text, re.I | re.S)
     if m:
@@ -86,7 +76,6 @@ def analyze_vhdl(vhdl: str) -> StaticMetrics:
     instantiations = _count(_KEYWORDS["instantiation"], text)
     hierarchy_depth = 1 + (1 if instantiations else 0)
 
-    # fan-out: max number of reads of any signal name
     signals = re.findall(r"signal\s+(\w+)", text, re.I)
     max_fan_out = 0
     for s in set(signals):

@@ -1,11 +1,5 @@
-"""Architecture agent: proposes the implementation approach for a specification.
+#Architecture agent proposes the implementation approach for a spec
 
-Rule-based: each design class has a known-good architectural pattern; the
-binding, machine-readable half of the architecture (ArchDecisions) is chosen
-by design-space exploration in the orchestrator — this agent supplies the
-human-readable intent the critic reviews and the report documents. On critic
-revision requests it records what changed.
-"""
 from __future__ import annotations
 
 from dataclasses import dataclass, field

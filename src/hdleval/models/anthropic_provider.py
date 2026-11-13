@@ -1,12 +1,3 @@
-"""Real Anthropic Messages API provider.
-
-Activated only when the ``anthropic`` SDK is importable and ``ANTHROPIC_API_KEY``
-is set. Responses are cached to disk (keyed by a hash of the full request) so
-that experiments remain reproducible despite non-deterministic sampling: a
-re-run reads the cached completion instead of issuing a new billable call.
-Set ``HDLEVAL_DISABLE_CACHE=1`` to force fresh calls.
-"""
-
 from __future__ import annotations
 
 import hashlib
@@ -31,6 +22,8 @@ def _cache_key(request: ModelRequest) -> str:
             "top_p": request.config.top_p,
             "max_tokens": request.config.max_tokens,
             "seed": request.config.seed,
+            "trial": request.trial,
+            "run_seed": request.run_seed,
         },
         sort_keys=True,
     )
@@ -46,7 +39,7 @@ class AnthropicProvider(ModelProvider):
         self._client = None
         key = os.environ.get("ANTHROPIC_API_KEY")
         if key:
-            try:  # pragma: no cover - depends on optional dep + network
+            try:
                 import anthropic
 
                 self._client = anthropic.Anthropic(api_key=key)
@@ -67,15 +60,12 @@ class AnthropicProvider(ModelProvider):
         _CACHE_DIR.mkdir(parents=True, exist_ok=True)
         (_CACHE_DIR / f"{key}.json").write_text(json.dumps(resp.__dict__))
 
-    def generate(self, request: ModelRequest) -> ModelResponse:  # pragma: no cover
+    def generate(self, request: ModelRequest) -> ModelResponse:
         key = _cache_key(request)
         cached = self._read_cache(key)
         if cached is not None:
             return cached
         if not self.available or self._client is None:
-            # Degrade gracefully: the harness records this as a generation
-            # failure (no_code_generated) rather than crashing the whole run.
-            # The CLI preflight warns before the run so the cause is obvious.
             return ModelResponse(
                 text="",
                 provider=self.name,

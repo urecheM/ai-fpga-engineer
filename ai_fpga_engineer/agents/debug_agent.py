@@ -1,13 +1,3 @@
-"""Debug agent: rule-based repair with an honestly stated scope.
-
-Repairs are limited to defect classes with a mechanical fix — missing
-library/use clauses flagged as ``fixable`` by the linter. Anything else
-(semantic mismatches found by GHDL, inferred latches, undriven outputs) is
-*diagnosed and recorded, not silently 'fixed'*: the step is logged with
-``resolved=False`` and ``final_clean`` goes False, which correctly fails the
-run. The mutation campaign documents exactly which classes fall on which side
-of that line — an analyzed escape beats a fake repair.
-"""
 from __future__ import annotations
 
 import re

@@ -4,7 +4,7 @@ labels: [bug]
 body:
   - type: textarea
     id: what
-    attributes: { label: What happened?, description: Describe the bug and expected behavior }
+    attributes: { label: What happened?, description: Describe bug and expected behaviour }
     validations: { required: true }
   - type: textarea
     id: repro

@@ -1,9 +1,10 @@
-"""Automated (static) property verification.
+"""Lint heuristics over VHDL source text. These are NOT verification.
 
-Full formal verification requires a formal backend (e.g. SymbiYosys); where it
-is unavailable we run deterministic *static* property heuristics so every run
-produces a property report. Each property returns pass/fail/unknown. The
-strategy pattern lets a formal engine be dropped in behind the same interface.
+Each check is a regular expression over the source (for example
+``overflow_detection`` passes if the text mentions ``carry`` or ``+ 1``). They
+are useful as cheap structural signals and are reported as metrics, but they
+never decide pass/fail: correctness comes from simulation and equivalence
+checking. Each check returns pass/fail/unknown.
 """
 
 from __future__ import annotations
@@ -80,3 +81,8 @@ def check_properties(vhdl: str, requested: list[str] | None = None) -> PropertyR
     names = requested or list(_PROPERTIES)
     results = {n: _PROPERTIES[n](vhdl) for n in names if n in _PROPERTIES}
     return PropertyReport(results=results)
+
+
+# Preferred names: these are lint heuristics, not properties in the formal sense.
+LintReport = PropertyReport
+run_lint = check_properties

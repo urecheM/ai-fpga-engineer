@@ -1,5 +1,5 @@
 name: Research proposal
-description: Propose an experiment, method, or study using the platform
+description: ignore
 labels: [research]
 body:
   - type: textarea

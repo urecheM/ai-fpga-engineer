@@ -1,17 +1,7 @@
-"""Synthesis stage.
-
-Priority order, each honestly labelled in the QoR ``source`` field:
-
-1. **Full measured flow** (yosys + GHDL plugin + nextpnr-ice40): real SB_LUT4 /
-   SB_DFF counts and the *achieved Fmax* from place-and-route on an iCE40 UP5K
-   — see :mod:`ai_fpga_engineer.sim.pnr`. This is the number the QoR loop and
-   the report should trust.
-2. **Yosys only**: generic LUT4 mapping for representative cell counts. No
-   timing — Fmax is reported as 0.0 and labelled ``yosys-counts-only`` rather
-   than pretending.
-3. **No tools**: a runnable flow is emitted and the heuristic estimate is used,
-   labelled ``estimated``. With ``AIFPGA_REQUIRE_TOOLS=1`` (CI) this path is a
-   hard failure instead of a silent fallback.
+"""Synthesis. Priority-
+1. yosys + GHDL plugin + nextpnr-ice40
+2. Yosys only
+3. No tools
 """
 from __future__ import annotations
 
@@ -30,8 +20,8 @@ from . import pnr
 @dataclass
 class SynthResult:
     ran: bool
-    backend: str                 # "nextpnr-ice40" | "yosys-counts-only" | "flow-emitted"
-    qor: QoR | None = None       # real numbers if a tool ran
+    backend: str
+    qor: QoR | None = None
     flow_path: str = ""
     log: str = ""
 
@@ -45,7 +35,7 @@ class SynthAgent(Agent):
         project.write(flow_rel, self._yosys_script(design), "synth_script")
         project.write("synth/README.md", self._readme(design), "synth_readme")
 
-        # 1. full measured flow
+        # 1
         ok, why = pnr.available()
         if ok:
             res = pnr.run_ice40(project, design)
@@ -58,13 +48,13 @@ class SynthAgent(Agent):
             if toolchain.require_tools():
                 raise RuntimeError(f"AIFPGA_REQUIRE_TOOLS=1 but PnR failed: {res.reason}")
 
-        # 2. yosys-only counts
+        # 2
         if toolchain.detect().present.get("yosys") and toolchain.detect().ghdl_plugin:
             res = self._run_yosys_counts(project, design)
             if res is not None:
                 return res
 
-        # 3. emitted flow only
+        # 3
         msg = (f"no usable synthesis flow ({why if not ok else 'yosys counts failed'}); "
                f"emitted runnable flow under synth/")
         if toolchain.require_tools():
@@ -76,7 +66,6 @@ class SynthAgent(Agent):
                               f"(source={estimate.source})")
         return SynthResult(False, "flow-emitted", None, flow_rel)
 
-    # ------------------------------------------------------------------
     def _run_yosys_counts(self, project, design) -> SynthResult | None:
         e = design.entity
         ys = (f"plugin -i ghdl; ghdl --std=08 rtl/{e}.vhd -e {e}; "

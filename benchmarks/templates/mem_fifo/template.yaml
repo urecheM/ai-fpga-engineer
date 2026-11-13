@@ -1,0 +1,24 @@
+id: mem_fifo_w${WIDTH}_d${DEPTH}
+category: memory
+title: Synchronous FIFO (${WIDTH}-bit, depth ${DEPTH})
+entity: fifo_w${WIDTH}_d${DEPTH}
+specification: >-
+  Design a synchronous FIFO, ${WIDTH} bits wide and ${DEPTH} entries deep, with wr_en and
+  rd_en, full and empty flags, and a synchronous active-high reset. A write when full
+  and a read when empty are ignored. A read updates dout on the clock edge at which
+  rd_en is sampled high (one-cycle read latency); dout holds its value otherwise.
+  full and empty are combinational functions of the stored entry count.
+functional_requirements:
+  - FIFO ordering preserved
+  - full/empty flags correct
+  - no overflow/underflow
+tags: [fifo, memory, sequential, variant]
+complexity: {control_complexity: 4, timing_constraints: 2, interface_count: 8, concurrency: 2}
+parameters:
+  WIDTH: [4, 12, 16]
+  DEPTH: [8, 24, 32]
+golden:
+  cycles: 1200
+  phases: 4
+  hold: 0.0
+  p_one: {wr_en: 0.15, rd_en: 0.85}

@@ -1,11 +1,3 @@
-"""Load YAML config files into typed dataclasses.
-
-The loader keeps a strict separation between *reference by name* (e.g. an
-experiment names ``models: [claude-sonnet, reference-golden]``) and the
-concrete config files under ``configs/``. This lets experiments compose
-reusable building blocks.
-"""
-
 from __future__ import annotations
 
 import os
@@ -33,7 +25,6 @@ def resolve_config_dir(explicit: str | os.PathLike[str] | None = None) -> Path:
     env = os.environ.get("HDLEVAL_CONFIG_DIR")
     if env:
         return Path(env)
-    # repo-root/configs, computed relative to this file (src/hdleval/config/loader.py)
     return Path(__file__).resolve().parents[3] / "configs"
 
 

@@ -1,0 +1,16 @@
+# Ripple-carry adder
+id: arith_adder_w${W}
+category: arithmetic
+title: ${W}-bit adder with carry in/out
+entity: adder_w${W}
+specification: >-
+  Design a ${W}-bit unsigned adder. Inputs a and b are ${W}-bit vectors and cin is a
+  carry-in bit; output sum is the low ${W} bits of a + b + cin and cout is the carry
+  out. Purely combinational.
+functional_requirements:
+  - sum = (a + b + cin) mod 2^${W}
+  - cout = carry out of bit ${W1}
+tags: [adder, combinational, variant]
+complexity: {arithmetic_complexity: 2, interface_count: 5}
+parameters:
+  W: [6, 10, 12, 16, 20]

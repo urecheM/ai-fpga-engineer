@@ -1,0 +1,27 @@
+id: arith_adder_w6
+category: arithmetic
+title: 6-bit adder with carry in/out
+entity: adder_w6
+specification: Design a 6-bit unsigned adder. Inputs a and b are 6-bit vectors and
+  cin is a carry-in bit; output sum is the low 6 bits of a + b + cin and cout is the
+  carry out. Purely combinational.
+functional_requirements:
+- sum = (a + b + cin) mod 2^6
+- cout = carry out of bit 5
+tags:
+- adder
+- combinational
+- variant
+complexity:
+  arithmetic_complexity: 2
+  interface_count: 5
+version: 1.0.0
+expected_behavior: ''
+reference_hdl_path: reference.vhd
+properties: []
+variant_of: arith_adder
+parameters:
+  W: 6
+release_seed: 2026
+testbench_path: golden_tb.vhd
+testbench_entity: adder_w6_golden_tb

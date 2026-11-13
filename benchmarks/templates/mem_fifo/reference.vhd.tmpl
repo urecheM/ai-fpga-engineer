@@ -1,0 +1,38 @@
+library ieee; use ieee.std_logic_1164.all; use ieee.numeric_std.all;
+entity fifo_w${WIDTH}_d${DEPTH} is
+  port(clk, rst, wr_en, rd_en : in std_logic;
+       din   : in  std_logic_vector(${WIDTH1} downto 0);
+       dout  : out std_logic_vector(${WIDTH1} downto 0);
+       full, empty : out std_logic);
+end entity;
+architecture rtl of fifo_w${WIDTH}_d${DEPTH} is
+  type mem_t is array(0 to ${DEPTH1}) of std_logic_vector(${WIDTH1} downto 0);
+  signal mem : mem_t;
+  signal wptr, rptr : integer range 0 to ${DEPTH1} := 0;
+  signal count : integer range 0 to ${DEPTH} := 0;
+begin
+  process(clk)
+    variable n : integer range 0 to ${DEPTH};
+  begin
+    if rising_edge(clk) then
+      if rst = '1' then
+        wptr <= 0; rptr <= 0; count <= 0;
+      else
+        n := count;
+        if wr_en = '1' and count < ${DEPTH} then
+          mem(wptr) <= din;
+          if wptr = ${DEPTH1} then wptr <= 0; else wptr <= wptr + 1; end if;
+          n := n + 1;
+        end if;
+        if rd_en = '1' and count > 0 then
+          dout <= mem(rptr);
+          if rptr = ${DEPTH1} then rptr <= 0; else rptr <= rptr + 1; end if;
+          n := n - 1;
+        end if;
+        count <= n;
+      end if;
+    end if;
+  end process;
+  full  <= '1' when count = ${DEPTH} else '0';
+  empty <= '1' when count = 0 else '0';
+end architecture;

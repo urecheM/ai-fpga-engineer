@@ -18,4 +18,6 @@ complexity:
   timing_constraints: 1
   interface_count: 6
 reference_hdl_path: reference.vhd
+testbench_path: golden_tb.vhd
+testbench_entity: sync_ram_golden_tb
 properties: []

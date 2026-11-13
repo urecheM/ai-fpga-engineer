@@ -1,1 +1,1 @@
-"""Offline engineering knowledge base."""
+"""Offline note"""

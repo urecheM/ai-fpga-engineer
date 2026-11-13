@@ -1,26 +1,3 @@
-"""Closed-loop pipeline orchestrator.
-
-Changes versus the previous version, mapped to the review findings:
-
-* **Measured QoR closes the loop.** When the open-source flow is installed
-  (yosys + GHDL plugin + nextpnr-ice40), every QoR-loop iteration is measured
-  by real place-and-route on an iCE40 UP5K and "targets met" refers to those
-  numbers. The heuristic estimator still ranks *proposals* (it is cheap), but
-  acceptance is decided by measurement. Without tools the loop runs on
-  estimates and says so (``qor.source == "estimated"``); with
-  ``AIFPGA_REQUIRE_TOOLS=1`` the estimate-only path is a hard failure.
-
-* **Un-rigged defect seeding.** ``mutate=<name>`` applies any operator from
-  ``hdl.mutate`` (eight defect classes) instead of the single planted,
-  auto-repairable fault. ``inject_fault=True`` is kept as an alias for
-  ``mutate="drop_numeric_std"``.
-
-* **Debug history is accumulated, not overwritten** (the old ``_gate`` return
-  let an empty report shadow a real one).
-
-* **Confidence is derived from evidence** (what actually ran and passed), with
-  the formula documented in ``docs/CLAIMS.md``, instead of hardcoded numbers.
-"""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -93,7 +70,6 @@ class Orchestrator:
         self.synthesis = SynthAgent(self.llm)
         self.documentation = DocumentationAgent(self.llm)
 
-    # ------------------------------------------------------------------
     def run(self, request: str, workdir: str | Path = "projects",
             name: str | None = None, exhaustive: bool = False,
             inject_fault: bool = False, mutate: str | None = None,
@@ -118,17 +94,14 @@ class Orchestrator:
 
         ctx = EngineeringContext()
 
-        # ---- requirements ------------------------------------------
         provisional = self.requirements.run(_Stub(request))
         proj_name = name or provisional.name
         root = Path(workdir) / proj_name
         project = Project(proj_name, root, request=request, quiet=not verbose).init()
         project.context = ctx
         spec = self.requirements.run(project)
-        # documented prior: rule-based classifier matched a known class or not
         ctx.set_confidence("requirements", 0.9 if spec.design_class != "unknown" else 0.3)
 
-        # ---- architecture + critic revision loop --------------------
         arch = self.architecture.run(project, spec)
         findings = self.critic.run(project, spec, arch)
         revision = 0
@@ -146,35 +119,27 @@ class Orchestrator:
         ctx.set_confidence("architecture",
                            max(0.2, 1.0 - 0.3 * len(self._blocking(findings))))
 
-        # ---- design-space exploration (choose ArchDecisions) --------
         decisions = self._explore(project, spec, objective, targets, ctx)
 
-        # ---- closed QoR loop ----------------------------------------
         design, hdl_review, vres, sim, debug = self._qor_loop(
             project, spec, decisions, objective, targets, max_qor_iters,
             exhaustive, mutate, ctx)
 
-        # ---- optimization report (on the final design) -------------
         opt = self.optimization.run(project, spec, design, objective=objective,
                                     targets=targets)
 
-        # ---- formal stage -------------------------------------------
         formal = FormalResult()
         if do_formal:
             formal = self.formal.run(project, spec, design)
             ctx.set_confidence("formal", formal.confidence)
 
-        # ---- synthesis (measured when possible) ----------------------
         synth = SynthResult(False, "skipped")
         if do_synth:
             synth = self.synthesis.run(project, design, estimate=ctx.qor)
             if synth.ran and synth.qor is not None and synth.qor.fmax_mhz > 0:
-                ctx.qor = synth.qor   # prefer measured numbers
+                ctx.qor = synth.qor
 
-        # ---- evidence-based confidence wrap-up -----------------------
-        # verification: 1.0 = GHDL executed the RTL and it passed;
-        #               0.6 = only the model-level checks ran (no simulator);
-        #               0.0 = a failure anywhere.
+        # 1.0 = GHDL executed the RTL and it passed, 0.6 = only the model-level checks ran (no simulator), 0.0 = a failure anywhere
         if sim.ran:
             ctx.set_confidence("verification", 1.0 if (sim.passed and vres.passed) else 0.0)
         else:
@@ -183,15 +148,11 @@ class Orchestrator:
         ctx.set_confidence("hdl", 1.0 if hdl_review.clean else 0.4)
         ctx.set_confidence("qor", 1.0 if (ctx.qor and ctx.qor.source == "nextpnr-ice40")
                            else 0.5)
-        ctx.notes.append("confidence formulas: see docs/CLAIMS.md (evidence-derived; "
-                         "1.0 requires the real tool to have run and passed)")
 
-        # ---- documentation ------------------------------------------
         report_path = self.documentation.run(
             project, spec, arch, design, findings, hdl_review, vres, sim,
             debug, opt, formal, synth, ctx)
 
-        # ---- finalise -----------------------------------------------
         ok = (not self._blocking(findings) and hdl_review.clean
               and not vres.property_failures and debug.final_clean
               and (sim.passed is not False) and not formal.any_failed
@@ -242,7 +203,6 @@ class Orchestrator:
                               vres, sim, debug, opt, formal, synth, ctx,
                               report_path, ok, summary)
 
-    # ==================================================================
     def _explore(self, project, spec, objective, targets, ctx) -> ArchDecisions:
         """Design-space exploration on cheap estimates (measurement refines later)."""
         cands = library.candidate_decisions(spec)
@@ -276,8 +236,6 @@ class Orchestrator:
 
     def _qor_loop(self, project, spec, decisions, objective, targets,
                   max_iters, exhaustive, mutation, ctx):
-        """Generate -> gate -> verify -> MEASURE -> (refine) until targets are met
-        or the iteration budget is exhausted."""
         design = hdl_review = vres = sim = None
         debug_total = DebugReport()
         action = "initial design"
@@ -288,15 +246,13 @@ class Orchestrator:
             if mutation and it == 0:
                 self._apply_mutation(project, design, mutation)
 
-            # --- lint gate + HDL critic (repairs accumulate) ---
             hdl_review, gate_debug = self._gate(project, spec, design)
             _merge_debug(debug_total, gate_debug)
 
-            # --- verification + simulation ---
             vres = self.verification.run(project, spec, design, exhaustive=exhaustive)
             sim = self.simulation.run(project, spec, design, vres)
 
-            # --- failure classification + debug if something failed ---
+            # failure classification and debug
             if not vres.passed or (sim.ran and sim.passed is False):
                 fc = classify(
                     lint_codes=[i.code for i in lint(design.vhdl)],
@@ -311,7 +267,6 @@ class Orchestrator:
                 vres = self.verification.run(project, spec, design, exhaustive=exhaustive)
                 sim = self.simulation.run(project, spec, design, vres)
 
-            # --- MEASURE QoR (real PnR when available) and decide ---
             qor = self._measure(project, spec, design, ctx)
             ctx.qor = qor
             unmet = targets.unmet(qor)
@@ -338,8 +293,6 @@ class Orchestrator:
 
     @staticmethod
     def _pick_proposal(opt, targets, objective, tried):
-        """Never revisit a tried point. Proposals are ranked on estimates; when
-        acceptance is measured, an estimator miss just costs one more iteration."""
         fresh = [p for p in opt.proposals if p.target_decisions.key() not in tried]
         if not fresh:
             return None
@@ -349,8 +302,7 @@ class Orchestrator:
         return fresh[0]
 
     def _gate(self, project, spec, design):
-        """Lint gate + HDL critic. Auto-fixable defects are repaired before
-        verification; repair history is returned for accumulation."""
+        #Auto-fixable defects repaired before verification and repair history returned
         issues = lint(design.vhdl)
         debug = DebugReport()
         if [i for i in issues if i.fixable]:
@@ -365,7 +317,6 @@ class Orchestrator:
             hdl_review = self.hdl_critic.run(project, spec, design)
         return hdl_review, debug
 
-    # ------------------------------------------------------------------
     @staticmethod
     def _blocking(findings: list[Finding]) -> list[Finding]:
         return [f for f in findings if f.severity == "block"]
@@ -386,8 +337,6 @@ class Orchestrator:
 
 
 def _merge_debug(base: DebugReport, extra: DebugReport) -> None:
-    """Accumulate debug history instead of letting a later empty report shadow
-    an earlier real one (fixes the old _gate return-contract bug)."""
     if extra is None or extra is base:
         return
     steps = getattr(extra, "steps", None) or []

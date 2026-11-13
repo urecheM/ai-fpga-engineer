@@ -1,10 +1,3 @@
-"""Run the pytest suite without pytest installed (offline verification shim).
-
-Provides a minimal `pytest` module (fixture, raises) + fixtures (tmp_path,
-repo_root, suite), discovers test_* functions, and reports pass/fail. This is a
-convenience for environments without the dev extras; CI uses real pytest+coverage.
-"""
-
 from __future__ import annotations
 
 import importlib.util
@@ -19,7 +12,6 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 
-# --- fake pytest ---
 class _Raises:
     def __init__(self, exc):
         self.exc = exc

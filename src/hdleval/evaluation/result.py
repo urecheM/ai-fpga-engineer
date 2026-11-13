@@ -1,5 +1,3 @@
-"""Result types produced by the evaluation harness."""
-
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
@@ -9,7 +7,7 @@ from typing import Any
 @dataclass
 class StageOutcome:
     stage: str
-    status: str  # ok | fail | skipped
+    status: str
     duration_s: float = 0.0
     detail: dict[str, Any] = field(default_factory=dict)
 
