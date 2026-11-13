@@ -12,7 +12,7 @@ _WEIGHTS = {
     "control_complexity": 2.5,
 }
 
-#scaling divisor
+# scaling divisor
 _SCALE = 1.6
 
 

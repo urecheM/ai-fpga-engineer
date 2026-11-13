@@ -43,6 +43,7 @@ def test_properties_report():
     assert set(rep.results) == {"deadlock_freedom", "unreachable_state"}
     assert rep.n_pass + rep.n_fail <= 2
 
+
 def test_lint_never_decides_pass_fail():
     assert (
         classify_failure(

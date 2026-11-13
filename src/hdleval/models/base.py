@@ -10,13 +10,13 @@ from ..registry.pricing import compute_cost_usd
 
 @dataclass(frozen=True)
 class ModelRequest:
-
     system: str
     prompt: str
     config: ModelConfig
     context: dict[str, Any] = field(default_factory=dict)
     trial: int = 0
     run_seed: int = 0
+
 
 def derive_run_seed(exp_seed: int, model: str, benchmark: str, trial: int) -> int:
     """reproducible seed for one trial
@@ -27,6 +27,7 @@ def derive_run_seed(exp_seed: int, model: str, benchmark: str, trial: int) -> in
     """
     key = f"{exp_seed}|{model}|{benchmark}|{trial}".encode()
     return int(hashlib.sha256(key).hexdigest()[:8], 16) & 0x7FFFFFFF
+
 
 @dataclass(frozen=True)
 class ModelResponse:
@@ -54,5 +55,4 @@ class ModelProvider(Protocol):
     name: str
     available: bool
 
-    def generate(self, request: ModelRequest) -> ModelResponse:
-        ...
+    def generate(self, request: ModelRequest) -> ModelResponse: ...

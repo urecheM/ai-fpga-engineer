@@ -42,6 +42,7 @@ class Toolchain:
 def require_tools() -> bool:
     return os.environ.get("HDLEVAL_REQUIRE_TOOLS", "") == "1"
 
+
 class ToolchainMissingError(RuntimeError):
     """Raised when HDLEVAL_REQUIRE_TOOLS=1 and a required tool is absent."""
 
@@ -58,6 +59,7 @@ def missing_tools(
     if equivalence and not shutil.which("sby"):
         missing.append("sby (SymbiYosys)")
     return missing
+
 
 def _ghdl_plugin_ok(timeout: float = 30.0) -> bool:
     if not shutil.which("yosys"):

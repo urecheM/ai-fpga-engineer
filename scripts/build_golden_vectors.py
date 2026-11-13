@@ -227,6 +227,7 @@ def build_one(b, root: Path | None, force: bool) -> str:
         return "SKIP: could not parse literal port widths"
     clocked = any(p.name in CLOCK_NAMES for p in ports)
     import yaml
+
     own = (yaml.safe_load((bdir / "benchmark.yaml").read_text()) or {}).get("golden", {})
     cfg = {**DEFAULTS, **OVERRIDES.get(b.id, {}), **own}
     ignore = set(cfg.get("ignore", []))

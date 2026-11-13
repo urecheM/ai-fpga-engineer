@@ -1,4 +1,4 @@
-#Analyse v1 reference design under GHDL and report pass/fail
+# Analyse v1 reference design under GHDL and report pass/fail
 
 from __future__ import annotations
 

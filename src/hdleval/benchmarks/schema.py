@@ -1,4 +1,4 @@
-#Structured benchmark metadata
+# Structured benchmark metadata
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
@@ -45,6 +45,7 @@ class Benchmark:
     properties: list[str] = field(default_factory=list)
     estimated_difficulty: int = 0
     suite: str = ""
+
     def to_dict(self) -> dict[str, object]:
         d = asdict(self)
         d["complexity"] = self.complexity.to_dict()

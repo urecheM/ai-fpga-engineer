@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#Generating parametric benchmark variants from templates (limits memorisation)
+# Generating parametric benchmark variants from templates (limits memorisation)
 from __future__ import annotations
 
 import argparse

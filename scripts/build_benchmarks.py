@@ -1,4 +1,4 @@
-#Run once to materialise ``benchmarks/v1/``
+# Run once to materialise ``benchmarks/v1/``
 
 from __future__ import annotations
 
@@ -14,7 +14,9 @@ VERSION = "1.0.0"
 def bench(**kw):
     return kw
 
+
 BENCHMARKS = []
+
 
 def add(
     id,
@@ -48,6 +50,7 @@ def add(
             "tb_entity": tb_entity,
         }
     )
+
 
 add(
     "arith_adder8",

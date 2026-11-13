@@ -1,4 +1,4 @@
-#need to scrap
+# need to scrap
 from __future__ import annotations
 
 import json

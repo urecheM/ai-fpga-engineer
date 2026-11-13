@@ -1,4 +1,4 @@
-#Load benchmark metadata from ``benchmarks/<version>/<id>/benchmark.yaml``
+# Load benchmark metadata from ``benchmarks/<version>/<id>/benchmark.yaml``
 from __future__ import annotations
 
 import os
@@ -72,6 +72,7 @@ def select(benchmarks: list[Benchmark], sel: BenchmarkSelector) -> list[Benchmar
 def _suite_dir(b: Benchmark) -> str:
     """The benchmark's suite directory: as loaded, else from its version (1.x -> v1)."""
     return b.suite or f"v{b.version.split('.')[0]}"
+
 
 def reference_hdl(b: Benchmark, root: str | os.PathLike[str] | None = None) -> str:
     if not b.reference_hdl_path:

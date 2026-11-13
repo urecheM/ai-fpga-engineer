@@ -43,7 +43,7 @@ class ModelStats:
             "compile_rate": round(self.compile_ok / self.n, 4) if self.n else 0.0,
             "synth_rate": round(self.synth_ok / self.n, 4) if self.n else 0.0,
             "sim_rate": round(self.sim_ok / self.n, 4) if self.n else 0.0,
-            "sim_coverage": round(self.sim_ran / self.n, 4) if self.n else 0.0,  
+            "sim_coverage": round(self.sim_ran / self.n, 4) if self.n else 0.0,
             "avg_latency_s": round(self.total_latency / self.n, 4) if self.n else 0.0,
             "avg_tokens": round(self.total_tokens / self.n, 1) if self.n else 0.0,
             "avg_retries": round(self.total_retries / self.n, 3) if self.n else 0.0,

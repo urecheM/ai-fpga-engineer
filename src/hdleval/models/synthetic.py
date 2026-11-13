@@ -12,6 +12,7 @@ def _det_unit(*parts: str) -> float:
     h = hashlib.sha256("|".join(parts).encode()).hexdigest()
     return (int(h[:8], 16) % 10_000) / 10_000.0
 
+
 class SyntheticProvider(ModelProvider):
     name = "synthetic"
 

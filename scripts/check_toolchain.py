@@ -1,6 +1,7 @@
 """python scripts/check_toolchain.py
 python scripts/check_toolchain.py --synthesize
 """
+
 from __future__ import annotations
 
 import sys

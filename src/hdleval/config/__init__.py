@@ -1,4 +1,4 @@
-#typed dataclasses + YAML loading.
+# typed dataclasses + YAML loading.
 from __future__ import annotations
 
 from .loader import load_experiment, load_yaml, resolve_config_dir

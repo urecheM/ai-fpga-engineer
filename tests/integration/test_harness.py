@@ -79,6 +79,7 @@ def test_resource_counts_nonzero_for_ctrl_debounce():
     assert resources["luts"] > 0
     assert resources["ffs"] > 0
 
+
 class _WrongInterfaceProvider:
     """Returns the adder reference with the carry-out port renamed."""
 

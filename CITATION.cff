@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: "hdleval: An Extensible, Reproducible Platform for Evaluating LLM-Assisted Hardware Design"
-message: ""
+message: "-"
 type: software
 authors:
   - name: "hdleval contributors"

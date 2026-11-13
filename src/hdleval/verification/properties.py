@@ -82,6 +82,7 @@ def check_properties(vhdl: str, requested: list[str] | None = None) -> PropertyR
     results = {n: _PROPERTIES[n](vhdl) for n in names if n in _PROPERTIES}
     return PropertyReport(results=results)
 
+
 # Preferred names: these are lint heuristics, not properties in the formal sense.
 LintReport = PropertyReport
 run_lint = check_properties

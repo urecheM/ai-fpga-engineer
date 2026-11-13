@@ -41,6 +41,7 @@ class AnthropicProvider(ModelProvider):
         if key:
             try:
                 import anthropic
+
                 self._client = anthropic.Anthropic(api_key=key)
                 self.available = True
             except Exception:

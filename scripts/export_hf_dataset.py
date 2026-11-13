@@ -1,4 +1,4 @@
-#pointless file honeslty
+# pointless file honeslty
 from __future__ import annotations
 
 import json

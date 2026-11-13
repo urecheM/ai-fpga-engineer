@@ -13,12 +13,14 @@ sys.path.insert(0, str(ROOT / "src"))
 def repo_root() -> Path:
     return ROOT
 
+
 def reference_verdict_ok(result) -> bool:
     from hdleval.toolchain.detect import detect
 
     if detect().has("ghdl"):
         return bool(result.passed)
     return (not result.passed) and result.failure_class == "unverified"
+
 
 @pytest.fixture
 def suite():

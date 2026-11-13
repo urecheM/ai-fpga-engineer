@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#McNemar + paired bootstrap
+# McNemar + paired bootstrap
 from __future__ import annotations
 
 import argparse

@@ -75,6 +75,7 @@ class VerificationConfig:
     equivalence_depth: int = 24
     prove_timeout_s: int = 120
 
+
 @dataclass(frozen=True)
 class OptimizationConfig:
     name: str = "baseline"

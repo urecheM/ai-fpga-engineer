@@ -30,7 +30,7 @@ def _code_only(text: str) -> str:
     return re.sub(r"--[^\n]*", lambda m: " " * len(m.group(0)), text)
 
 
-#syntactic
+# syntactic
 def drop_semicolon(text: str, rng: random.Random) -> str | None:
     return text.replace(";", "", 1) if ";" in text else None
 
@@ -45,7 +45,7 @@ def truncate(text: str, rng: random.Random) -> str | None:
     return "\n".join(lines[: max(3, len(lines) // 2)]) if len(lines) > 6 else None
 
 
-#semantic
+# semantic
 def invert_condition(text: str, rng: random.Random) -> str | None:
     """``if C then`` -> ``if not (C) then``, skipping clock-edge conditions."""
     code = _code_only(text)
@@ -180,7 +180,6 @@ SEMANTIC: dict[str, Operator] = {
 
 
 def apply_fault(text: str, mode: str, rng: random.Random) -> tuple[str, str]:
-
     if mode == "syntactic":
         pool = dict(SYNTACTIC)
     elif mode == "semantic":

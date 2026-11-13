@@ -225,7 +225,8 @@ class EvaluationHarness:
             parsed.found
             and parsed.entity
             and "architecture" in parsed.code.lower()
-            and lint.n_fail == 0)
+            and lint.n_fail == 0
+        )
         self._stage(result, "lint", "ok" if lint.n_fail == 0 else "warn", detail=lint.results)
         functional_ok = sim.status == "ok" or equiv.ok
         result.metrics["simulated"] = sim.status in ("ok", "fail")
@@ -305,6 +306,7 @@ class EvaluationHarness:
             )
         )
 
+
 def with_interface(specification: str, reference: str, entity: str) -> str:
     """Append the reference's entity declaration to the natural-language spec."""
     decl = entity_declaration(reference, entity)
@@ -324,6 +326,7 @@ def expected_interface(benchmark: Benchmark, reference: str) -> list[PortSig]:
             for p in benchmark.interfaces
         ]
     return parse_ports(reference, benchmark.entity) or []
+
 
 def _skipped():
     from ..toolchain.detect import ToolResult

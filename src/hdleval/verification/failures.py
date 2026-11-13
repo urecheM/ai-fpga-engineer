@@ -21,6 +21,7 @@ class FailureClass(str, Enum):
     UNVERIFIED = "unverified"
     EQUIVALENCE = "equivalence_failure"  # miter found a counterexample vs the reference
 
+
 def classify_failure(
     *,
     code_found: bool,
