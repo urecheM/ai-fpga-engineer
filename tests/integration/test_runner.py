@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from conftest import reference_verdict_ok
-
 from hdleval.config.schema import (
     BenchmarkSelector,
     ExperimentConfig,

@@ -16,8 +16,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-import build_golden_vectors as golden  # noqa: E402
-from hdleval.benchmarks.loader import load_benchmark  # noqa: E402
+import build_golden_vectors as golden
+from hdleval.benchmarks.loader import load_benchmark
 
 TEMPLATES = ROOT / "benchmarks" / "templates"
 

@@ -22,8 +22,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from hdleval.benchmarks.loader import load_suite, reference_hdl  # noqa: E402
-from hdleval.parsing.ports import PortSig, parse_ports  # noqa: E402
+from hdleval.benchmarks.loader import load_suite, reference_hdl
+from hdleval.parsing.ports import PortSig, parse_ports
 
 CLOCK_NAMES = {"clk", "clock"}
 RESET_NAMES = {"rst", "reset", "rst_n", "reset_n"}
