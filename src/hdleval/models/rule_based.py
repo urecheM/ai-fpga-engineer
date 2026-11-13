@@ -22,7 +22,7 @@ class RuleBasedProvider(ModelProvider):
         self.available = True
         try:
             _ensure_importable()
-            import ai_fpga_engineer
+            import ai_fpga_engineer  # noqa: F401
 
             self.available = True
         except Exception:
