@@ -19,6 +19,8 @@ complexity:
   timing_constraints: 2
   interface_count: 4
 reference_hdl_path: reference.vhd
+testbench_path: golden_tb.vhd
+testbench_entity: traffic_light_golden_tb
 properties:
 - deadlock_freedom
 - unreachable_state

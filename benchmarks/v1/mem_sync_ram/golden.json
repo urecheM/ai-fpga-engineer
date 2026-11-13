@@ -1,0 +1,16 @@
+{
+  "vectors": 400,
+  "clocked": true,
+  "stimulus": {
+    "cycles": 400,
+    "comb_vectors": 512,
+    "hold": 0.5,
+    "reset_cycles": 2,
+    "reset_rate": 0.01,
+    "seed": 20260707,
+    "narrow": {
+      "addr": 3
+    }
+  },
+  "dont_care_fraction": 0.0625
+}

@@ -1,0 +1,27 @@
+id: arith_adder_w12
+category: arithmetic
+title: 12-bit adder with carry in/out
+entity: adder_w12
+specification: Design a 12-bit unsigned adder. Inputs a and b are 12-bit vectors and
+  cin is a carry-in bit; output sum is the low 12 bits of a + b + cin and cout is
+  the carry out. Purely combinational.
+functional_requirements:
+- sum = (a + b + cin) mod 2^12
+- cout = carry out of bit 11
+tags:
+- adder
+- combinational
+- variant
+complexity:
+  arithmetic_complexity: 2
+  interface_count: 5
+version: 1.0.0
+expected_behavior: ''
+reference_hdl_path: reference.vhd
+properties: []
+variant_of: arith_adder
+parameters:
+  W: 12
+release_seed: 2026
+testbench_path: golden_tb.vhd
+testbench_entity: adder_w12_golden_tb

@@ -19,6 +19,8 @@ complexity:
   control_complexity: 3
   timing_constraints: 0
 reference_hdl_path: reference.vhd
+testbench_path: golden_tb.vhd
+testbench_entity: alu8_golden_tb
 properties:
 - overflow_detection
 - mutual_exclusion

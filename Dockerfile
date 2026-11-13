@@ -8,7 +8,7 @@ ENV PYTHONUNBUFFERED=1 \
     PATH="/opt/oss-cad-suite/bin:${PATH}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        ca-certificates curl git make libgomp1 \
+        ca-certificates curl git make libgomp1 gcc libc6-dev zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
 RUN set -eux; \

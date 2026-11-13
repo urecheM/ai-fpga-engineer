@@ -22,5 +22,7 @@ complexity:
   concurrency: 2
   hierarchy_depth: 1
 reference_hdl_path: reference.vhd
+testbench_path: golden_tb.vhd
+testbench_entity: regfile_golden_tb
 properties:
 - mutual_exclusion

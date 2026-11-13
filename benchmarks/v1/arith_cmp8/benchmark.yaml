@@ -15,5 +15,7 @@ complexity:
   interface_count: 5
   control_complexity: 2
 reference_hdl_path: reference.vhd
+testbench_path: golden_tb.vhd
+testbench_entity: cmp8_golden_tb
 properties:
 - mutual_exclusion

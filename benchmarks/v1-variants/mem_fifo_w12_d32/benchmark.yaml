@@ -1,0 +1,41 @@
+id: mem_fifo_w12_d32
+category: memory
+title: Synchronous FIFO (12-bit, depth 32)
+entity: fifo_w12_d32
+specification: Design a synchronous FIFO, 12 bits wide and 32 entries deep, with wr_en
+  and rd_en, full and empty flags, and a synchronous active-high reset. A write when
+  full and a read when empty are ignored. A read updates dout on the clock edge at
+  which rd_en is sampled high (one-cycle read latency); dout holds its value otherwise.
+  full and empty are combinational functions of the stored entry count.
+functional_requirements:
+- FIFO ordering preserved
+- full/empty flags correct
+- no overflow/underflow
+tags:
+- fifo
+- memory
+- sequential
+- variant
+complexity:
+  control_complexity: 4
+  timing_constraints: 2
+  interface_count: 8
+  concurrency: 2
+golden:
+  cycles: 1200
+  phases: 4
+  hold: 0.0
+  p_one:
+    wr_en: 0.15
+    rd_en: 0.85
+version: 1.0.0
+expected_behavior: ''
+reference_hdl_path: reference.vhd
+properties: []
+variant_of: mem_fifo
+parameters:
+  DEPTH: 32
+  WIDTH: 12
+release_seed: 2026
+testbench_path: golden_tb.vhd
+testbench_entity: fifo_w12_d32_golden_tb
